@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:6
+    working_directory: ~/client
     steps:
       - checkout
       - run:

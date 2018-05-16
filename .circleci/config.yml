@@ -14,6 +14,9 @@ jobs:
       - run:
           name: Change dir
           command: cd client
+      - run:
+          name:  Ls2 dir
+          command: ls
       - restore_cache: # special step to restore the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
       - run:

@@ -6,6 +6,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name:  Las dir
+          command: pwd
+      - run:
+          name:  Ls dir
+          command: ls
+      - run:
           name: Change dir
           command: cd client
       - restore_cache: # special step to restore the dependency cache

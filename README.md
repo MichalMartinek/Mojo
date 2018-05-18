@@ -1,7 +1,8 @@
 # Client
 - [x] React
 - [ ] Redux
-- [ ] Storybook
+- [x] Storybook
+- [x] SASS
 - [ ] Flow
 - [x] Circle
 - [x] Docker
@@ -9,7 +10,7 @@
 # Docker
 Development
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 Production

@@ -28,4 +28,5 @@ services:
     command: npm run start
     build: ./client
     ports:
-      - 4000:3000
+      - 3000:3000
+      - 9009:9009

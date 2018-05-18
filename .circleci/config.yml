@@ -9,17 +9,15 @@ jobs:
           name:  Ls2 dir
           command: ls
       - restore_cache: # special step to restore the dependency cache
-          working_directory: client
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "client/package.json" }}
       - run:
           name: Setup Dependencies
           command: npm install
           working_directory: client
       - save_cache: # special step to save the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
-          working_directory: client
+          key: dependency-cache-{{ checksum "client/package.json" }}
           paths:
-            - ./node_modules
+            - ./client/node_modules
       - run: # run tests
           name: Run Test and Coverage
           command: |

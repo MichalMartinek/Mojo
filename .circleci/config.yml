@@ -3,12 +3,12 @@ jobs:
   build:
     docker:
       - image: circleci/node:6
-    working_directory: ~/client
     steps:
       - checkout
       - run:
           name:  Las dir
           command: pwd
+          working_directory: client
       - run:
           name:  Ls dir
           command: ls

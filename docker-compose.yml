@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  ################################
+  #   Setup postgres container
+  ################################
+  #database:
+    #image: postgres:latest
+    #volumes:
+      #- database_data:/var/lib/postgresql/data
+
+################################
+#   Setup node container
+################################
+  #server:
+    #build: ./server
+    #expose:
+    #  - 5000
+    #ports:
+    #  - 5000:5000
+    #volumes:
+    #  - ./server/src:/usr/src/app/src/
+    #command: npm run dev
+  client:
+    volumes:
+      - ./client/src:/usr/src/app/src
+      - ./client/public:/usr/src/app/public
+    command: npm run start
+    build: ./client
+    ports:
+      - 3000:3000
+      - 9009:9009

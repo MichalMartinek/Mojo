@@ -11,6 +11,7 @@
   },
   "scripts": {
     "test-js": "react-scripts test --env=jsdom",
+    "test-jsCI": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
@@ -20,6 +21,7 @@
     "build-js": "react-scripts build",
     "start": "npm-run-all -p watch-css start-js",
     "test": "npm-run-all -p build test-js",
+    "testCI": "npm-run-all -p build test-jsCI",
     "build": "npm-run-all build-css build-js"
   },
   "devDependencies": {

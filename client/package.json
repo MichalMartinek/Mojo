@@ -31,7 +31,7 @@
     "build-js": "react-scripts build",
     "start": "npm-run-all -p watch-css start-js",
     "test": "npm-run-all -p build test-js",
-    "testCI": "npm-run-all -p build test-jsCI",
+    "testCI": "npm-run-all -p test-jsCI",
     "build": "npm-run-all build-css build-js",
     "flow": "flow"
   },

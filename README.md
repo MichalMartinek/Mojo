@@ -1,6 +1,6 @@
 # Client
 - [x] React
-- [ ] Redux
+- [x] Redux
 - [x] Storybook
 - [x] SASS
 - [x] Flow

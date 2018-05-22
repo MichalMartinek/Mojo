@@ -1,14 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
 import { Route } from 'react-router'
-
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
-
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 
 import App from './app/App';
 import Home from './Home';
@@ -19,7 +16,6 @@ import './App.css';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
-
 const enhancers = [];
 const middleware = [thunk, routerMiddleware(history)];
 

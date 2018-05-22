@@ -17,3 +17,6 @@ Production
 ```bash
 docker-compose -f docker-compose-prod.yml up -d --build
 ```
+
+# Pushing to dev branch
+git push origin master:dev

@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+// @flow
+
+import React from 'react';
 import Button from './Button';
 import './App.css';
 
-class App extends Component {
+class App extends React.Component<{}> {
   render() {
     return (
       <div className="App">

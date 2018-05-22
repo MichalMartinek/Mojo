@@ -3,7 +3,7 @@
 - [ ] Redux
 - [x] Storybook
 - [x] SASS
-- [ ] Flow
+- [x] Flow
 - [x] Circle
 - [x] Docker
 

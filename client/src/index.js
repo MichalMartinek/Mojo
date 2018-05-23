@@ -11,6 +11,7 @@ import firebase from 'firebase'
 
 import App from './app/App';
 import Home from './Home';
+import Login from './Login';
 import reducers from './reducers' // Or wherever you keep your reducers
 import registerServiceWorker from './registerServiceWorker';
 import locateMessages from './localization/cs';
@@ -77,6 +78,7 @@ ReactDOM.render(
       <div>
         <Route exact path="/" component={Home}/>
         <Route path="/app" component={App}/>
+        <Route path="/login" component={Login}/>
       </div>
     </ConnectedRouter>
   </Provider>,

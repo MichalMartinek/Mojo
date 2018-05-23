@@ -5,7 +5,6 @@ import Button from './Button';
 import { firebaseConnect } from 'react-redux-firebase'
 import {compose} from 'redux';
 import {connect }from 'react-redux'
-import './App.css';
 
 class Home extends React.Component<{}> {
   render() {
@@ -26,11 +25,9 @@ class Home extends React.Component<{}> {
 }
 
 export default compose(
-  firebaseConnect((props) => {
-    return [
-      'feed'
-    ]
-  }),
+  firebaseConnect((props) => [
+    { path: 'feed' } // string equivalent 'todos'
+  ]),
   connect(
     (state) => ({
       feed: state.firebase.data.feed,

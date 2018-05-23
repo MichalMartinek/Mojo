@@ -2,10 +2,14 @@
 
 import React from 'react';
 import Button from './Button';
+import { firebaseConnect } from 'react-redux-firebase'
+import {compose} from 'redux';
+import {connect }from 'react-redux'
 import './App.css';
 
 class Home extends React.Component<{}> {
   render() {
+    console.log(this.props)
     return (
       <div className="App">
         <header className="App-header">
@@ -21,4 +25,16 @@ class Home extends React.Component<{}> {
   }
 }
 
-export default Home;
+export default compose(
+  firebaseConnect((props) => {
+    return [
+      'feed'
+    ]
+  }),
+  connect(
+    (state) => ({
+      feed: state.firebase.data.feed,
+      profile: state.firebase.profile // load profile
+    })
+  )
+)(Home)

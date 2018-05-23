@@ -6,6 +6,8 @@ import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory'
 import { Route } from 'react-router'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import { reactReduxFirebase } from 'react-redux-firebase'
+import firebase from 'firebase'
 
 import App from './app/App';
 import Home from './Home';
@@ -38,10 +40,30 @@ const initialState = {
   },
   // ...other initialState
 };
+// Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc",
+    authDomain: "geom-280cd.firebaseapp.com",
+    databaseURL: "https://geom-280cd.firebaseio.com",
+    projectId: "geom-280cd",
+    storageBucket: "geom-280cd.appspot.com",
+    messagingSenderId: "851478162916"
+  };
+
+firebase.initializeApp(firebaseConfig) // <- new to v2.*.*
+// react-redux-firebase options
+const config = {
+  userProfile: 'users', // firebase root where user profiles are stored
+  enableLogging: false, // enable/disable Firebase's database logging
+}
+// Add redux Firebase to compose
+const createStoreWithFirebase = compose(
+  reactReduxFirebase(firebase, config)
+)(createStore)
 
 // Add the reducer to your store on the `router` key
 // Also apply our middleware for navigating
-const store = createStore(
+const store = createStoreWithFirebase(
   reducers,
   initialState,
   composedEnhancers

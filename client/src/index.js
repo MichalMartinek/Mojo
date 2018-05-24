@@ -3,21 +3,19 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
-import createHistory from 'history/createBrowserHistory'
-import { Route } from 'react-router'
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import history from './history';
+import { routerMiddleware } from 'react-router-redux'
 import { reactReduxFirebase } from 'react-redux-firebase'
 import firebase from 'firebase'
 
 import App from './app/App';
-import Home from './Home';
 import reducers from './reducers' // Or wherever you keep your reducers
 import registerServiceWorker from './registerServiceWorker';
 import locateMessages from './localization/cs';
 import './App.css';
 
 // Create a history of your choosing (we're using a browser history in this case)
-const history = createHistory()
+
 const enhancers = [];
 const middleware = [thunk, routerMiddleware(history)];
 
@@ -69,16 +67,9 @@ const store = createStoreWithFirebase(
   composedEnhancers
 )
 
-
 ReactDOM.render(
   <Provider store={store}>
-    { /* ConnectedRouter will use the store from Provider automatically */ }
-    <ConnectedRouter history={history}>
-      <div>
-        <Route exact path="/" component={Home}/>
-        <Route path="/app" component={App}/>
-      </div>
-    </ConnectedRouter>
+      <App />
   </Provider>,
   document.getElementById('root')
 )

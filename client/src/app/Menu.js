@@ -12,6 +12,9 @@ const Menu = () => {
       <div className="menu__item">
         <Link to="/settings">Settings</Link>
       </div>
+      <div className="menu__item">
+        <Link to="/playlist">Playlist</Link>
+      </div>
     </div>
   );
 }

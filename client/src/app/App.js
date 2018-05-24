@@ -8,6 +8,7 @@ import Home from '../home/Home';
 import SettingsView from '../settings/SettingsView';
 import Login from '../Login';
 import history from '../history';
+import PlaylistView from '../playlist/PlaylistView';
 import NotFound from '../common/NotFound';
 import {
   Route,
@@ -25,6 +26,7 @@ class App extends React.Component<{}> {
               <Route exact path="/" component={Home}/>
               <Route path="/login" component={Login}/>
               <Route path="/settings" component={SettingsView}/>
+              <Route path="/playlist" component={PlaylistView}/>
               <Route component={NotFound}/>
             </Switch>
           </div>

@@ -4,10 +4,10 @@ const Menu = () => {
   return (
     <div className="menu">
       <div className="menu__item">
-        <Link to="/app">App</Link>
+        <Link to="/">App</Link>
       </div>
       <div className="menu__item">
-        <Link to="/settings">Settings</Link>
+        <Link to="/login">Settings</Link>
       </div>
     </div>
   );

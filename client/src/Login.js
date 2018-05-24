@@ -1,12 +1,21 @@
 /* @flow */
-
-import React from 'react';
+import React from 'react'
 import { firebaseConnect } from 'react-redux-firebase'
-import {compose} from 'redux';
+import {compose} from 'redux'
 import {connect }from 'react-redux'
 import { withFirebase } from 'react-redux-firebase'
+import { bindActionCreators } from 'redux';
+import * as actions from "./app/actions";
+import {push} from 'react-router-redux'
 
-class Login extends React.Component<{}> {
+type Props = {
+  push: (path: string) => void,
+  firebase: {
+    login: ({provider: string, type: string}) => void,
+  }
+};
+
+class Login extends React.Component<Props> {
   render() {
     console.log(this.props)
     return (
@@ -15,12 +24,14 @@ class Login extends React.Component<{}> {
           <h1 className="App-title">Welcome</h1>
         </header>
         <p className="App-intro">
-              <button onClick={() => {
-                this.props.firebase.login({
-                  provider: 'facebook',
+              <button onClick={async () => {
+                const res = await this.props.firebase.login({
+                  provider: 'google',
                   type: 'popup',
                   // scopes: ['email'] // not required
                 })
+                console.log(res);
+                this.props.push('/')
               }}>Login</button>
         </p>
       </div>
@@ -28,4 +39,10 @@ class Login extends React.Component<{}> {
   }
 }
 
-export default withFirebase(Login)
+export default compose(
+  withFirebase,
+  connect(null, (dispatch) => ({
+    actions: bindActionCreators(actions, dispatch),
+    push: bindActionCreators(push, dispatch),
+  }))
+)(Login)

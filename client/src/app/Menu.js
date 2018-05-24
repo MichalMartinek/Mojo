@@ -7,7 +7,10 @@ const Menu = () => {
         <Link to="/">App</Link>
       </div>
       <div className="menu__item">
-        <Link to="/login">Settings</Link>
+        <Link to="/login">Login</Link>
+      </div>
+      <div className="menu__item">
+        <Link to="/settings">Settings</Link>
       </div>
     </div>
   );

@@ -2,12 +2,17 @@
 
 import React from 'react';
 import { ConnectedRouter } from 'react-router-redux';
-import { Route } from 'react-router'
 import Sidebar from './Sidebar';
 import Menu from './Menu';
-import Home from '../Home';
+import Home from '../home/Home';
+import SettingsView from '../settings/SettingsView';
 import Login from '../Login';
 import history from '../history';
+import NotFound from '../common/NotFound';
+import {
+  Route,
+  Switch,
+} from "react-router-dom";
 
 class App extends React.Component<{}> {
   render() {
@@ -16,9 +21,12 @@ class App extends React.Component<{}> {
         <ConnectedRouter history={history}>
           <div>
             <Menu />
-            <Sidebar />
-            <Route exact path="/" component={Home}/>
-            <Route path="/login" component={Login}/>
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route path="/login" component={Login}/>
+              <Route path="/settings" component={SettingsView}/>
+              <Route component={NotFound}/>
+            </Switch>
           </div>
         </ConnectedRouter>
       </div>

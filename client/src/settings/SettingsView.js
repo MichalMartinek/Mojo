@@ -9,8 +9,11 @@ import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
 
 type Props = {
   profile: {
-    isLoaded?:string,
-    isEmpty?:string,
+    isLoaded: string,
+    isEmpty: string,
+    avatarUrl?: string,
+    displayName?: string,
+    email?: string,
   }
 };
 

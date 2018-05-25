@@ -7,21 +7,24 @@ import {connect }from 'react-redux'
 import  search from "youtube-search";
 import YouTube from 'react-youtube';
 
-type Props = {
-  id: string,
-}
-
 type State = {
   results: Array<{
     id: string,
     title: string,
   }>
 }
-class Playlist extends React.Component<Props, State> {
+class Playlist extends React.Component<{}}, State> {
   state = {
     results: []
   }
-  handleAdd = () => {
+  handleAdd = (id) => {
+    console.log(id)
+    const newOne = Object.assign({videos: []}, this.props.playlists[this.props.playlistId]);
+    newOne.videos = [...newOne.videos, id]
+    console.log(newOne )
+    return this.props.firebase.push(`/playlists/${this.props.playlistId}/videos`, id)
+  }
+  handleSearch = () => {
     var opts = {
       maxResults: 10,
       key: 'AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc'
@@ -50,7 +53,7 @@ class Playlist extends React.Component<Props, State> {
           <h1 className="App-title">Playlist {playlist.title}</h1>
           <h2>Search</h2>
           <input type='text' ref={ref => { this.input = ref }} />
-          <button onClick={this.handleAdd}>
+          <button onClick={this.handleSearch}>
             Search
           </button>
           {
@@ -58,6 +61,9 @@ class Playlist extends React.Component<Props, State> {
              <div key={i.id}>
                {i.title}
                <img src={i.thumbnails.medium.url} />
+               <button onClick={()=>this.handleAdd(i.id)}>
+                 Add
+               </button>
               {/*
                <YouTube
                 videoId={i.id}

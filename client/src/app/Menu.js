@@ -13,7 +13,7 @@ const Menu = () => {
         <Link to="/settings">Settings</Link>
       </div>
       <div className="menu__item">
-        <Link to="/playlist">Playlist</Link>
+        <Link to="/">Playlists</Link>
       </div>
     </div>
   );

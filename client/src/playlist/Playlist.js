@@ -5,7 +5,7 @@ import { firebaseConnect,  withFirebase, isLoaded, isEmpty } from 'react-redux-f
 import {compose} from 'redux';
 import {connect }from 'react-redux'
 import  search from "youtube-search";
-import YouTube from 'react-youtube';
+import PlayBar from './PlayBar'
 
 type State = {
   results: Array<{
@@ -13,33 +13,27 @@ type State = {
     title: string,
   }>
 }
-class Playlist extends React.Component<{}}, State> {
+class Playlist extends React.Component<{}, State> {
   state = {
     results: []
   }
   handleAdd = (id) => {
-    console.log(id)
-    const newOne = Object.assign({videos: []}, this.props.playlists[this.props.playlistId]);
-    newOne.videos = [...newOne.videos, id]
-    console.log(newOne )
     return this.props.firebase.push(`/playlists/${this.props.playlistId}/videos`, id)
   }
   handleSearch = () => {
     var opts = {
       maxResults: 10,
-      key: 'AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc'
+      key: 'AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc',
+      type: 'video'
     };
 
     search(this.input.value, opts, (err, results, pageInfo) => {
       if(err) return console.log(err);
       this.setState({results})
-      console.log(results);
-      console.log(this.state);
       this.input.value = ''
     });
   }
   render() {
-    console.log(this.props)
     if (!this.props.playlists || !this.props.playlists[this.props.playlistId]) {
       return <div>
         Loading or not found
@@ -61,25 +55,27 @@ class Playlist extends React.Component<{}}, State> {
              <div key={i.id}>
                {i.title}
                <img src={i.thumbnails.medium.url} />
-               <button onClick={()=>this.handleAdd(i.id)}>
+               <button onClick={()=>this.handleAdd(i)}>
                  Add
                </button>
-              {/*
-               <YouTube
-                videoId={i.id}
-                opts={{
-                  height: '390',
-                  width: '640',
-                  playerVars: { // https://developers.google.com/youtube/player_parameters
-                    autoplay: 0
-                  }
-                }}
-                onReady={this._onReady}
-              /> */}
              </div>
            ))
           }
         </header>
+        <div>
+          <h2>Videos</h2>
+          { playlist.videos &&
+            Object.keys(playlist.videos).map((key) => {
+              const i = playlist.videos[key]
+              return (
+             <div key={i.id}>
+               {i.title}
+               <img src={i.thumbnails.medium.url} />
+             </div>
+           )})
+          }
+        </div>
+        <PlayBar playlistId={this.props.playlistId}/>
       </div>
     );
   }

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import {Link} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect }from 'react-redux'
 
@@ -31,7 +32,11 @@ class Home extends React.Component<{}> {
               : isEmpty(playlists)
                 ? 'Playlists are empty'
                 : Object.keys(playlists).map((key) => (
-                  <div key={key} id={key}>{playlists[key].title}</div>
+                  playlists[key] ?
+                  <div key={key} id={key}>
+                    <Link to={`/playlist/${key}`}>{playlists[key].title}</Link>
+                  </div>
+                  : null
                 ))
           }
         </header>

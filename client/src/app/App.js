@@ -26,7 +26,7 @@ class App extends React.Component<{}> {
               <Route exact path="/" component={Home}/>
               <Route path="/login" component={Login}/>
               <Route path="/settings" component={SettingsView}/>
-              <Route path="/playlist" component={PlaylistView}/>
+              <Route path="/playlist/:id" component={PlaylistView}/>
               <Route component={NotFound}/>
             </Switch>
           </div>

@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Roboto:300,400,500,700&subset=latin-ext');
+@import 'styles/_colors.scss';
+
 * {
   box-sizing: border-box;
 }
 html, body {
   padding: 0;
   margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: $backgroundGray;
 }
-@import 'styles/_colors.scss';
+
 @import 'app/_app.scss';

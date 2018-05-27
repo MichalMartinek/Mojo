@@ -1,0 +1,51 @@
+.menu {
+  position: relative;
+  background: $white;
+  padding: 0.25rem;
+
+  &__container {
+    display: flex;
+    max-width: 960px;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  &__item {
+    margin-left: 1.5rem;
+    transition: all 0.25s ease-out;
+    color: $darkGray;
+    font-size: 1.15rem;
+    letter-spacing: 0.1rem;
+    & a {
+      text-decoration: none;
+      color: inherit;
+    }
+    &:hover {
+      color: $black;
+    }
+    &:first-child {
+      margin-right: auto;
+      margin-left: 0;
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 40px;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  &:after {
+    bottom: -5px;
+    box-shadow: inset 0 4px 8px -3px hsla(0,0%,7%,.06);
+    content: "";
+    height: 5px;
+    left: 0;
+    opacity: 1;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    z-index: 2050;
+  }
+}

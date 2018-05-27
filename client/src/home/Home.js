@@ -2,15 +2,33 @@
 
 import React from 'react';
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import {Link} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect }from 'react-redux'
+import * as constants from '../playlist/constants'
 
 class Home extends React.Component<{}> {
-  handleAdd = () => {
-    return this.props.firebase.push('/playlists', { title: this.input.value, videos:[] })
+  handleAdd = (e) => {
+    e.persist()
+    e.target.disabled = true
+    const newOne = {
+      title: this.input.value,
+      videos:[],
+      lastUpdated: this.props.firebase.database.ServerValue.TIMESTAMP,
+      position: {
+        state: constants.PAUSED,
+        video: null,
+        time: 0,
+      }
+    }
+    return this.props.firebase.push('/playlists', newOne)
       .then(() => {
+        e.target.disabled = false
         this.input.value = ''
       })
+  }
+  delete = (id) => {
+    return this.props.firebase.ref().child(`playlists/${id}`).remove()
   }
   render() {
     console.log(this.props)
@@ -31,7 +49,15 @@ class Home extends React.Component<{}> {
               : isEmpty(playlists)
                 ? 'Playlists are empty'
                 : Object.keys(playlists).map((key) => (
-                  <div key={key} id={key}>{playlists[key].title}</div>
+                  playlists[key] ?
+                  <div key={key} id={key}>
+                    <Link to={`/playlist/${key}`}>{playlists[key].title}</Link>
+
+                    <button onClick={() => this.delete(key)}>
+                      Delete
+                    </button>
+                  </div>
+                  : null
                 ))
           }
         </header>

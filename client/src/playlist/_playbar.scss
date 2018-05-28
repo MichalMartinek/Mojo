@@ -5,14 +5,21 @@
   background: #d3f1ef;
   display: flex;
   justify-content: space-between;
+  vertical-align: center;
 
   &__main {
     justify-self: center;
+    display: flex;
+    vertical-align: center;
   }
   &__icon {
     color: #000066;
     margin: 1rem;
     font-size: 1.3rem;
+    &--main {
+      font-size: 1.5rem;
+    }
+
     &:hover {
 
       color: #6b56cb;

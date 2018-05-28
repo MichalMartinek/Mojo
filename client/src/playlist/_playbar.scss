@@ -1,0 +1,21 @@
+.playBar {
+  width: 100%;
+  height: auto;
+  padding: 0.5rem;
+  background: #d3f1ef;
+  display: flex;
+  justify-content: space-between;
+
+  &__main {
+    justify-self: center;
+  }
+  &__icon {
+    color: #000066;
+    margin: 1rem;
+    font-size: 1.3rem;
+    &:hover {
+
+      color: #6b56cb;
+    }
+  }
+}

@@ -9,6 +9,8 @@ import { reactReduxFirebase } from 'react-redux-firebase'
 import firebase from 'firebase'
 
 import App from './app/App';
+
+import './iconLibrary'
 import reducers from './reducers' // Or wherever you keep your reducers
 import registerServiceWorker from './registerServiceWorker';
 import locateMessages from './localization/cs';

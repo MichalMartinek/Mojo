@@ -7,7 +7,7 @@ import {compose} from 'redux';
 import {connect }from 'react-redux'
 import * as constants from '../playlist/constants'
 
-class Home extends React.Component<{}> {
+class PlaylistsView extends React.Component<{}> {
   handleAdd = (e) => {
     e.persist()
     e.target.disabled = true
@@ -75,4 +75,4 @@ export default compose(
       playlists: state.firebase.data.playlists,
     })
   )
-)(Home)
+)(PlaylistsView)

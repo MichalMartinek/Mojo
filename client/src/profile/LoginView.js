@@ -5,7 +5,7 @@ import {compose} from 'redux'
 import {connect }from 'react-redux'
 import { withFirebase } from 'react-redux-firebase'
 import { bindActionCreators } from 'redux';
-import * as actions from "./app/actions";
+import * as actions from "../app/actions";
 import {push} from 'react-router-redux'
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
   }
 };
 
-class Login extends React.Component<Props> {
+class LoginView extends React.Component<Props> {
   render() {
     console.log(this.props)
     return (
@@ -45,4 +45,4 @@ export default compose(
     actions: bindActionCreators(actions, dispatch),
     push: bindActionCreators(push, dispatch),
   }))
-)(Login)
+)(LoginView)

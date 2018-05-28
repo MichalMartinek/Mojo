@@ -8,7 +8,7 @@ import  search from "youtube-search";
 import YouTube from 'react-youtube';
 import * as constants from './constants'
 
-class PlayBar extends React.Component<{}> {
+class PlayBarContainer extends React.Component<{}> {
   update = (obj) => {
     return this.props.firebase.ref().child(`/playlists/${this.props.playlistId}/position`).update(obj);
   }
@@ -45,7 +45,8 @@ class PlayBar extends React.Component<{}> {
                 height: '390',
                 width: '640',
                 playerVars: { // https://developers.google.com/youtube/player_parameters
-                  autoplay: 0
+                  autoplay: 0,
+                  controls: 0,
                 }
               }}                        // defaults -> {}
               onReady={(e)=> {console.log('onReady', e);}}                        // defaults -> noop
@@ -68,4 +69,4 @@ export default compose(
       playlist: state.firebase.data.playlists[props.playlistId],
     })
   )
-)(PlayBar)
+)(PlayBarContainer)

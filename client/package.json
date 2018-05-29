@@ -28,23 +28,29 @@
     "youtube-search": "^1.1.1"
   },
   "scripts": {
+    "test": "npm-run-all -p build test-js",
     "test-js": "react-scripts test --env=jsdom",
     "test-jsCI": "react-scripts test --env=jsdom --coverage",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
+    "testCI": "npm-run-all -p test-jsCI",
+
+    "start-storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public -o .out",
+
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+
     "start-js": "react-scripts start",
     "build-js": "react-scripts build",
+
     "start": "npm-run-all -p watch-css start-js",
-    "test": "npm-run-all -p build test-js",
-    "testCI": "npm-run-all -p test-jsCI",
+    "storybook": "npm-run-all -p watch-css start-storybook",
     "build": "npm-run-all build-css build-js",
-    "flow": "flow"
+    "flow": "flow",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.5",
+    "@storybook/addon-info": "^3.4.6",
     "@storybook/addon-links": "^3.4.5",
     "@storybook/addons": "^3.4.5",
     "@storybook/react": "^3.4.5",

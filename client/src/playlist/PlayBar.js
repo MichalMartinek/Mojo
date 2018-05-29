@@ -4,6 +4,8 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
 type Props = {
   paused?: boolean,
+  shuffle?: boolean,
+  loop?: boolean,
 };
 
 const PlayBar = (props: Props) => (
@@ -24,5 +26,7 @@ const PlayBar = (props: Props) => (
 
 PlayBar.defaultProps = {
   paused: false,
+  shuffle: false,
+  loop: false,
 };
 export default PlayBar;

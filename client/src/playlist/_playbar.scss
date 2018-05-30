@@ -2,27 +2,62 @@
   width: 100%;
   height: auto;
   padding: 0.5rem;
-  background: #d3f1ef;
+  background: $secondary-bg;
   display: flex;
   justify-content: space-between;
-  vertical-align: center;
 
-  &__main {
-    justify-self: center;
-    display: flex;
-    vertical-align: center;
-  }
   &__icon {
-    color: #000066;
-    margin: 1rem;
+    color: $secondary;
+    transition: color 0.5s ease;
+    margin: 1vw;
     font-size: 1.3rem;
-    &--main {
-      font-size: 1.5rem;
-    }
 
+    &--big {
+      font-size: 1.6rem;
+      margin: 1.5vw;
+    }
     &:hover {
-
-      color: #6b56cb;
+      color: $secondary-dark;
     }
+  }
+
+
+  /* Info column*/
+  &__info {
+    width: 30%;
+    justify-self: flex-start;
+    display: flex;
+    align-items: center;
+  }
+  &__title, &__author {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  &__title {
+    margin-bottom: 0.3rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  &__preview {
+    width: 120px;
+    height: 80px;
+    margin-right: 1rem;
+  }
+
+  /* Main controls column*/
+  &__main {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Settings column */
+  &__settings {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 }

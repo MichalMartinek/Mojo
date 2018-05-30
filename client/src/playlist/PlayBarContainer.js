@@ -41,6 +41,7 @@ class PlayBarContainer extends React.Component<{}> {
           {playlist.position.video &&
             <YouTube
               videoId={playlist.videos[playlist.position.video].id}
+              className="player"
               opts={{
                 height: '390',
                 width: '640',

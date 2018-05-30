@@ -1,15 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Monoton|Roboto:300,400,500,700&subset=latin-ext');
-@import 'styles/_colors.scss';
-
-* {
-  box-sizing: border-box;
-}
-html, body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background: $backgroundGray;
-}
-
+@import 'styles/colors';
+@import 'styles/helpers';
 @import 'app/app';
 @import 'playlist/playbar';

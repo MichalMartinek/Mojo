@@ -9,14 +9,19 @@
   &__icon {
     color: $secondary;
     transition: color 0.5s ease;
-    margin: 1vw;
+    margin: 1.25vw;
     font-size: 1.3rem;
 
     &--big {
       font-size: 1.6rem;
-      margin: 1.5vw;
+      margin: 1.25vw;
     }
-    &:hover {
+    &--small {
+      font-size: 1rem;
+      margin: 1vw;
+    }
+
+    &:hover, &--checked {
       color: $secondary-dark;
     }
   }

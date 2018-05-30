@@ -4,12 +4,12 @@ import * as React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
 type Props = {
-  paused?: boolean,
-  shuffle?: boolean,
-  loop?: boolean,
-  author?: string,
-  title?: string,
-  className?: string,
+  paused: boolean,
+  shuffle: boolean,
+  loop: boolean,
+  author: string,
+  title: string,
+  className: string,
   preview: React.ComponentType<{className: string}>,
 };
 
@@ -25,13 +25,33 @@ const PlayBar = (props: Props) => {
         </div>
       </div>
       <div className="playBar__main">
-        <FontAwesomeIcon icon="backward" className="playBar__icon"/>
-        <FontAwesomeIcon icon={props.paused ? 'play' : 'pause'} className="playBar__icon playBar__icon--big"/>
-        <FontAwesomeIcon icon="forward" className="playBar__icon"/>
+        <button className="no-button">
+          <FontAwesomeIcon icon="random"
+                           className={`playBar__icon playBar__icon--small ${props.shuffle ? 'playBar__icon--checked' :''}`}
+          />
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="backward" className="playBar__icon"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon={props.paused ? 'play' : 'pause'} className="playBar__icon playBar__icon--big"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="forward" className="playBar__icon"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="circle-notch"
+                           className={`playBar__icon playBar__icon--small ${props.loop ? 'playBar__icon--checked' :''}`}
+          />
+        </button>
       </div>
       <div className="playBar__settings">
-        <FontAwesomeIcon icon="share" className="playBar__icon"/>
-        <FontAwesomeIcon icon="sliders-h" className="playBar__icon"/>
+        <button className="no-button">
+          <FontAwesomeIcon icon="share" className="playBar__icon"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="sliders-h" className="playBar__icon"/>
+        </button>
       </div>
     </div>
   )

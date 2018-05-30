@@ -1,11 +1,10 @@
 /* @flow */
-
-import React from 'react';
+import React from 'react'
 import { firebaseConnect,  withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
-import {compose} from 'redux';
+import {compose} from 'redux'
 import {connect }from 'react-redux'
-import  search from "youtube-search";
-import YouTube from 'react-youtube';
+import PlayBar from './PlayBar'
+import YouTube from 'react-youtube'
 import * as constants from './constants'
 
 class PlayBarContainer extends React.Component<{}> {
@@ -59,6 +58,7 @@ class PlayBarContainer extends React.Component<{}> {
             />
           }
         </div>
+        <PlayBar title={'Title'} author={'Author'} preview={({className})=> <div  className={className} style={{backgroundColor: 'red'}}/>}/>
       </div>
     );
   }

@@ -1,71 +1,66 @@
 /* @flow */
+import * as React from 'react';
 
-import React from 'react';
-import { firebaseConnect,  withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
-import {compose} from 'redux';
-import {connect }from 'react-redux'
-import  search from "youtube-search";
-import YouTube from 'react-youtube';
-import * as constants from './constants'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
-class PlayBar extends React.Component<{}> {
-  update = (obj) => {
-    return this.props.firebase.ref().child(`/playlists/${this.props.playlistId}/position`).update(obj);
-  }
-  playOrPause = () => {
-    const {playlist} = this.props
-    const update = {}
-     if(playlist.position.state === constants.PAUSED) {
-       if (!playlist.position.video) {
-         if (playlist.videos && Object.keys(playlist.videos).length > 0) {
-          update.video = Object.keys(playlist.videos)[0]
-          } else {
-            return;
-          }
-       }
-     }
-    update.state = playlist.position.state === constants.PLAYING ? constants.PAUSED : constants.PLAYING
-    console.log(update)
-    this.update(update)
-  }
-  render() {
-    const { playlist } = this.props
-    console.log(playlist);
-    return (
-      <div className="playbar">
-        <button onClick={this.playOrPause}>
-          {playlist.position.state === constants.PLAYING ? 'STOP': 'PLAY'}
-        </button>
-        <button>>></button>
-        <div className="youtubeContainer">
-          {playlist.position.video &&
-            <YouTube
-              videoId={playlist.videos[playlist.position.video].id}
-              opts={{
-                height: '390',
-                width: '640',
-                playerVars: { // https://developers.google.com/youtube/player_parameters
-                  autoplay: 0
-                }
-              }}                        // defaults -> {}
-              onReady={(e)=> {console.log('onReady', e);}}                        // defaults -> noop
-              onPlay={(e)=> {console.log('onPlay', e);}}                         // defaults -> noop
-              onPause={(e)=> {console.log('onPause',e);}}                        // defaults -> noop
-              onEnd={(e)=> {console.log('onEnd',e);}}                         // defaults -> noop
-              onError={(e)=> {console.log('onError',e);}}                       // defaults -> noop
-              onStateChange={(e)=> {console.log('onStateChange',e);}}              // defaults -> noop
-            />
-          }
+type Props = {
+  paused: boolean,
+  shuffle: boolean,
+  loop: boolean,
+  author: string,
+  title: string,
+  className: string,
+  preview: React.ComponentType<{className: string}>,
+};
+
+const PlayBar = (props: Props) => {
+  const Preview  = props.preview;
+  return (
+    <div className={`playBar ${props.className}`}>
+      <div className="playBar__info">
+        <Preview className="playBar__preview" />
+        <div className="playBar__name">
+          <h2 className="playBar__title">{props.title}</h2>
+          <h3 className="playBar__author">{props.author}</h3>
         </div>
       </div>
-    );
-  }
-}
-export default compose(
-  withFirebase,
-  connect(
-    (state, props) => ({
-      playlist: state.firebase.data.playlists[props.playlistId],
-    })
+      <div className="playBar__main">
+        <button className="no-button">
+          <FontAwesomeIcon icon="random"
+                           className={`playBar__icon playBar__icon--small ${props.shuffle ? 'playBar__icon--checked' :''}`}
+          />
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="backward" className="playBar__icon"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon={props.paused ? 'play' : 'pause'} className="playBar__icon playBar__icon--big"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="forward" className="playBar__icon"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="circle-notch"
+                           className={`playBar__icon playBar__icon--small ${props.loop ? 'playBar__icon--checked' :''}`}
+          />
+        </button>
+      </div>
+      <div className="playBar__settings">
+        <button className="no-button">
+          <FontAwesomeIcon icon="share" className="playBar__icon"/>
+        </button>
+        <button className="no-button">
+          <FontAwesomeIcon icon="sliders-h" className="playBar__icon"/>
+        </button>
+      </div>
+    </div>
   )
-)(PlayBar)
+}
+
+PlayBar.defaultProps = {
+  paused: false,
+  shuffle: false,
+  loop: false,
+  className: '',
+};
+export default PlayBar;

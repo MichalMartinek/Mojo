@@ -1,7 +1,6 @@
 /* @flow */
 
 import React from 'react';
-import { firebaseConnect } from 'react-redux-firebase'
 import {compose} from 'redux';
 import {connect }from 'react-redux'
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
@@ -17,7 +16,7 @@ type Props = {
   }
 };
 
-class SettingsView extends React.Component<Props> {
+class ProfileView extends React.Component<Props> {
   render() {
     console.log(this.props)
     const {profile} = this.props
@@ -45,4 +44,4 @@ export default compose(
       profile: state.firebase.profile // load profile
     })
   )
-)(SettingsView)
+)(ProfileView)

@@ -5,7 +5,7 @@ import { firebaseConnect,  withFirebase, isLoaded, isEmpty } from 'react-redux-f
 import {compose} from 'redux';
 import {connect }from 'react-redux'
 import  search from "youtube-search";
-import PlayBar from './PlayBar'
+import PlayBarContainer from './PlayBarContainer'
 
 type State = {
   results: Array<{
@@ -18,7 +18,7 @@ class Playlist extends React.Component<{}, State> {
     results: []
   }
   handleAdd = (id) => {
-    return this.props.firebase.push(`/playlists/${this.props.playlistId}/videos`, id)
+    return this.props.firebase.push(`playlists/${this.props.playlistId}/videos`, id)
   }
   handleSearch = () => {
     var opts = {
@@ -75,7 +75,7 @@ class Playlist extends React.Component<{}, State> {
            )})
           }
         </div>
-        <PlayBar playlistId={this.props.playlistId}/>
+        <PlayBarContainer playlistId={this.props.playlistId}/>
       </div>
     );
   }

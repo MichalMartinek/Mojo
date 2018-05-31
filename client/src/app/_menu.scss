@@ -27,10 +27,20 @@
     &:first-child {
       margin-right: auto;
       margin-left: 0;
-      font-family: 'Gloria Hallelujah', cursive;
+      font-family: 'Monoton', cursive;
       font-size: 40px;
-      &:hover {
-        color: $primary;
+      & a {
+        color: transparent;
+        background-position-y: -0%;
+        background-image: linear-gradient( black, red );
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        transition: background 1400ms ease;
+        background-size: auto 300%;
+
+        &:hover {
+          background-position-y: 100%;
+        }
       }
     }
   }

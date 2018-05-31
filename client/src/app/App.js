@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { ConnectedRouter } from 'react-router-redux';
-import Sidebar from './Sidebar';
 import Menu from './Menu';
-import Home from '../home/Home';
-import SettingsView from '../settings/SettingsView';
-import Login from '../Login';
+import Home from '../home/HomeView';
+import Playlists from '../playlists/PlaylistsView';
+import Profile from '../profile/ProfileView';
+import Login from '../profile/LoginView';
 import history from '../history';
-import PlaylistView from '../playlist/PlaylistView';
-import NotFound from '../common/NotFound';
+import Playlist from '../playlist/PlaylistView';
+import NotFound from '../common/NotFoundView';
 import {
   Route,
   Switch,
@@ -24,9 +24,10 @@ class App extends React.Component<{}> {
             <Menu />
             <Switch>
               <Route exact path="/" component={Home}/>
+              <Route exact path="/playlists" component={Playlists}/>
+              <Route path="/playlist/:id" component={Playlist}/>
               <Route path="/login" component={Login}/>
-              <Route path="/settings" component={SettingsView}/>
-              <Route path="/playlist/:id" component={PlaylistView}/>
+              <Route path="/profile" component={Profile}/>
               <Route component={NotFound}/>
             </Switch>
           </div>

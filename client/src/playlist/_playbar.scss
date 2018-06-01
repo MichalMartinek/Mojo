@@ -1,3 +1,8 @@
+.playBarContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 .playBar {
   width: 100%;
   height: auto;
@@ -44,7 +49,7 @@
     font-size: 1.2rem;
     font-weight: 500;
   }
-  &__preview {
+  &__preview > *,&__preview > span > * {
     width: 120px;
     height: 80px;
     margin-right: 1rem;

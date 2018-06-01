@@ -3,8 +3,8 @@ import { mount } from "enzyme"
 import PlayBar from './PlayBar'
 
 
-const Preview = ({className}) => (
-  <div className={className}/>
+const Preview = () => (
+  <div />
 )
 
 describe("PlayBar", () => {
@@ -22,7 +22,7 @@ describe("PlayBar", () => {
 
   beforeEach(() => {
     props = {
-      preview: Preview,
+      preview: <Preview />,
       title: "Title",
       author: "Author/Channel"
     }

@@ -8,57 +8,99 @@ import YouTube from 'react-youtube'
 import * as constants from './constants'
 
 class PlayBarContainer extends React.Component<{}> {
+  state = {
+    player: null,
+  }
+  componentDidMount() {
+    this.update({state: constants.PAUSED})
+  }
   update = (obj) => {
     return this.props.firebase.ref().child(`/playlists/${this.props.playlistId}/position`).update(obj);
   }
+  play() {
+    if (!this.state.player) return;
+    this.state.player.playVideo()
+  }
+  pause() {
+    if (!this.state.player) return;
+    this.state.player.pauseVideo()
+  }
   playOrPause = () => {
+    if (!this.state.player) return
     const {playlist} = this.props
-    const update = {}
-     if(playlist.position.state === constants.PAUSED) {
-       if (!playlist.position.video) {
-         if (playlist.videos && Object.keys(playlist.videos).length > 0) {
-          update.video = Object.keys(playlist.videos)[0]
-          } else {
-            return;
-          }
-       }
-     }
-    update.state = playlist.position.state === constants.PLAYING ? constants.PAUSED : constants.PLAYING
-    console.log(update)
-    this.update(update)
+    // Add some video from playlist, if none is assigned
+    if(playlist.position.state === constants.PAUSED && !playlist.position.video) {
+      if (playlist.videos && Object.keys(playlist.videos).length > 0) {
+        this.update({video: Object.keys(playlist.videos)[0]})
+      } else {
+        return
+      }
+    }
+    if (playlist.position.state === constants.PLAYING) {
+      this.pause()
+    } else {
+      this.play()
+    }
+  }
+  onPlayerReady = (event) => {
+    this.setState({
+      player: event.target,
+    });
+  }
+  onPlayerChange = (event) => {
+    console.log(event)
+    switch (event.data) {
+      case -1:
+        //Not started
+        break;
+      case 0:
+        //Ended
+        break;
+      case 1:
+        //Playing
+        this.update({state: constants.PLAYING})
+        break;
+      case 2:
+        //Paused
+        this.update({state: constants.PAUSED})
+        break;
+      case 3:
+        //Loading
+        break;
+      case 5:
+        // Cued
+        if (this.props.playlist.position.state === constants.PLAYING) {
+          this.play()
+        }
+        break;
+    }
   }
   render() {
     const { playlist } = this.props
+    const video = playlist.videos && playlist.videos[playlist.position.video] || {}
     console.log(playlist);
     return (
-      <div className="playbar">
-        <button onClick={this.playOrPause}>
-          {playlist.position.state === constants.PLAYING ? 'STOP': 'PLAY'}
-        </button>
-        <button>>></button>
-        <div className="youtubeContainer">
-          {playlist.position.video &&
+      <div className="playBarContainer">
+        <PlayBar
+          title={'Title'}
+          author={'Author'}
+          mainButtonClick={this.playOrPause}
+          paused={playlist.position.state === constants.PAUSED}
+          preview={
             <YouTube
-              videoId={playlist.videos[playlist.position.video].id}
-              className="player"
+              videoId={video.id}
               opts={{
-                height: '390',
-                width: '640',
                 playerVars: { // https://developers.google.com/youtube/player_parameters
                   autoplay: 0,
                   controls: 0,
                 }
-              }}                        // defaults -> {}
-              onReady={(e)=> {console.log('onReady', e);}}                        // defaults -> noop
-              onPlay={(e)=> {console.log('onPlay', e);}}                         // defaults -> noop
-              onPause={(e)=> {console.log('onPause',e);}}                        // defaults -> noop
-              onEnd={(e)=> {console.log('onEnd',e);}}                         // defaults -> noop
-              onError={(e)=> {console.log('onError',e);}}                       // defaults -> noop
-              onStateChange={(e)=> {console.log('onStateChange',e);}}              // defaults -> noop
+              }}
+              onReady={this.onPlayerReady}
+              onStateChange={this.onPlayerChange}
+              onError={(e)=> {console.log('onError',e);}}
             />
           }
-        </div>
-        <PlayBar title={'Title'} author={'Author'} preview={({className})=> <div  className={className} style={{backgroundColor: 'red'}}/>}/>
+        />
       </div>
     );
   }

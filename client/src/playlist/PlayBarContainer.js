@@ -1,21 +1,30 @@
-/* @flow */
+// @flow
 import React from 'react'
-import { firebaseConnect,  withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
-import {compose} from 'redux'
-import {connect }from 'react-redux'
 import PlayBar from './PlayBar'
+import type { Player, Playlist } from "./types";
 import YouTube from 'react-youtube'
 import * as constants from './constants'
 
-class PlayBarContainer extends React.Component<{}> {
+type Props = {
+  playlist: Playlist,
+  node: {
+    update: (obj: {}) => void
+  },
+}
+
+type State = {
+  player: null | Player
+};
+
+class PlayBarContainer extends React.Component<Props, State> {
   state = {
     player: null,
   }
   componentDidMount() {
     this.update({state: constants.PAUSED})
   }
-  update = (obj) => {
-    return this.props.firebase.ref().child(`/playlists/${this.props.playlistId}/position`).update(obj);
+  update = (obj: {}) => {
+    return this.props.node.update(obj);
   }
   play() {
     if (!this.state.player) return;
@@ -42,12 +51,12 @@ class PlayBarContainer extends React.Component<{}> {
       this.play()
     }
   }
-  onPlayerReady = (event) => {
+  onPlayerReady = (event: {target: Player}) => {
     this.setState({
       player: event.target,
     });
   }
-  onPlayerChange = (event) => {
+  onPlayerChange = (event: {data: number}) => {
     console.log(event)
     switch (event.data) {
       case -1:
@@ -73,11 +82,12 @@ class PlayBarContainer extends React.Component<{}> {
           this.play()
         }
         break;
+      default:
     }
   }
   render() {
     const { playlist } = this.props
-    const video = playlist.videos && playlist.videos[playlist.position.video] || {}
+    const video = (playlist.videos && playlist.videos[playlist.position.video]) || {}
     console.log(playlist);
     return (
       <div className="playBarContainer">
@@ -93,6 +103,8 @@ class PlayBarContainer extends React.Component<{}> {
                 playerVars: { // https://developers.google.com/youtube/player_parameters
                   autoplay: 0,
                   controls: 0,
+                  showinfo: 0,
+                  rel:0,
                 }
               }}
               onReady={this.onPlayerReady}
@@ -105,11 +117,4 @@ class PlayBarContainer extends React.Component<{}> {
     );
   }
 }
-export default compose(
-  withFirebase,
-  connect(
-    (state, props) => ({
-      playlist: state.firebase.data.playlists[props.playlistId],
-    })
-  )
-)(PlayBarContainer)
+export default PlayBarContainer

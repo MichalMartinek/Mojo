@@ -1,11 +1,18 @@
 /* @flow */
 
 import React from 'react';
-import { firebaseConnect,  withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import {compose} from 'redux';
 import {connect }from 'react-redux'
 import  search from "youtube-search";
 import PlayBarContainer from './PlayBarContainer'
+import type {Playlist} from "./types";
+
+type Props = {
+  playlistId: string,
+  playlists: { [string]: Playlist },
+  firebase: any,
+}
 
 type State = {
   results: Array<{
@@ -13,7 +20,7 @@ type State = {
     title: string,
   }>
 }
-class Playlist extends React.Component<{}, State> {
+class PlaylistContainer extends React.Component<Props, State> {
   state = {
     results: []
   }
@@ -75,7 +82,10 @@ class Playlist extends React.Component<{}, State> {
            )})
           }
         </div>
-        <PlayBarContainer playlistId={this.props.playlistId}/>
+        <PlayBarContainer
+          playlist={playlist}
+          node={this.props.firebase.ref().child(`/playlists/${this.props.playlistId}/position`)}
+        />
       </div>
     );
   }
@@ -89,4 +99,4 @@ export default compose(
       playlists: state.firebase.data.playlists,
     })
   )
-)(Playlist)
+)(PlaylistContainer)

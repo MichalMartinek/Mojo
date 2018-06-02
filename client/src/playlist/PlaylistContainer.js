@@ -31,11 +31,13 @@ class PlaylistContainer extends React.Component<Props, State> {
     var opts = {
       maxResults: 10,
       key: 'AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc',
-      type: 'video'
+      type: 'video',
+      part: 'contentDetails'
     };
 
     search(this.input.value, opts, (err, results, pageInfo) => {
       if(err) return console.log(err);
+      console.log(results)
       this.setState({results})
       this.input.value = ''
     });

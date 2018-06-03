@@ -52,6 +52,7 @@ class PlaylistContainer extends React.Component<Props, State> {
     const playlist = this.props.playlists[this.props.playlistId]
     return (
       <div className="App">
+
         <header className="App-header">
           <h1 className="App-title">Playlist {playlist.title}</h1>
           <h2>Search</h2>

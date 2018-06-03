@@ -1,0 +1,12 @@
+.playlistContainer {
+  display: flex;
+  height: calc(100vh - 10.6rem);
+  &__playlist {
+    width: 40%;
+    max-width: 500px;
+  }
+  &__search {
+    overflow-x: auto;
+    padding: 1rem;
+  }
+}

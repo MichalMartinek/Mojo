@@ -1,27 +1,20 @@
 /* @flow */
 
 import React from 'react';
-import { firebaseConnect,  withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
-import {compose} from 'redux';
-import {connect }from 'react-redux'
-import  search from "youtube-search";
-import YouTube from 'react-youtube';
-import Playlist from './Playlist';
+import PlaylistContainer from './PlaylistContainer';
 
-class PlaylistView extends React.Component<{}> {
+type Props = {
+  match: {
+    params: {
+      id: string
+    }
+  }
+};
+class PlaylistView extends React.Component<Props> {
   render() {
-    console.log(this.props.match.params.id)
-    const opts = {
-      height: '390',
-      width: '640',
-      playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 0
-      }
-    };
     return (
       <div className="App">
-        test
-        <Playlist playlistId={this.props.match.params.id} />
+        <PlaylistContainer playlistId={this.props.match.params.id} />
       </div>
     );
   }

@@ -1,3 +1,9 @@
+.playBarContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid $secondary-middle;
+}
 .playBar {
   width: 100%;
   height: auto;
@@ -44,7 +50,7 @@
     font-size: 1.2rem;
     font-weight: 500;
   }
-  &__preview {
+  &__preview > *,&__preview > span > * {
     width: 120px;
     height: 80px;
     margin-right: 1rem;
@@ -65,4 +71,17 @@
     justify-content: flex-end;
     align-items: center;
   }
+ /* &:after {
+    top: -2.5px;
+    box-shadow: inset  0px -5px 5px 0px  hsla(0,0%,7%,.06);
+    content: "";
+    height: 5px;
+    left: 0;
+    opacity: 1;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    z-index: 2050;
+  }*/
 }

@@ -7,7 +7,8 @@ import {connect }from 'react-redux'
 import  search from "youtube-search";
 import PlayBarContainer from './PlayBarContainer'
 import PlaylistComponent from './Playlist'
-import type {Playlist} from "./types";
+import type {Playlist, Video} from "./types";
+import Search from "./Search";
 
 type Props = {
   playlistId: string,
@@ -16,30 +17,27 @@ type Props = {
 }
 
 type State = {
-  results: Array<{
-    id: string,
-    title: string,
-  }>
+  results: null | Array<Video>
 }
 class PlaylistContainer extends React.Component<Props, State> {
   state = {
-    results: []
+    results: null,
   }
-  handleAdd = (id) => {
-    return this.props.firebase.push(`playlists/${this.props.playlistId}/videos`, id)
+  handleAdd = (item) => {
+    if (item) {
+      return this.props.firebase.push(`playlists/${this.props.playlistId}/videos`, item)
+    }
   }
-  handleSearch = () => {
-    var opts = {
+  handleSearch = (text) => {
+    const opts = {
       maxResults: 10,
       key: 'AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc',
       type: 'video',
     };
 
-    search(this.input.value, opts, (err, results, pageInfo) => {
+    search(text, opts, (err, results, pageInfo) => {
       if(err) return console.log(err);
-      console.log(results)
       this.setState({results})
-      this.input.value = ''
     });
   }
   render() {
@@ -48,7 +46,6 @@ class PlaylistContainer extends React.Component<Props, State> {
         Loading or not found
       </div>
     }
-    const {results} = this.state
     const playlist = this.props.playlists[this.props.playlistId]
     if (!playlist.videos) playlist.videos = {} // Because Firebase can't store empty objects
     return (
@@ -58,21 +55,7 @@ class PlaylistContainer extends React.Component<Props, State> {
             <PlaylistComponent playlist={playlist} itemClick={(e)=>{console.log(e)}} totalTime={{ hours: 3, minutes: 45}}/>
           </div>
           <div className="playlistContainer__search">
-            <input type='text' ref={ref => { this.input = ref }} />
-            <button onClick={this.handleSearch}>
-              Search
-            </button>
-            {
-              this.state.results.map((i) => (
-                <div key={i.id}>
-                  {i.title}
-                  <img src={i.thumbnails.medium.url} />
-                  <button onClick={()=>this.handleAdd(i)}>
-                    Add
-                  </button>
-                </div>
-              ))
-            }
+            <Search itemClick={(id)=>this.handleAdd(id)} result={this.state.results} searchHandle={this.handleSearch}/>
           </div>
         </div>
         <PlayBarContainer
@@ -88,7 +71,7 @@ export default compose(
       { path: `playlists/${props.playlistId}` } // string equivalent 'todos'
     ]),
   connect(
-    (state, props) => ({
+    (state) => ({
       playlists: state.firebase.data.playlists,
     })
   )

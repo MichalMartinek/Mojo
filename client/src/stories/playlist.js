@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import Playlist from '../playlist/Playlist'
+import Playlist from '../playlist/Playlist';
+import { action } from '@storybook/addon-actions';
 
 const PlayBarDoc = `
       is bar containing player controls, preview and settings    `
@@ -37,7 +38,7 @@ const commonProps = {
     title: "Playlist title",
     author: "Author/Channel",
   },
-  itemClick: (e)=>{console.log(e)},
+  itemClick: action('item-click'),
   totalTime: {
     hours: 3,
     minutes: 45,

@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import PlayBar from '../playlist/PlayBar'
+import PlayBar from '../playlist/PlayBar';
+import { action } from '@storybook/addon-actions';
 
 const PlayBarDoc = `
       is bar containing player controls, preview and settings    `
@@ -11,7 +12,8 @@ const Preview = () => (
 const commonProps = {
   preview: <Preview />,
   title: "Title",
-  author: "Author/Channel"
+  author: "Author/Channel",
+  mainButtonClick: action('mainButton-click')
 }
 storiesOf('PlayBar', module)
   .add('paused',

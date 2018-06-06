@@ -4,8 +4,10 @@ import { withInfo } from '@storybook/addon-info';
 import Playlist from '../playlist/Playlist';
 import { action } from '@storybook/addon-actions';
 
-const PlayBarDoc = `
-      is bar containing player controls, preview and settings    `
+const PlaylistDoc = `
+      is simple view component, rendering basic information about playlist like the title, total length, count of videos and
+          of course a simple list of the videos.
+       This component use whole place around.`
 
 const commonProps = {
   playlist: {
@@ -47,7 +49,7 @@ const commonProps = {
 
 storiesOf('Playlist', module)
   .add('basic',
-    withInfo(PlayBarDoc)(() =>
+    withInfo(PlaylistDoc)(() =>
       <div style={{width: 1000, height: 300}}>
         <Playlist {...commonProps}/>
       </div>

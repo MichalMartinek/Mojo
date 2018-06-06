@@ -50,6 +50,7 @@ class PlaylistContainer extends React.Component<Props, State> {
     }
     const {results} = this.state
     const playlist = this.props.playlists[this.props.playlistId]
+    if (!playlist.videos) playlist.videos = {} // Because Firebase can't store empty objects
     return (
       <Fragment>
         <div className="playlistContainer">

@@ -26,12 +26,11 @@
       font-size: 1rem;
       margin: 1vw;
     }
-
-    &:hover, &--checked {
-      color: $secondary-dark;
-    }
   }
 
+  &__icon:hover, &__iconButton:hover, &__icon--checked {
+    color: $secondary-dark;
+  }
 
   /* Info column*/
   &__info {

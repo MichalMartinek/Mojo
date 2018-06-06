@@ -1,7 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import type {Playlist as PlaylistType} from "./types";
-import PlaylistItem from "./PlaylistItem";
+import VideoListItem from "./VideoListItem";
 
 type Props = {
   playlist: PlaylistType,
@@ -22,7 +22,7 @@ const Playlist = ({ playlist, itemClick, totalTime }: Props) => {
       <div className="playlist__container">
         {
           Object.keys(playlist.videos).map((key) => (
-            <PlaylistItem video={playlist.videos[key]} key={key} onClick={()=>itemClick(key)}/>
+            <VideoListItem baseClassName="playlistItem" video={playlist.videos[key]} key={key} onClick={()=>itemClick(key)}/>
           ))
         }
       </div>

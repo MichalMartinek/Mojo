@@ -27,7 +27,7 @@ const PlayBar = (props: Props) => {
         </div>
       </div>
       <div className="playBar__main">
-        <button className="no-button">
+        <button className="no-button playBar__iconButton">
           <FontAwesomeIcon icon="random"
                            className={`playBar__icon playBar__icon--small ${props.shuffle ? 'playBar__icon--checked' :''}`}
           />

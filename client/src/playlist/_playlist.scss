@@ -54,6 +54,15 @@
   &__info {
     flex: 1;
   }
+  &__delete {
+    width: 3rem;
+    padding: 0.5rem 1rem;
+    margin-left: -1.2rem;
+    transition: color 0.5s ease;
+    &:hover {
+      color: $primary;
+    }
+  }
   &__imgContainer {
     width: 30%;
     max-width: 150px;
@@ -66,7 +75,7 @@
 .playlistHandle {
   cursor: row-resize;
   width: 3rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   margin-left: -1.2rem;
   text-align: center;
   &__hover, &:hover &__normal {

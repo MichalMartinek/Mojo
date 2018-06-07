@@ -41,7 +41,8 @@ const commonProps = {
     title: "Playlist title",
     author: "Author/Channel",
   },
-  itemClick: action('item-click'),
+  itemOpen: action('item-click'),
+  itemDelete: action('item-delete'),
   changeOrder: action('changeOrder-end'),
   totalTime: {
     hours: 3,

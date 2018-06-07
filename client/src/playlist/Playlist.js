@@ -7,7 +7,8 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
 type Props = {
   playlist: PlaylistType,
-  itemClick: (id:string) => void,
+  itemOpen: (id:string) => void,
+  itemDelete: (id:string) => Promise<any>,
   changeOrder: (Array<string>) => void,
   totalTime: {
     hours: number,
@@ -23,17 +24,27 @@ const DragHandle = SortableHandle(({number}) =>
   </div>
 );
 
-const SortableItem = SortableElement(({value, itemClick, number}) =>
-  <VideoListItem baseClassName="playlistItem" video={value} onClick={()=>itemClick(value.id)}>
+const SortableItem = SortableElement(({value, itemOpen, itemDelete, number}) =>
+  <VideoListItem baseClassName="playlistItem" video={value} onClick ={itemOpen}>
     <DragHandle number={number} />
+    <button className="no-button playlistItem__delete" onClick={itemDelete}>
+      <FontAwesomeIcon icon="trash-alt" />
+    </button>
   </VideoListItem>
 );
 
-const SortableList = SortableContainer(({playlist, itemClick}) => {
+const SortableList = SortableContainer(({playlist, itemOpen, itemDelete}) => {
   return (
     <div className="playlist__container">
       {playlist.order.map((value, index) => (
-        <SortableItem key={value} index={index} number={index} value={playlist.videos[value]} itemClick={itemClick}/>
+        <SortableItem
+          key={value}
+          index={index}
+          number={index}
+          value={playlist.videos[value]}
+          itemOpen={()=>itemOpen(value)}
+          itemDelete={()=>itemDelete(value)}
+        />
       ))}
     </div>
   );
@@ -44,7 +55,7 @@ class Playlist extends React.Component<Props> {
     this.props.changeOrder(arrayMove(this.props.playlist.order, oldIndex, newIndex))
   };
   render() {
-    const { playlist, itemClick, totalTime } = this.props
+    const { playlist, totalTime, ...rest } = this.props
     return (
       <div className="playlist">
         <h2 className="playlist__title">{playlist.title}</h2>
@@ -54,9 +65,9 @@ class Playlist extends React.Component<Props> {
         <SortableList
           playlist={playlist}
           onSortEnd={this.handleSort}
-          itemClick={itemClick}
           useDragHandle={true}
           lockAxis="y"
+          {...rest}
         />
       </div>
     );

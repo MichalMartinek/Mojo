@@ -19,6 +19,7 @@ type Props = {
 type State = {
   results: null | Array<Video>
 }
+//TODO: refactor handle methods and handle errors
 class PlaylistContainer extends React.Component<Props, State> {
   state = {
     results: null,
@@ -31,8 +32,22 @@ class PlaylistContainer extends React.Component<Props, State> {
       return this.props.firebase.update(`playlists/${this.props.playlistId}`, {order: newOrder})
     }
   }
-  handleChangeOrder = (order) => {
+  changeOrder = (order) => {
     return this.props.firebase.update(`playlists/${this.props.playlistId}`, {order})
+  }
+  handleDelete = async (id) => {
+    const playlist = this.props.playlists[this.props.playlistId]
+    const index = playlist.order.indexOf(id)
+    if (index > -1) {
+      if (playlist.position.video === id) {
+        const video = playlist.order[index < playlist.order.length ? index + 1 : 0]
+        await this.props.firebase.update(`/playlists/${this.props.playlistId}/position`, {video})
+      }
+      const newOrder = [...playlist.order]
+      newOrder.splice(index, 1)
+      await this.changeOrder(newOrder);
+    }
+    return this.props.firebase.ref().child(`playlists/${this.props.playlistId}/videos/${id}`).remove()
   }
   handleSearch = (text) => {
     const opts = {
@@ -54,14 +69,16 @@ class PlaylistContainer extends React.Component<Props, State> {
     }
     const playlist = this.props.playlists[this.props.playlistId]
     if (!playlist.videos) playlist.videos = {} // Because Firebase can't store empty objects
+    if (!playlist.order) playlist.order = [] // Because Firebase can't store empty objects
     return (
       <Fragment>
         <div className="playlistContainer">
           <div className="playlistContainer__playlist">
             <PlaylistComponent
               playlist={playlist}
-              itemClick={(e)=>{console.log(e)}}
-              changeOrder={this.handleChangeOrder}
+              itemOpen={(e)=>{console.log(e)}}
+              itemDelete={this.handleDelete}
+              changeOrder={this.changeOrder}
               totalTime={{ hours: 3, minutes: 45}}/>
           </div>
           <div className="playlistContainer__search">

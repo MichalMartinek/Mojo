@@ -23,10 +23,16 @@ class PlaylistContainer extends React.Component<Props, State> {
   state = {
     results: null,
   }
-  handleAdd = (item) => {
+  handleAdd = async (item) => {
     if (item) {
-      return this.props.firebase.push(`playlists/${this.props.playlistId}/videos`, item)
+      const playlist = this.props.playlists[this.props.playlistId]
+      const addedVideo = await this.props.firebase.push(`playlists/${this.props.playlistId}/videos`, item)
+      const newOrder = playlist.order ? [...playlist.order, addedVideo.key]: [addedVideo.key]
+      return this.props.firebase.update(`playlists/${this.props.playlistId}`, {order: newOrder})
     }
+  }
+  handleChangeOrder = (order) => {
+    return this.props.firebase.update(`playlists/${this.props.playlistId}`, {order})
   }
   handleSearch = (text) => {
     const opts = {
@@ -52,10 +58,14 @@ class PlaylistContainer extends React.Component<Props, State> {
       <Fragment>
         <div className="playlistContainer">
           <div className="playlistContainer__playlist">
-            <PlaylistComponent playlist={playlist} itemClick={(e)=>{console.log(e)}} totalTime={{ hours: 3, minutes: 45}}/>
+            <PlaylistComponent
+              playlist={playlist}
+              itemClick={(e)=>{console.log(e)}}
+              changeOrder={this.handleChangeOrder}
+              totalTime={{ hours: 3, minutes: 45}}/>
           </div>
           <div className="playlistContainer__search">
-            <Search itemClick={(id)=>this.handleAdd(id)} result={this.state.results} searchHandle={this.handleSearch}/>
+            <Search itemClick={(id)=> this.handleAdd(id)} result={this.state.results} searchHandle={this.handleSearch}/>
           </div>
         </div>
         <PlayBarContainer

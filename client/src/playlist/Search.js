@@ -6,7 +6,7 @@ import SearchResult from "./SearchResult";
 
 type Props = {
   result: null | Array<Video>,
-  itemClick: (id:Video) => void,
+  itemClick: (id:Video) => any,
   searchHandle: (inputText:string) => void,
 };
 

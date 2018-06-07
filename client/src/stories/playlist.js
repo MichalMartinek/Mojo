@@ -37,10 +37,12 @@ const commonProps = {
         }
       }
     },
+    order:['someKey', 'someKey2'],
     title: "Playlist title",
     author: "Author/Channel",
   },
   itemClick: action('item-click'),
+  changeOrder: action('changeOrder-end'),
   totalTime: {
     hours: 3,
     minutes: 45,

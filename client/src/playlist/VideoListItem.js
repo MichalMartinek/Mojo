@@ -4,13 +4,19 @@ import type {Video} from "./types";
 
 type Props = {
   video: Video,
+  children?: React.Node,
   onClick: (id:string) => void,
   baseClassName: string,
 };
 
-const VideoListItem = ({ video, onClick, baseClassName }: Props) => {
+const VideoListItem = ({ video, onClick, baseClassName, children }: Props) => {
   return (
     <div className={`${baseClassName}`} onClick={onClick}>
+      {children &&
+        <div className={`${baseClassName}__children`} onClick={(e)=> e.stopPropagation()}>
+          {children}
+        </div>
+      }
       <div className={`${baseClassName}__info`}>
         <h4 className={`${baseClassName}__title`}>{video.title}</h4>
         <h4 className={`${baseClassName}__channel`}>{video.channelTitle}</h4>

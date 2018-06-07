@@ -51,12 +51,29 @@
     font-size: 0.9rem;
     font-weight: 400;
   }
-  &__info {}
+  &__info {
+    flex: 1;
+  }
   &__imgContainer {
     width: 30%;
     max-width: 150px;
   }
   &__thumbnail {
     max-width: 100%;
+  }
+}
+
+.playlistHandle {
+  cursor: row-resize;
+  width: 3rem;
+  padding: 1rem;
+  margin-left: -1.2rem;
+  text-align: center;
+  &__hover, &:hover &__normal {
+    display: none;
+  }
+
+  &:hover &__hover, &:active &__hover  {
+    display: inline-block;
   }
 }

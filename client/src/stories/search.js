@@ -11,6 +11,7 @@ const SearchDoc = `
 const commonProps = {
   itemClick: action('item-click'),
   searchHandle: action('searchForm-submit'),
+  hasMore: true,
 }
 const results = [
   {

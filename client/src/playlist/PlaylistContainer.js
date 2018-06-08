@@ -17,12 +17,14 @@ type Props = {
 }
 
 type State = {
-  results: null | Array<Video>
+  results: null | Array<Video>,
+  nextPage: ?string,
 }
 //TODO: refactor handle methods and handle errors
 class PlaylistContainer extends React.Component<Props, State> {
   state = {
     results: null,
+    nextPage: undefined,
   }
   handleAdd = async (item) => {
     if (item) {
@@ -49,16 +51,20 @@ class PlaylistContainer extends React.Component<Props, State> {
     }
     return this.props.firebase.ref().child(`playlists/${this.props.playlistId}/videos/${id}`).remove()
   }
-  handleSearch = (text) => {
+  handleSearch = (text, nextPage) => {
     const opts = {
       maxResults: 10,
       key: 'AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc',
       type: 'video',
+      pageToken: undefined,
     };
 
-    search(text, opts, (err, results, pageInfo) => {
+    if (nextPage) opts.pageToken = this.state.nextPage
+
+    search(text, opts, (err, newPage, pageInfo) => {
       if(err) return console.log(err);
-      this.setState({results})
+      const results = nextPage && this.state.results ? [...this.state.results, ...newPage] : newPage
+      this.setState({results, nextPage: pageInfo.nextPageToken})
     });
   }
   render() {
@@ -82,7 +88,12 @@ class PlaylistContainer extends React.Component<Props, State> {
               totalTime={{ hours: 3, minutes: 45}}/>
           </div>
           <div className="playlistContainer__search">
-            <Search itemClick={(id)=> this.handleAdd(id)} result={this.state.results} searchHandle={this.handleSearch}/>
+            <Search
+              itemClick={(id)=> this.handleAdd(id)}
+              searchHandle={this.handleSearch}
+              result={this.state.results}
+              hasMore={typeof this.state.nextPage === typeof ''}
+            />
           </div>
         </div>
         <PlayBarContainer

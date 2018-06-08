@@ -32,9 +32,14 @@
   }
   &__resultContainer {
     height: calc(100% - 5.4rem);
-    overflow-x: auto;
   }
 }
+
+.searchResult__Container {
+  height: 100%;
+  overflow-x: auto;
+}
+
 .searchItem {
   display: flex;
   justify-content: space-between;

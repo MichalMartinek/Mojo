@@ -75,7 +75,7 @@
 .playlistHandle {
   cursor: row-resize;
   width: 3rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   margin-left: -1.2rem;
   text-align: center;
   &__hover, &:hover &__normal {

@@ -7,7 +7,8 @@ import SearchResult from "./SearchResult";
 type Props = {
   result: null | Array<Video>,
   itemClick: (id:Video) => any,
-  searchHandle: (inputText:string) => void,
+  searchHandle: (inputText:string, nextPage: ?boolean) => void,
+  hasMore: boolean,
 };
 
 class Search extends React.Component<Props>  {
@@ -21,8 +22,7 @@ class Search extends React.Component<Props>  {
   }
 
   render() {
-    const {result, itemClick } = this.props
-    console.log(result)
+    const {result, itemClick, hasMore } = this.props
     return (
       <div className="search">
         <form onSubmit={this.handleForm} className="search__form">
@@ -36,7 +36,12 @@ class Search extends React.Component<Props>  {
         <div className="search__resultContainer">
           {
             result ?
-              <SearchResult itemClick={itemClick} videos={result} />
+              <SearchResult
+                itemClick={itemClick}
+                videos={result}
+                hasMore={hasMore}
+                loadMore={()=>this.props.searchHandle('', true)}
+              />
               :
               <div>
                 Use search to get videos

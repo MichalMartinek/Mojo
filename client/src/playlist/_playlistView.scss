@@ -6,7 +6,6 @@
     max-width: 500px;
   }
   &__search {
-    overflow-x: auto;
-    padding: 1rem;
+    flex: 1;
   }
 }

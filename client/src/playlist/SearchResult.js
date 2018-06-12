@@ -13,6 +13,7 @@ type Props = {
   hasMore: boolean,
 };
 
+
 const SearchResult = ({ videos, itemClick, loadMore, hasMore}: Props) => {
   return (
     <div className="searchResult__container customScrollbar">

@@ -35,7 +35,7 @@ const SortableItem = SortableElement(({value, itemOpen, itemDelete, number}) =>
 
 const SortableList = SortableContainer(({playlist, itemOpen, itemDelete}) => {
   return (
-    <div className="playlist__container">
+    <div className="playlist__container customScrollbar">
       {playlist.order.map((value, index) => (
         <SortableItem
           key={value}

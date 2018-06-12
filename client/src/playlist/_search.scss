@@ -17,6 +17,7 @@
     height: 2rem;
     border: 1px solid $gray;
     border-right: none;
+    font-family: inherit;
   }
   &__submit {
     width: 3rem;
@@ -35,20 +36,29 @@
   }
 }
 
-.searchResult__Container {
-  height: 100%;
-  overflow-x: auto;
+.searchResult {
+  &__container {
+    height: 100%;
+    overflow-x: auto;
+  }
+  &__loader {
+    text-align: center;
+    margin: 1rem 0;
+  }
 }
 
 .searchItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1.2rem;
-  transition: all 0.3s ease;
-  color:$darkGray;
-  cursor: pointer;
-
+  &__inner {
+    max-width: 950px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+    color: $darkGray;
+    cursor: pointer;
+  }
   &:hover {
     background-color: $background-transparent;
     color:$black;

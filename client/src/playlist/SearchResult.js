@@ -15,7 +15,7 @@ type Props = {
 
 const SearchResult = ({ videos, itemClick, loadMore, hasMore}: Props) => {
   return (
-    <div className="searchResult__Container">
+    <div className="searchResult__container customScrollbar">
       {
         videos.length ?
           <InfiniteScroll
@@ -24,7 +24,7 @@ const SearchResult = ({ videos, itemClick, loadMore, hasMore}: Props) => {
             hasMore={hasMore}
             threshold={35}
             useWindow={false}
-            loader={<div className="center" key={0}><Spinner /></div>}
+            loader={<div className="searchResult__loader" key={0}><Spinner /></div>}
           >
             {
               videos.map((item, index) => (

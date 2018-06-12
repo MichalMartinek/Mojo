@@ -23,20 +23,21 @@
     font-size: 0.9rem;
   }
   &__container {
-    height: calc(100% - 5.4rem);
+    height: calc(100% - 5.8rem);
     overflow-x: auto;
     border-top: 2px solid $secondary-bg;
   }
 }
 .playlistItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1.2rem;
-  transition: all 0.3s ease;
-  color:$darkGray;
-  cursor: pointer;
-
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+    color:$darkGray;
+    cursor: pointer;
+  }
   &:hover {
     background-color: $background-transparent;
     color:$black;

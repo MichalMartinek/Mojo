@@ -8,6 +8,7 @@ export type Player = {
 export type Playlist = {
   position: PlaylistPosition,
   videos: { [string]: Video },
+  order: Array<string>,
   title: string,
 };
 

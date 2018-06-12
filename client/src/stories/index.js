@@ -1,13 +1,11 @@
-import React from 'react';
-
-import { storiesOf } from '@storybook/react';
-import { linkTo } from '@storybook/addon-links';
-
-import {  Welcome } from '@storybook/react/demo';
-import PlayBar from '../playlist/PlayBar'
+// Init
 import '../App.css';
 import '../iconLibrary'
+
+
+// Stories
+import './spinner'
 import './playBar'
 import './playlist'
+import './search'
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('PlayBar')} />);

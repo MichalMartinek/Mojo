@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import Spinner from '../common/Spinner';
 import type {Video} from "../playlist/types";
-import VideoListItem from "../playlist/VideoListItem";
+import VideoListItem from "../common/VideoListItem";
 
 type Props = {
   videos: Array<Video>,

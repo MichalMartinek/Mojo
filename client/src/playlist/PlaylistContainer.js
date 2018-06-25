@@ -4,10 +4,9 @@ import React, {Fragment} from 'react';
 import { firebaseConnect } from 'react-redux-firebase'
 import {compose} from 'redux';
 import {connect }from 'react-redux'
-import  search from "youtube-search";
 import PlayBarContainer from './PlayBarContainer'
 import PlaylistComponent from './Playlist'
-import type {Playlist, Video} from "./types";
+import type {Playlist} from "./types";
 import Search from "../search/SearchContainer";
 
 type Props = {

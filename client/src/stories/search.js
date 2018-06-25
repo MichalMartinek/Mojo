@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import Search from '../playlist/Search';
+import Search from '../search/Search';
 import { action } from '@storybook/addon-actions';
 
 const SearchDoc = `
@@ -10,7 +10,7 @@ const SearchDoc = `
 
 const commonProps = {
   itemClick: action('item-click'),
-  searchHandle: action('searchForm-submit'),
+  handleSearch: action('searchForm-submit'),
   hasMore: true,
 }
 const results = [
@@ -42,21 +42,21 @@ storiesOf('Search', module)
   .add('initial state',
     withInfo(SearchDoc)(() =>
       <div style={{width: 1000, height: 300}}>
-        <Search result={null} {...commonProps}/>
+        <Search results={null} {...commonProps}/>
       </div>
     )
   )
   .add('successful search',
     withInfo(SearchDoc)(() =>
       <div style={{width: 1000, height: 300}}>
-        <Search {...commonProps} result={results}/>
+        <Search {...commonProps} results={results}/>
       </div>
     )
   )
   .add('nothing found',
     withInfo(SearchDoc)(() =>
       <div style={{width: 1000, height: 300}}>
-        <Search {...commonProps} result={[]}/>
+        <Search {...commonProps} results={[]}/>
       </div>
     )
   )

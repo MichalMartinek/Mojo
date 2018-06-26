@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect }from 'react-redux'
 import * as constants from '../playlist/constants'
+import * as actions from '../profile/firebaseActions'
 
 class PlaylistsView extends React.Component<{}> {
   handleAdd = (e) => {
@@ -21,11 +22,15 @@ class PlaylistsView extends React.Component<{}> {
         time: 0,
       }
     }
-    return this.props.firebase.push('/playlists', newOne)
-      .then(() => {
+    this.props.firebase.push('/playlists', newOne)
+      .then((res) => {
+        console.log(res.key)
         e.target.disabled = false
         this.input.value = ''
+
+        //return actions.updateProfile(this.props.firebase, {playlists: {[res.key]: true}})
       })
+
   }
   delete = (id) => {
     return this.props.firebase.ref().child(`playlists/${id}`).remove()

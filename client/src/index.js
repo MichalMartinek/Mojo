@@ -42,7 +42,7 @@ const initialState = {
 };
 // Firebase config
 const firebaseConfig = {
-    apiKey: "AIzaSyCA88Ye6O5jP-4DtQz1Ap5SsJ_Z0orYixc",
+    apiKey: "AIzaSyAd3aCWmRNkPDY3_hwaLwG7UIPvg7fI3xs",
     authDomain: "geom-280cd.firebaseapp.com",
     databaseURL: "https://geom-280cd.firebaseio.com",
     projectId: "geom-280cd",

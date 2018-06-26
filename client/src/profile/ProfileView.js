@@ -4,7 +4,7 @@ import React from 'react';
 import {compose} from 'redux';
 import {connect }from 'react-redux'
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
-
+import Playlists from './Playlists'
 
 type Props = {
   profile: {
@@ -13,13 +13,16 @@ type Props = {
     avatarUrl?: string,
     displayName?: string,
     email?: string,
+  },
+  auth: {
+    uid: string,
   }
 };
 
 class ProfileView extends React.Component<Props> {
   render() {
     console.log(this.props)
-    const {profile} = this.props
+    const {profile, auth} = this.props
     if (!isLoaded(profile)) {
         return <div>Loading...</div>
       }
@@ -32,6 +35,7 @@ class ProfileView extends React.Component<Props> {
           <h1>{profile.displayName}</h1>
           <img src={profile.avatarUrl} />
           <h1>{profile.email}</h1>
+          <Playlists id={auth.uid}/>
         </div>
       )
   }
@@ -41,7 +45,8 @@ export default compose(
   withFirebase,
   connect(
     (state) => ({
-      profile: state.firebase.profile // load profile
+      profile: state.firebase.profile,
+      auth: state.firebase.auth,
     })
   )
 )(ProfileView)

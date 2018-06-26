@@ -3,8 +3,8 @@ import * as React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import Spinner from '../common/Spinner';
-import type {Video} from "./types";
-import VideoListItem from "./VideoListItem";
+import type {Video} from "../playlist/types";
+import VideoListItem from "../common/VideoListItem";
 
 type Props = {
   videos: Array<Video>,

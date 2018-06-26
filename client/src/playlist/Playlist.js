@@ -1,7 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import type {Playlist as PlaylistType} from "./types";
-import VideoListItem from "./VideoListItem";
+import VideoListItem from "../common/VideoListItem";
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 

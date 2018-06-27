@@ -1,6 +1,7 @@
 // @flow
 import type {Firebase} from '../common/types'
 import type {Playlist} from "../playlist/types";
+import * as constants from "../playlist/constants";
 
 export const login = (firebase: Firebase): Promise<Object> => {
   return firebase.login({
@@ -18,9 +19,35 @@ export const updateProfile = (firebase: Firebase, obj: Object): Promise<Object> 
 
 export const deletePlaylist = (firebase: Firebase, id:string, playlists: { [string]: Playlist }) => {
   if (playlists[id]) {
-    const newPlaylists = { ...playlists }
-    delete newPlaylists[id];
+    const newPlaylists = {}
+    Object.keys(playlists).forEach((key: string) => {
+      if (key !== id) {
+        newPlaylists[key] = true
+      }
+    })
     return updateProfile(firebase, { playlists: newPlaylists })
   }
   //return new Promise(()=>{})
+}
+export const addPlaylist = (firebase: Firebase, title: string, profile: ?Object) => {
+  const newOne = {
+    title,
+    videos:[],
+    lastUpdated: firebase.database.ServerValue.TIMESTAMP,
+    position: {
+      state: constants.PAUSED,
+      video: null,
+      time: 0,
+    }
+  }
+  firebase.push('/playlists', newOne)
+    .then((res) => {
+      console.log(res.key)
+      if (profile) {
+        const playlists = profile.playlists ? {...profile.playlists} : {}
+        playlists[res.key] = true
+        return updateProfile(firebase, {playlists} )
+      }
+    })
+
 }

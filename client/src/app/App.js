@@ -4,7 +4,6 @@ import React from 'react';
 import { ConnectedRouter } from 'react-router-redux';
 import Menu from './Menu';
 import Home from '../home/HomeView';
-import Playlists from '../playlists/PlaylistsView';
 import Profile from '../profile/ProfileView';
 import Login from '../profile/LoginView';
 import history from '../history';
@@ -24,7 +23,6 @@ class App extends React.Component<{}> {
             <Menu />
             <Switch>
               <Route exact path="/" component={Home}/>
-              <Route exact path="/playlists" component={Playlists}/>
               <Route path="/playlist/:id" component={Playlist}/>
               <Route path="/login" component={Login}/>
               <Route path="/profile" component={Profile}/>

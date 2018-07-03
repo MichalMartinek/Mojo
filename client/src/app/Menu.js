@@ -5,7 +5,7 @@ const Menu = () => {
   return (
     <div className="menu">
       <div className="menu__container">
-        <div className="menu__item">
+        <div className="menu__item--logo">
           <Link to="/">Mojo</Link>
         </div>
         <div className="menu__item">
@@ -13,9 +13,6 @@ const Menu = () => {
         </div>
         <div className="menu__item">
           <Link to="/Profile">Profile</Link>
-        </div>
-        <div className="menu__item">
-          <Link to="/playlists">Playlists</Link>
         </div>
       </div>
     </div>

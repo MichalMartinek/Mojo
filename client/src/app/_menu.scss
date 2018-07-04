@@ -6,45 +6,61 @@
   &__container {
     display: flex;
     max-width: 960px;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin: 0 auto;
+    @media (max-width: $breakpoint-phone) {
+      padding: 0 2vw;
+    }
   }
 
-  &__item {
-    margin-left: 1.5rem;
+  &__controls{
+    width: 14rem;
+    display: flex;
+    justify-content: flex-end;
+    @media (max-width: $breakpoint-phone) {
+      &--first {
+        display: none;
+      }
+    }
+  }
+  &__button {
+    margin-left: 0.5rem;
+    text-decoration: none;
     transition: all 0.25s ease-out;
-    color: $darkGray;
-    font-size: 1.15rem;
-    letter-spacing: 0.1rem;
-    & a {
-      text-decoration: none;
-      color: inherit;
-    }
+    color: $primary-dark;
+    font-size: 1.05rem;
+    letter-spacing: 0.025rem;
+    border: 2px solid $primary-mid;
+    border-radius: 5px;
+    padding: 0.25rem 0.75rem;
     &:hover {
-      color: $black;
+      color: $white;
+      background: $primary-mid;
     }
-    &--logo {
-      margin-right: auto;
-      margin-left: 0;
-      font-family: 'Monoton', cursive;
-      font-size: 40px;
-      & a {
-        color: transparent;
-        background-position-y: -0%;
-        background-image: linear-gradient( black, red );
-        -webkit-background-clip: text;
-        -moz-background-clip: text;
-        transition: background 1400ms ease;
-        background-size: auto 300%;
+    @media (max-width: $breakpoint-phone) {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+  &__logo {
+    font-family: 'Monoton', cursive;
+    font-size: 40px;
+    & a {
+      color: transparent;
+      background-position-y: -0%;
+      background-image: linear-gradient( $black, $primary);
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      transition: background 1400ms ease;
+      background-size: auto 300%;
 
-        &:hover {
-          background-position-y: 100%;
-        }
+      &:hover {
+        background-position-y: 100%;
       }
     }
   }
 
+  /* Shadow */
   &:after {
     bottom: -5px;
     box-shadow: inset 0 4px 8px -3px hsla(0,0%,7%,.06);

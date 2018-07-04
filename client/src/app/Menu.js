@@ -11,19 +11,23 @@ const Menu = ({ isAuthenticated, loading } : Props) => {
   return (
     <div className="menu">
       <div className="menu__container">
-        <div className="menu__item--logo">
+        <div className="menu__controls menu__controls--first">
+          {/*TBD*/}
+        </div>
+        <div className="menu__logo">
           <Link to="/">Mojo</Link>
         </div>
-        {!loading && (
-        isAuthenticated ?
-          <div className="menu__item">
-            <Link to="/Profile">Profile</Link>
-          </div>
-          :
-          <div className="menu__item">
-            <Link to="/login">Login</Link>
-          </div>
-        )}
+        <div className="menu__controls">
+          {!loading && (
+            isAuthenticated ?
+                <Link className="menu__button" to="/Profile">Profile</Link>
+              :
+                <Link className="menu__button" to="/login">Log in</Link>
+          )}
+
+          <Link className="menu__button" to="/new">New playlist</Link>
+        </div>
+
 
       </div>
     </div>

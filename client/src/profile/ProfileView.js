@@ -25,24 +25,24 @@ class ProfileView extends React.Component<Props> {
   }
   render() {
     console.log(this.props)
-    const {profile, auth} = this.props
+    const {profile, auth, firebase} = this.props
     if (!isLoaded(profile)) {
         return <div>Loading...</div>
       }
       if (isEmpty(profile)) {
         return <div>Profile Is Empty</div>
       }
-      return (
-        <div>
-          <h1>Profile</h1>
-          <h1>{profile.displayName}</h1>
-          <img src={profile.avatarUrl} alt={profile.displayName}/>
-          <h1>{profile.email}</h1>
-
-          <PlaylistForm handleForm={this.handleSubmit} />
-          <Playlists id={auth.uid}/>
-        </div>
-      )
+    return (
+      <div>
+        <h1>Profile</h1>
+        <h1>{profile.displayName}</h1>
+        <img src={profile.avatarUrl} alt={profile.displayName}/>
+        <h2>{profile.email}</h2>
+        <button onClick={() => actions.logout(firebase)}>Logout</button>
+        <PlaylistForm handleForm={this.handleSubmit} />
+        <Playlists id={auth.uid}/>
+      </div>
+    )
   }
 }
 

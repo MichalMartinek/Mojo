@@ -17,6 +17,7 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {withFirebase, isLoaded, isEmpty} from "react-redux-firebase";
 import type { Profile } from "../profile/types";
+import routes from './routes'
 
 class App extends React.Component<{profile: Profile}> {
   render() {
@@ -27,10 +28,10 @@ class App extends React.Component<{profile: Profile}> {
           <div>
             <Menu loading={!isLoaded(profile)} isAuthenticated={!isEmpty(profile)}/>
             <Switch>
-              <Route exact path="/" component={HomeView}/>
-              <Route path="/playlist/:id" component={PlaylistView}/>
-              <Route path="/login" component={LoginView}/>
-              <Route path="/profile" component={ProfileView}/>
+              <Route exact path={routes.root} component={HomeView}/>
+              <Route path={routes.playlist} component={PlaylistView}/>
+              <Route path={routes.login} component={LoginView}/>
+              <Route path={routes.profile} component={ProfileView}/>
               <Route component={NotFound}/>
             </Switch>
           </div>

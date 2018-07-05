@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import Menu from './Menu';
 import HomeView from '../home/HomeView';
 import ProfileView from '../profile/ProfileView';
+import NewPlaylistView from '../newPlaylist/NewPlaylistView';
 import LoginView from '../profile/LoginView';
 import history from '../history';
 import PlaylistView from '../playlist/PlaylistView';
@@ -32,6 +33,7 @@ class App extends React.Component<{profile: Profile}> {
               <Route path={routes.playlist} component={PlaylistView}/>
               <Route path={routes.login} component={LoginView}/>
               <Route path={routes.profile} component={ProfileView}/>
+              <Route path={routes.newPlaylist} component={NewPlaylistView}/>
               <Route component={NotFound}/>
             </Switch>
           </div>

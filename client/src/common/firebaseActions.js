@@ -1,5 +1,5 @@
 // @flow
-import type {Firebase} from '../common/types'
+import type {Firebase} from './types'
 import type {Playlist} from "../playlist/types";
 import * as constants from "../playlist/constants";
 
@@ -29,7 +29,7 @@ export const deletePlaylist = (firebase: Firebase, id:string, playlists: { [stri
   }
   //return new Promise(()=>{})
 }
-export const addPlaylist = (firebase: Firebase, title: string, profile: ?Object) => {
+export const addPlaylist = (firebase: Firebase, title: string, profile: ?Object) : Promise<Object> => {
   const newOne = {
     title,
     videos:[],
@@ -40,14 +40,14 @@ export const addPlaylist = (firebase: Firebase, title: string, profile: ?Object)
       time: 0,
     }
   }
-  firebase.push('/playlists', newOne)
+  return firebase.push('/playlists', newOne)
     .then((res) => {
       console.log(res.key)
       if (profile) {
         const playlists = profile.playlists ? {...profile.playlists} : {}
         playlists[res.key] = true
-        return updateProfile(firebase, {playlists} )
+        return updateProfile(firebase, {playlists}).then(()=> (res))
       }
+      return res
     })
-
 }

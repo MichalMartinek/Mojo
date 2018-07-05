@@ -7,7 +7,7 @@ import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase'
 import Playlists from './Playlists'
 import type {Firebase} from '../common/types'
 import PlaylistForm from '../common/PlaylistForm'
-import * as actions from './firebaseActions'
+import * as actions from '../common/firebaseActions'
 import type {Profile} from "./types";
 
 type Props = {

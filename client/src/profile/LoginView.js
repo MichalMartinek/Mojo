@@ -1,12 +1,12 @@
 /* @flow */
 import React from 'react'
-import { firebaseConnect } from 'react-redux-firebase'
 import {compose} from 'redux'
 import {connect }from 'react-redux'
 import { withFirebase } from 'react-redux-firebase'
 import { bindActionCreators } from 'redux';
 import * as actions from "../app/actions";
 import {push} from 'react-router-redux'
+import routes from '../app/routes'
 
 type Props = {
   push: (path: string) => void,
@@ -31,7 +31,7 @@ class LoginView extends React.Component<Props> {
                   // scopes: ['email'] // not required
                 })
                 console.log(res);
-                this.props.push('/')
+                this.props.push(routes.profile)
               }}>Login</button>
         </p>
       </div>

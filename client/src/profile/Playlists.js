@@ -5,7 +5,7 @@ import { firebaseConnect, populate, isLoaded, isEmpty} from 'react-redux-firebas
 import {Link} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect }from 'react-redux'
-import * as actions from '../profile/firebaseActions'
+import * as actions from '../common/firebaseActions'
 import type {PopulateProfile} from "./types";
 import type {Firebase} from '../common/types'
 

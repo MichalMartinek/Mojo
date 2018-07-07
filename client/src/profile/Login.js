@@ -18,14 +18,14 @@ class Login extends React.Component<Props> {
         </header>
         <div className="login__content">
           <div className="login__buttons">
-            <button className="login__button" onClick={loginWithGoogle}>Login with Google</button>
-            <button className="login__button" onClick={loginWithFacebook}>Login with Facebook</button>
-            <button className="login__button" onClick={loginWithGithub}>Login with Github</button>
+            <button className="button login__button" onClick={loginWithGoogle}>Login with Google</button>
+            <button className="button login__button" onClick={loginWithFacebook}>Login with Facebook</button>
+            <button className="button login__button" onClick={loginWithGithub}>Login with Github</button>
           </div>
           <div className="login__create">
             Or you can create new playlist without logging in.
 
-            <button className="login__button login__button--create" onClick={newPlaylist}>New playlist</button>
+            <button className="button login__button login__button--create" onClick={newPlaylist}>New playlist</button>
           </div>
         </div>
 

@@ -27,12 +27,8 @@
   &__button {
     margin-left: 0.5rem;
     text-decoration: none;
-    transition: all 0.25s ease-out;
-    color: $primary-dark;
     font-size: 1.05rem;
     letter-spacing: 0.025rem;
-    border: 2px solid $primary-mid;
-    border-radius: 5px;
     padding: 0.25rem 0.75rem;
     &:hover {
       color: $white;

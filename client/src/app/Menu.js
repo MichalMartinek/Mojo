@@ -21,12 +21,12 @@ const Menu = ({ isAuthenticated, loading } : Props) => {
         <div className="menu__controls">
           {!loading && (
             isAuthenticated ?
-                <Link className="menu__button" to={routes.profile}>Profile</Link>
+                <Link className="button menu__button" to={routes.profile}>Profile</Link>
               :
-                <Link className="menu__button" to={routes.login}>Log in</Link>
+                <Link className="button menu__button" to={routes.login}>Log in</Link>
           )}
 
-          <Link className="menu__button" to={routes.newPlaylist}>New playlist</Link>
+          <Link className="button menu__button" to={routes.newPlaylist}>New playlist</Link>
         </div>
 
 

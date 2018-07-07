@@ -12,6 +12,8 @@ type Props = {
   className: string,
   preview: any,
   mainButtonClick?: () => void,
+  previousButtonClick?: () => void,
+  nextButtonClick?: () => void,
 };
 
 const PlayBar = (props: Props) => {
@@ -32,13 +34,13 @@ const PlayBar = (props: Props) => {
                            className={`playBar__icon playBar__icon--small ${props.shuffle ? 'playBar__icon--checked' :''}`}
           />
         </button>
-        <button className="no-button">
+        <button className="no-button"  onClick={functionHandler(props.previousButtonClick)}>
           <FontAwesomeIcon icon="backward" className="playBar__icon"/>
         </button>
         <button className="no-button" onClick={functionHandler(props.mainButtonClick)}>
           <FontAwesomeIcon icon={props.paused ? 'play' : 'pause'} className="playBar__icon playBar__icon--big"/>
         </button>
-        <button className="no-button">
+        <button className="no-button" onClick={functionHandler(props.nextButtonClick)}>
           <FontAwesomeIcon icon="forward" className="playBar__icon"/>
         </button>
         <button className="no-button">

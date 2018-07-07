@@ -51,6 +51,37 @@ class PlayBarContainer extends React.Component<Props, State> {
       this.play()
     }
   }
+  playOrPause = () => {
+    if (!this.state.player) return
+    const {playlist} = this.props
+    // Add some video from playlist, if none is assigned
+    if(playlist.position.state === constants.PAUSED && !playlist.position.video) {
+      if (playlist.videos && Object.keys(playlist.videos).length > 0) {
+        this.update({video: Object.keys(playlist.videos)[0]})
+      } else {
+        return
+      }
+    }
+    if (playlist.position.state === constants.PLAYING) {
+      this.pause()
+    } else {
+      this.play()
+    }
+  }
+  nextVideo = () => {
+    const {playlist} = this.props
+    const position = playlist.order.indexOf(playlist.position.video)
+    const newPosition = position + 1 === playlist.order.length ? 0 : position + 1
+    console.log(position, newPosition)
+    this.update({video: playlist.order[newPosition]})
+  }
+  previousVideo = () => {
+    const {playlist} = this.props
+    const position = playlist.order.indexOf(playlist.position.video)
+    const newPosition = position === 0 ? playlist.order.length - 1 : position - 1
+    console.log(position, newPosition)
+    this.update({video: playlist.order[newPosition]})
+  }
   onPlayerReady = (event: {target: Player}) => {
     this.setState({
       player: event.target,
@@ -86,6 +117,7 @@ class PlayBarContainer extends React.Component<Props, State> {
     }
   }
   render() {
+    console.log(this.props)
     const { playlist } = this.props
     const video = (playlist.videos && playlist.videos[playlist.position.video]) || {}
     return (
@@ -94,6 +126,8 @@ class PlayBarContainer extends React.Component<Props, State> {
           title={'Title'}
           author={'Author'}
           mainButtonClick={this.playOrPause}
+          nextButtonClick={this.nextVideo}
+          previousButtonClick={this.previousVideo}
           paused={playlist.position.state === constants.PAUSED}
           preview={
             <YouTube

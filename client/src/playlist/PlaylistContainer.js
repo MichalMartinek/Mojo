@@ -43,7 +43,9 @@ class PlaylistContainer extends React.Component<Props> {
     }
     return this.props.firebase.ref().child(`playlists/${this.props.playlistId}/videos/${id}`).remove()
   }
-
+  handleTitleChange = (title) => (
+    this.props.firebase.update(`/playlists/${this.props.playlistId}`, {title})
+  )
   render() {
     if (!this.props.playlists || !this.props.playlists[this.props.playlistId]) {
       return <div>
@@ -62,6 +64,7 @@ class PlaylistContainer extends React.Component<Props> {
               itemOpen={(e)=>{console.log(e)}}
               itemDelete={this.handleDelete}
               changeOrder={this.changeOrder}
+              handleTitleChange={this.handleTitleChange}
               totalTime={{ hours: 3, minutes: 45}}/>
           </div>
           <div className="playlistContainer__search">

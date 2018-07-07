@@ -26,8 +26,9 @@ class Playlists extends React.Component<Props> {
       return <div>Profile Is Empty</div>
     }
     const { playlists } = profile
+    console.log(playlists)
     return (
-      <div className="App">
+      <div className="profile__playlists">
         <h4>Playlists</h4>
         {
           Object.keys(playlists).map((key: string) => (

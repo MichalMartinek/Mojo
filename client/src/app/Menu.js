@@ -8,7 +8,6 @@ type Props = {
 };
 
 const Menu = ({ isAuthenticated, loading } : Props) => {
-  console.log(loading)
   return (
     <div className="menu">
       <div className="menu__container">

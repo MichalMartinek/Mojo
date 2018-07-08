@@ -117,7 +117,6 @@ class PlayBarContainer extends React.Component<Props, State> {
     }
   }
   render() {
-    console.log(this.props)
     const { playlist } = this.props
     const video = (playlist.videos && playlist.videos[playlist.position.video]) || {}
     return (

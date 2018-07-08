@@ -46,6 +46,9 @@ class PlaylistContainer extends React.Component<Props> {
   handleTitleChange = (title) => (
     this.props.firebase.update(`/playlists/${this.props.playlistId}`, {title})
   )
+  handlePlayItem = (key) => {
+    this.props.firebase.update(`/playlists/${this.props.playlistId}`, {position: {video:key}})
+  }
   render() {
     if (!this.props.playlists || !this.props.playlists[this.props.playlistId]) {
       return <div>
@@ -61,7 +64,7 @@ class PlaylistContainer extends React.Component<Props> {
           <div className="playlistContainer__playlist">
             <PlaylistComponent
               playlist={playlist}
-              itemOpen={(e)=>{console.log(e)}}
+              itemOpen={this.handlePlayItem}
               itemDelete={this.handleDelete}
               changeOrder={this.changeOrder}
               handleTitleChange={this.handleTitleChange}

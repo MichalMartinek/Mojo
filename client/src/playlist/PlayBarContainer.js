@@ -90,25 +90,19 @@ class PlayBarContainer extends React.Component<Props, State> {
   onPlayerChange = (event: {data: number}) => {
     console.log(event)
     switch (event.data) {
-      case -1:
-        //Not started
+      case -1: //Not started
+         break;
+      case 0: //Ended
         break;
-      case 0:
-        //Ended
-        break;
-      case 1:
-        //Playing
+      case 1: //Playing
         this.update({state: constants.PLAYING})
         break;
-      case 2:
-        //Paused
+      case 2: //Paused
         this.update({state: constants.PAUSED})
         break;
-      case 3:
-        //Loading
+      case 3: //Loading
         break;
-      case 5:
-        // Cued
+      case 5: // Cued
         if (this.props.playlist.position.state === constants.PLAYING) {
           this.play()
         }
@@ -117,13 +111,14 @@ class PlayBarContainer extends React.Component<Props, State> {
     }
   }
   render() {
+    console.log(this.props)
     const { playlist } = this.props
     const video = (playlist.videos && playlist.videos[playlist.position.video]) || {}
     return (
       <div className="playBarContainer">
         <PlayBar
-          title={'Title'}
-          author={'Author'}
+          title={video.title}
+          author={video.channelTitle}
           mainButtonClick={this.playOrPause}
           nextButtonClick={this.nextVideo}
           previousButtonClick={this.previousVideo}
@@ -133,7 +128,7 @@ class PlayBarContainer extends React.Component<Props, State> {
               videoId={video.id}
               opts={{
                 playerVars: { // https://developers.google.com/youtube/player_parameters
-                  autoplay: 0,
+                  autoplay: playlist.position.state === constants.PLAYING,
                   controls: 0,
                   showinfo: 0,
                   rel:0,

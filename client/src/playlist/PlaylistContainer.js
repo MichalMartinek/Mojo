@@ -6,7 +6,9 @@ import {compose} from 'redux';
 import {connect }from 'react-redux'
 import PlayBarContainer from './PlayBarContainer'
 import PlaylistComponent from './Playlist'
+import {videoInfo} from "../utils/youtube";
 import type {Playlist} from "./types";
+import { get } from 'lodash-es';
 import Search from "../search/SearchContainer";
 
 type Props = {
@@ -20,6 +22,11 @@ class PlaylistContainer extends React.Component<Props> {
 
   handleAdd = async (item) => {
     if (item) {
+      const res = await videoInfo(item.id)
+      const duration = get(res, 'items[0].contentDetails.duration')
+      if (duration) {
+        item.duration = duration
+      }
       const playlist = this.props.playlists[this.props.playlistId]
       const addedVideo = await this.props.firebase.push(`playlists/${this.props.playlistId}/videos`, item)
       const newOrder = playlist.order ? [...playlist.order, addedVideo.key]: [addedVideo.key]

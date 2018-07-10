@@ -8,6 +8,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 type Props = {
   playlist: PlaylistType,
   itemOpen: (id:string) => void,
+  handleTitleChange: (title:string) => void,
   itemDelete: (id:string) => Promise<any>,
   changeOrder: (Array<string>) => void,
   totalTime: {
@@ -15,6 +16,9 @@ type Props = {
     minutes: number,
   }
 };
+type State = {
+  title: string,
+}
 
 // Helping components for sortable playlist
 const DragHandle = SortableHandle(({number}) =>
@@ -50,15 +54,27 @@ const SortableList = SortableContainer(({playlist, itemOpen, itemDelete}) => {
   );
 });
 
-class Playlist extends React.Component<Props> {
+class Playlist extends React.Component<Props, State> {
+  state = {
+    title: '',
+  }
   handleSort = ({oldIndex, newIndex}: {oldIndex: number, newIndex: number}) => {
     this.props.changeOrder(arrayMove(this.props.playlist.order, oldIndex, newIndex))
   };
+  componentDidMount() {
+    this.setState({title: this.props.playlist.title})
+  }
+  handleTitleChange = (e: {target: {value: string}}) => {
+    const value = e.target.value
+    this.setState({title: value})
+    this.props.handleTitleChange(value)
+  }
   render() {
     const { playlist, totalTime, ...rest } = this.props
+    const { title } = this.state
     return (
       <div className="playlist">
-        <h2 className="playlist__title">{playlist.title}</h2>
+        <input className="playlist__title" onChange={this.handleTitleChange} value={title}/>
         <h3 className="playlist__stats">
           {Object.keys(playlist.videos).length} items  •  {totalTime.hours} hours {totalTime.minutes} minutes
         </h3>

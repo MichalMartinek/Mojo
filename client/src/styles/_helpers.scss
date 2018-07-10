@@ -24,3 +24,18 @@ button {
 .center {
   text-align: center;
 }
+.button {
+  padding: 0.5rem;
+  font: inherit;
+  color: $primary-dark;
+  outline: none;
+  background: none;
+  border: 2px solid $primary-mid;
+  border-radius: 5px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: $primary-mid;
+    color: $white;
+  }
+}

@@ -6,8 +6,11 @@ import {compose} from 'redux';
 import {connect }from 'react-redux'
 import PlayBarContainer from './PlayBarContainer'
 import PlaylistComponent from './Playlist'
+import {videoInfo} from "../utils/youtube";
 import type {Playlist} from "./types";
+import { get } from 'lodash-es';
 import Search from "../search/SearchContainer";
+import {sumOfDurations, parseDuration} from "../utils/helpers";
 
 type Props = {
   playlistId: string,
@@ -20,6 +23,11 @@ class PlaylistContainer extends React.Component<Props> {
 
   handleAdd = async (item) => {
     if (item) {
+      const res = await videoInfo(item.id)
+      const duration = get(res, 'items[0].contentDetails.duration')
+      if (duration) {
+        item.duration = duration
+      }
       const playlist = this.props.playlists[this.props.playlistId]
       const addedVideo = await this.props.firebase.push(`playlists/${this.props.playlistId}/videos`, item)
       const newOrder = playlist.order ? [...playlist.order, addedVideo.key]: [addedVideo.key]
@@ -43,7 +51,12 @@ class PlaylistContainer extends React.Component<Props> {
     }
     return this.props.firebase.ref().child(`playlists/${this.props.playlistId}/videos/${id}`).remove()
   }
-
+  handleTitleChange = (title) => (
+    this.props.firebase.update(`/playlists/${this.props.playlistId}`, {title})
+  )
+  handlePlayItem = (key) => {
+    this.props.firebase.update(`/playlists/${this.props.playlistId}`, {position: {video:key}})
+  }
   render() {
     if (!this.props.playlists || !this.props.playlists[this.props.playlistId]) {
       return <div>
@@ -53,16 +66,19 @@ class PlaylistContainer extends React.Component<Props> {
     const playlist = this.props.playlists[this.props.playlistId]
     if (!playlist.videos) playlist.videos = {} // Because Firebase can't store empty objects
     if (!playlist.order) playlist.order = [] // Because Firebase can't store empty objects
+
+    const durations = playlist.order.map((x) => (parseDuration(playlist.videos[x].duration)))
     return (
       <Fragment>
         <div className="playlistContainer">
           <div className="playlistContainer__playlist">
             <PlaylistComponent
               playlist={playlist}
-              itemOpen={(e)=>{console.log(e)}}
+              itemOpen={this.handlePlayItem}
               itemDelete={this.handleDelete}
               changeOrder={this.changeOrder}
-              totalTime={{ hours: 3, minutes: 45}}/>
+              handleTitleChange={this.handleTitleChange}
+              totalTime={sumOfDurations(durations)}/>
           </div>
           <div className="playlistContainer__search">
             <Search

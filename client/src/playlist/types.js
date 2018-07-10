@@ -25,6 +25,7 @@ export type Video = {
   kind: string,
   link: string,
   title: string,
+  duration: string,
   publishedAt: string,
   thumbnails: {
     default: Thumbnail,

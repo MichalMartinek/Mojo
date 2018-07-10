@@ -69,7 +69,7 @@ describe("Playlist", () => {
     expect(divs.props().children[0].key).toBe(props.playlist.order[0])
   })
   it("always renders title", () => {
-    const title = playlist().find(".playlist__title").text()
+    const title = playlist().find(".playlist__title").props().value
     expect(title).toBe(props.playlist.title)
   })
 })

@@ -11,12 +11,10 @@ import firebase from 'firebase'
 import App from './app/App';
 
 import './iconLibrary'
-import reducers from './reducers' // Or wherever you keep your reducers
+import reducers from './reducers'
 import registerServiceWorker from './registerServiceWorker';
 import locateMessages from './localization/cs';
 import './App.css';
-
-// Create a history of your choosing (we're using a browser history in this case)
 
 const enhancers = [];
 const middleware = [thunk, routerMiddleware(history)];
@@ -71,7 +69,7 @@ const store = createStoreWithFirebase(
 
 ReactDOM.render(
   <Provider store={store}>
-      <App />
+    <App />
   </Provider>,
   document.getElementById('root')
 )

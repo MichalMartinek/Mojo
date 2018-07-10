@@ -5,19 +5,12 @@ import { firebaseConnect, populate, isLoaded, isEmpty} from 'react-redux-firebas
 import {Link} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect }from 'react-redux'
-import * as actions from '../profile/firebaseActions'
-import type {Playlist} from "../playlist/types";
+import * as actions from '../common/firebaseActions'
+import type {PopulateProfile} from "./types";
 import type {Firebase} from '../common/types'
 
 type Props = {
-  profile: {
-    isLoaded: string,
-    isEmpty: string,
-    avatarUrl?: string,
-    displayName?: string,
-    email?: string,
-    playlists:{ [string]: Playlist }
-  },
+  profile: PopulateProfile,
   id: string,
   firebase: Firebase,
 };
@@ -29,12 +22,13 @@ class Playlists extends React.Component<Props> {
     if (!isLoaded(profile)) {
       return <div>Loading...</div>
     }
-    if (isEmpty(profile)) {
+    if (isEmpty(profile) || !profile.playlists) {
       return <div>Profile Is Empty</div>
     }
     const { playlists } = profile
+    console.log(playlists)
     return (
-      <div className="App">
+      <div className="profile__playlists">
         <h4>Playlists</h4>
         {
           Object.keys(playlists).map((key: string) => (

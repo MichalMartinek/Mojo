@@ -10,6 +10,7 @@ import {videoInfo} from "../utils/youtube";
 import type {Playlist} from "./types";
 import { get } from 'lodash-es';
 import Search from "../search/SearchContainer";
+import {sumOfDurations, parseDuration} from "../utils/helpers";
 
 type Props = {
   playlistId: string,
@@ -65,6 +66,8 @@ class PlaylistContainer extends React.Component<Props> {
     const playlist = this.props.playlists[this.props.playlistId]
     if (!playlist.videos) playlist.videos = {} // Because Firebase can't store empty objects
     if (!playlist.order) playlist.order = [] // Because Firebase can't store empty objects
+
+    const durations = playlist.order.map((x) => (parseDuration(playlist.videos[x].duration)))
     return (
       <Fragment>
         <div className="playlistContainer">
@@ -75,7 +78,7 @@ class PlaylistContainer extends React.Component<Props> {
               itemDelete={this.handleDelete}
               changeOrder={this.changeOrder}
               handleTitleChange={this.handleTitleChange}
-              totalTime={{ hours: 3, minutes: 45}}/>
+              totalTime={sumOfDurations(durations)}/>
           </div>
           <div className="playlistContainer__search">
             <Search

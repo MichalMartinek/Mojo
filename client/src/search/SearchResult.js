@@ -1,10 +1,9 @@
 /* @flow */
 import * as React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import Spinner from '../common/Spinner';
 import type {Video} from "../playlist/types";
-import VideoListItem from "../common/VideoListItem";
+import SearchResultItem from "./SearchResultItem";
 
 type Props = {
   videos: Array<Video>,
@@ -29,9 +28,7 @@ const SearchResult = ({ videos, itemClick, loadMore, hasMore}: Props) => {
           >
             {
               videos.map((item, index) => (
-                <VideoListItem baseClassName="searchItem" video={item} key={index} onClick={()=>itemClick(item)}>
-                  <FontAwesomeIcon icon="plus" />
-                </VideoListItem>
+                <SearchResultItem baseClassName="searchItem" video={item} key={index} onClick={()=>itemClick(item)} />
               ))
             }
           </InfiniteScroll>

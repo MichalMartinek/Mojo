@@ -1,9 +1,8 @@
 /* @flow */
 import * as React from 'react';
 import type {Playlist as PlaylistType} from "./types";
-import VideoListItem from "../common/VideoListItem";
-import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import PlaylistItem from './PlaylistItem'
 
 type Props = {
   playlist: PlaylistType,
@@ -20,21 +19,9 @@ type State = {
   title: string,
 }
 
-// Helping components for sortable playlist
-const DragHandle = SortableHandle(({number}) =>
-  <div className="playlistHandle">
-    <span className="playlistHandle__normal">#{number + 1}</span>
-    <span className="playlistHandle__hover"><FontAwesomeIcon icon="bars" /></span>
-  </div>
-);
 
 const SortableItem = SortableElement(({value, itemOpen, itemDelete, number}) =>
-  <VideoListItem baseClassName="playlistItem" video={value} onClick ={itemOpen}>
-    <DragHandle number={number} />
-    <button className="no-button playlistItem__delete" onClick={itemDelete}>
-      <FontAwesomeIcon icon="trash-alt" />
-    </button>
-  </VideoListItem>
+  <PlaylistItem number={number} video={value} onClick={itemOpen} onDelete={itemDelete}/>
 );
 
 const SortableList = SortableContainer(({playlist, itemOpen, itemDelete}) => {

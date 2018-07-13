@@ -13,12 +13,14 @@ type Props = {
 }
 
 type State = {
-  player: null | Player
+  player: null | Player,
+  volume: number,
 };
 
 class PlayBarContainer extends React.Component<Props, State> {
   state = {
     player: null,
+    volume: 50,
   }
   componentDidMount() {
     this.update({state: constants.PAUSED})
@@ -33,6 +35,9 @@ class PlayBarContainer extends React.Component<Props, State> {
   pause() {
     if (!this.state.player) return;
     this.state.player.pauseVideo()
+  }
+  changeVolume = (volume: number) => {
+    this.setState({volume})
   }
   playOrPause = () => {
     if (!this.state.player) return
@@ -113,6 +118,7 @@ class PlayBarContainer extends React.Component<Props, State> {
   render() {
     console.log(this.props)
     const { playlist } = this.props
+    const { volume } = this.state
     const video = (playlist.videos && playlist.videos[playlist.position.video]) || {}
     return (
       <div className="playBarContainer">
@@ -123,6 +129,8 @@ class PlayBarContainer extends React.Component<Props, State> {
           nextButtonClick={this.nextVideo}
           previousButtonClick={this.previousVideo}
           paused={playlist.position.state === constants.PAUSED}
+          volume={volume}
+          changeVolume={this.changeVolume}
           preview={
             <YouTube
               videoId={video.id}

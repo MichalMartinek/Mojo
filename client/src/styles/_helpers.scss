@@ -39,3 +39,14 @@ button {
     color: $white;
   }
 }
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@mixin flexCenter {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

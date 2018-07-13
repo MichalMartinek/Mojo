@@ -6,21 +6,24 @@
 }
 .playBar {
   width: 100%;
-  height: auto;
-  padding: 0.5rem;
-  background: $secondary-bg;
+  height: 5rem;
+  padding: 0 $padding-box;
+  background: $blue-navy;
   display: flex;
   justify-content: space-between;
+  box-shadow: 0px -5px 5px 0px $blue-transparent;
 
   &__icon {
-    color: $secondary;
+    color: $white-blue;
     transition: color 0.5s ease;
     margin: 1.25vw;
     font-size: 1.3rem;
 
-    &--big {
-      font-size: 1.6rem;
-      margin: 1.25vw;
+    &--main {
+      margin: 0;
+      color: $blue-navy;
+      position: relative;
+      left: 0.15rem;
     }
     &--small {
       font-size: 1rem;
@@ -29,30 +32,28 @@
   }
 
   &__icon:hover, &__iconButton:hover, &__icon--checked {
-    color: $secondary-dark;
+    color: $white-almost;
   }
 
   /* Info column*/
   &__info {
     width: 30%;
     justify-self: flex-start;
-    display: flex;
-    align-items: center;
+    align-self: center;
   }
-  &__title, &__author {
+  &__author {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 400;
+    color: $white-blue;
   }
   &__title {
-    margin-bottom: 0.3rem;
+    margin: 0 0 0.5rem;
     font-size: 1.2rem;
     font-weight: 500;
-  }
-  &__preview > *,&__preview > span > * {
-    width: 120px;
-    height: 80px;
-    margin-right: 1rem;
+    color: $white-almost;
+
+    @include ellipsis;
   }
 
   /* Main controls column*/
@@ -63,14 +64,30 @@
     justify-content: center;
   }
 
+  &__mainButton {
+    @include flexCenter;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    background: $white-almost;
+    box-shadow: 0px 0px 10px 0px $white-blue;
+    &:hover {
+      background: $white;
+      box-shadow: 0px 0px 15px 0px $white-blue;
+      & .playBar__icon--main {
+        color: $blue-basic;
+      }
+    }
+  }
   /* Settings column */
-  &__settings {
+  &__volume {
     width: 30%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
- /* &:after {
+  /*&:after {
     top: -2.5px;
     box-shadow: inset  0px -5px 5px 0px  hsla(0,0%,7%,.06);
     content: "";
@@ -83,4 +100,20 @@
     width: 100%;
     z-index: 2050;
   }*/
+}
+
+.input-range__label-container {
+  display: none;
+}
+
+.input-range__track {
+  background: $white-blue;
+}
+
+.input-range__track--active {
+  background: $blue-basic;
+}
+.input-range__slider {
+  background: $blue-basic;
+  border-color: $blue-basic;
 }

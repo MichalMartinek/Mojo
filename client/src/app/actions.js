@@ -1,4 +1,4 @@
-import * as types from './actionTypes';
+import * as types from './constants';
 
 export const addTransition = item => ({
   type: types.TRANSITION,

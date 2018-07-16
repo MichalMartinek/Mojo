@@ -1,9 +1,9 @@
 /* @flow */
 import * as React from 'react';
 import search from "youtube-search";
-import type {Video} from "../playlist/types";
+import type {Video} from "../types";
 import Search from "./Search";
-import * as constants from "../constants";
+import * as constants from "../../constants";
 
 type Props = {
   itemClick: (id:Video) => any

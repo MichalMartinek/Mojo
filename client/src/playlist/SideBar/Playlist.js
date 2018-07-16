@@ -1,6 +1,6 @@
 /* @flow */
 import * as React from 'react';
-import type {Playlist as PlaylistType} from "./types";
+import type {Playlist as PlaylistType} from "../types";
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import PlaylistItem from './PlaylistItem'
 

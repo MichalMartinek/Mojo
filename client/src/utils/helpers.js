@@ -1,5 +1,5 @@
 // @flow
-import type {Duration} from '../common/types'
+import type {Duration} from '../playlist/types'
 
 export const functionHandler = (func: any): ((e: any)=>void) => {
   return typeof func === "function" ? func : () => {}

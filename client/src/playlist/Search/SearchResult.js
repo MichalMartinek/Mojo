@@ -1,8 +1,8 @@
 /* @flow */
 import * as React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import Spinner from '../common/Spinner';
-import type {Video} from "../playlist/types";
+import Spinner from '../../common/Spinner';
+import type {Video} from "../types";
 import SearchResultItem from "./SearchResultItem";
 
 type Props = {

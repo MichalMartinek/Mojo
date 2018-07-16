@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from 'react';
-import PlaylistContainer from './PlaylistContainer';
+import PlaylistContainer from './SideBar/PlaylistContainer';
 
 type Props = {
   match: {

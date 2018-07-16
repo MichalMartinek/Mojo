@@ -1,9 +1,9 @@
 // @flow
 import React from 'react'
 import PlayBar from './PlayBar'
-import type { Player, Playlist } from "./types";
+import type { Player, Playlist } from "../types";
 import YouTube from 'react-youtube'
-import * as constants from './constants'
+import * as constants from '../constants'
 
 type Props = {
   playlist: Playlist,
@@ -92,31 +92,7 @@ class PlayBarContainer extends React.Component<Props, State> {
       player: event.target,
     });
   }
-  onPlayerChange = (event: {data: number}) => {
-    console.log(event)
-    switch (event.data) {
-      case -1: //Not started
-         break;
-      case 0: //Ended
-        break;
-      case 1: //Playing
-        this.update({state: constants.PLAYING})
-        break;
-      case 2: //Paused
-        this.update({state: constants.PAUSED})
-        break;
-      case 3: //Loading
-        break;
-      case 5: // Cued
-        if (this.props.playlist.position.state === constants.PLAYING) {
-          this.play()
-        }
-        break;
-      default:
-    }
-  }
   render() {
-    console.log(this.props)
     const { playlist } = this.props
     const { volume } = this.state
     const video = (playlist.videos && playlist.videos[playlist.position.video]) || {}
@@ -131,22 +107,6 @@ class PlayBarContainer extends React.Component<Props, State> {
           paused={playlist.position.state === constants.PAUSED}
           volume={volume}
           changeVolume={this.changeVolume}
-          preview={
-            <YouTube
-              videoId={video.id}
-              opts={{
-                playerVars: { // https://developers.google.com/youtube/player_parameters
-                  autoplay: playlist.position.state === constants.PLAYING,
-                  controls: 0,
-                  showinfo: 0,
-                  rel:0,
-                }
-              }}
-              onReady={this.onPlayerReady}
-              onStateChange={this.onPlayerChange}
-              onError={(e)=> {console.log('onError',e);}}
-            />
-          }
         />
       </div>
     );

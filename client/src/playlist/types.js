@@ -3,6 +3,8 @@
 export type Player = {
   pauseVideo: () => void,
   playVideo: () => void,
+  setVolume: (volume: number) => void,
+  getVolume: () => number,
 };
 
 export type Playlist = {
@@ -39,3 +41,9 @@ export type Thumbnail = {
   height: number,
   width: number,
 };
+
+export type Duration = {
+  hours: number,
+  minutes: number,
+  seconds: number,
+}

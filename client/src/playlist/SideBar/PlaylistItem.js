@@ -1,9 +1,9 @@
 /* @flow */
 import * as React from 'react';
-import type {Video} from "../playlist/types";
+import type {Video} from "../types";
 import {SortableHandle} from 'react-sortable-hoc';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
-import {parseDuration} from "../utils/helpers";
+import {parseDuration} from "../../utils/helpers";
 
 type Props = {
   video: Video,

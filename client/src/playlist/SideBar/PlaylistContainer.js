@@ -4,13 +4,14 @@ import React, {Fragment} from 'react';
 import { firebaseConnect } from 'react-redux-firebase'
 import {compose} from 'redux';
 import {connect }from 'react-redux'
-import PlayBarContainer from './PlayBarContainer'
+import PlayBarContainer from '../PlayBar/PlayBarContainer'
 import PlaylistComponent from './Playlist'
-import {videoInfo} from "../utils/youtube";
-import type {Playlist} from "./types";
+import {videoInfo} from "../../utils/youtube";
+import type {Playlist} from "../types";
 import { get } from 'lodash-es';
-import Search from "../search/SearchContainer";
-import {sumOfDurations, parseDuration} from "../utils/helpers";
+import Search from "../Search/SearchContainer";
+import {sumOfDurations, parseDuration} from "../../utils/helpers";
+import VideoPlayer from "./VideoPlayer";
 
 type Props = {
   playlistId: string,
@@ -86,6 +87,10 @@ class PlaylistContainer extends React.Component<Props> {
             />
           </div>
         </div>
+        <VideoPlayer
+          playlist={playlist}
+          node={this.props.firebase.ref().child(`/playlists/${this.props.playlistId}/position`)}
+        />
         <PlayBarContainer
           playlist={playlist}
           node={this.props.firebase.ref().child(`/playlists/${this.props.playlistId}/position`)}

@@ -1,6 +1,6 @@
 /* @flow */
 import * as React from 'react';
-import type {Video} from "../playlist/types";
+import type {Video} from "../types";
 import SearchResult from "./SearchResult";
 import SearchForm from "./SearchForm";
 

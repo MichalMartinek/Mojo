@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import PlayBar from '../playlist/PlayBar';
+import PlayBar from '../playlist/PlayBar/PlayBar';
 import { action } from '@storybook/addon-actions';
 
 const PlayBarDoc = `

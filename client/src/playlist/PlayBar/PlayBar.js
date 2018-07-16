@@ -1,7 +1,7 @@
 /* @flow */
 import * as React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
-import { functionHandler } from '../utils/helpers'
+import { functionHandler } from '../../utils/helpers'
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css'
 
@@ -14,7 +14,6 @@ type Props = {
   title: string,
   volume: number,
   className: string,
-  preview: any,
   mainButtonClick?: () => void,
   previousButtonClick?: () => void,
   nextButtonClick?: () => void,

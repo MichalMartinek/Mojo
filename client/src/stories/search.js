@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import Search from '../search/Search';
+import Search from '../playlist/Search/Search';
 import { action } from '@storybook/addon-actions';
 
 const SearchDoc = `

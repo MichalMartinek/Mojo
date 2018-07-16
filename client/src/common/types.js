@@ -11,9 +11,3 @@ export type Firebase = {
     },
   },
 }
-
-export type Duration = {
-  hours: number,
-  minutes: number,
-  seconds: number,
-}

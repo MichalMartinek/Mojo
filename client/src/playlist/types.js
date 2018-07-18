@@ -1,4 +1,5 @@
 // @flow
+import * as constants from './constants'
 
 export type Player = {
   pauseVideo: () => void,
@@ -47,3 +48,13 @@ export type Duration = {
   minutes: number,
   seconds: number,
 }
+export type State = {
+  +volume: number,
+  +name: string,
+};
+export type SetVolumeAction = { type: constants.SET_VOLUME, value: number };
+export type SetNameFieldAction = { type: constants.SET_NAME_FIELD, value: string };
+
+export type Action =
+  | SetVolumeAction
+  | SetNameFieldAction;

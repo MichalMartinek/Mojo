@@ -1,13 +1,18 @@
-import * as types from './constants';
+// @flow
+import * as constants from './constants';
+import type {Action, State} from './types';
 
-const initialState = {
+const initialState: State = {
   volume: 50,
+  name: '',
 };
 
-export default (state = initialState, payload) => {
+export default (state: State = initialState, payload: Action) => {
   switch (payload.type) {
-    case types.SET_VOLUME:
-      return {...state, volume: payload.volume};
+    case constants.SET_VOLUME:
+      return {...state, volume: payload.value};
+    case constants.SET_NAME_FIELD:
+      return {...state, name: payload.value};
     default:
       return state;
   }

@@ -3,17 +3,14 @@ import * as React from 'react';
 import type {Playlist as PlaylistType} from "../types";
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import PlaylistItem from './PlaylistItem'
+import {parseDuration, sumOfDurations} from "../../utils/helpers";
 
 type Props = {
   playlist: PlaylistType,
   itemOpen: (id:string) => void,
   handleTitleChange: (title:string) => void,
-  itemDelete: (id:string) => Promise<any>,
+  itemDelete: (id:string) => void,
   changeOrder: (Array<string>) => void,
-  totalTime: {
-    hours: number,
-    minutes: number,
-  }
 };
 type State = {
   title: string,
@@ -57,7 +54,9 @@ class Playlist extends React.Component<Props, State> {
     this.props.handleTitleChange(value)
   }
   render() {
-    const { playlist, totalTime, ...rest } = this.props
+    const { playlist, ...rest } = this.props
+    const durations = playlist.order.map((x) => (parseDuration(playlist.videos[x].duration)))
+    const totalTime = sumOfDurations(durations)
     const { title } = this.state
     return (
       <div className="playlist">

@@ -1,100 +1,42 @@
 // @flow
 import React from 'react'
 import PlayBar from './PlayBar'
-import type { Player, Playlist } from "../types";
-import YouTube from 'react-youtube'
+import type {NextPreviousAction, Playlist, PlayPauseAction} from "../types";
 import * as constants from '../constants'
+import {bindActionCreators} from 'redux';
+import {withFirebase} from "react-redux-firebase";
+import * as actions from '../actions'
+import {connect} from "react-redux";
+import {bindFirebaseActions} from "../../utils/bindFirebaseActions";
+import * as firebaseActions from "../firebaseActions";
 
 type Props = {
+  id: string,
   playlist: Playlist,
-  node: {
-    update: (obj: {}) => void
+  volume: number,
+  actions: {
+    setVolume: (volume: number) => void
+  },
+  firebaseActions: {
+    play: PlayPauseAction,
+    pause: PlayPauseAction,
+    next: NextPreviousAction,
+    previous: NextPreviousAction,
   },
 }
 
-type State = {
-  player: null | Player,
-  volume: number,
-};
+class PlayBarContainer extends React.Component<Props> {
+  playOrPause = () => {
+    const {playlist, firebaseActions, id} = this.props
+    if (playlist.position.state === constants.PLAYING) {
+      firebaseActions.pause(id)
+    } else {
+      firebaseActions.play(id)
+    }
+  }
 
-class PlayBarContainer extends React.Component<Props, State> {
-  state = {
-    player: null,
-    volume: 50,
-  }
-  componentDidMount() {
-    this.update({state: constants.PAUSED})
-  }
-  update = (obj: {}) => {
-    return this.props.node.update(obj);
-  }
-  play() {
-    if (!this.state.player) return;
-    this.state.player.playVideo()
-  }
-  pause() {
-    if (!this.state.player) return;
-    this.state.player.pauseVideo()
-  }
-  changeVolume = (volume: number) => {
-    this.setState({volume})
-  }
-  playOrPause = () => {
-    if (!this.state.player) return
-    const {playlist} = this.props
-    // Add some video from playlist, if none is assigned
-    if(playlist.position.state === constants.PAUSED && !playlist.position.video) {
-      if (playlist.videos && Object.keys(playlist.videos).length > 0) {
-        this.update({video: Object.keys(playlist.videos)[0]})
-      } else {
-        return
-      }
-    }
-    if (playlist.position.state === constants.PLAYING) {
-      this.pause()
-    } else {
-      this.play()
-    }
-  }
-  playOrPause = () => {
-    if (!this.state.player) return
-    const {playlist} = this.props
-    // Add some video from playlist, if none is assigned
-    if(playlist.position.state === constants.PAUSED && !playlist.position.video) {
-      if (playlist.videos && Object.keys(playlist.videos).length > 0) {
-        this.update({video: Object.keys(playlist.videos)[0]})
-      } else {
-        return
-      }
-    }
-    if (playlist.position.state === constants.PLAYING) {
-      this.pause()
-    } else {
-      this.play()
-    }
-  }
-  nextVideo = () => {
-    const {playlist} = this.props
-    const position = playlist.order.indexOf(playlist.position.video)
-    const newPosition = position + 1 === playlist.order.length ? 0 : position + 1
-    console.log(position, newPosition)
-    this.update({video: playlist.order[newPosition]})
-  }
-  previousVideo = () => {
-    const {playlist} = this.props
-    const position = playlist.order.indexOf(playlist.position.video)
-    const newPosition = position === 0 ? playlist.order.length - 1 : position - 1
-    console.log(position, newPosition)
-    this.update({video: playlist.order[newPosition]})
-  }
-  onPlayerReady = (event: {target: Player}) => {
-    this.setState({
-      player: event.target,
-    });
-  }
   render() {
-    const { playlist } = this.props
-    const { volume } = this.state
+    const { playlist, volume, actions, firebaseActions, id } = this.props
     const video = (playlist.videos && playlist.videos[playlist.position.video]) || {}
     return (
       <div className="playBarContainer">
@@ -102,14 +44,29 @@ class PlayBarContainer extends React.Component<Props, State> {
           title={video.title}
           author={video.channelTitle}
           mainButtonClick={this.playOrPause}
-          nextButtonClick={this.nextVideo}
-          previousButtonClick={this.previousVideo}
+          nextButtonClick={() => {firebaseActions.next(id, playlist, playlist.position.state === constants.PLAYING)}}
+          previousButtonClick={() => {firebaseActions.previous(id, playlist, playlist.position.state === constants.PLAYING)}}
           paused={playlist.position.state === constants.PAUSED}
           volume={volume}
-          changeVolume={this.changeVolume}
+          changeVolume={actions.setVolume}
         />
       </div>
     );
   }
 }
-export default PlayBarContainer
+export default withFirebase(
+  connect(
+    (state, props) => ({
+      playlist: state.firebase.data.playlists[props.id],
+      volume: state.playlist.volume,
+    }),
+    (dispatch) => ({
+      actions: bindActionCreators(actions, dispatch),
+    }),
+    (stateProps, dispatchProps, ownProps) => {
+      const boundFirebaseActions = bindFirebaseActions(ownProps.firebase, firebaseActions)
+      return Object.assign({}, ownProps, stateProps, dispatchProps, {firebaseActions: boundFirebaseActions})
+    }
+  )(PlayBarContainer)
+)
+

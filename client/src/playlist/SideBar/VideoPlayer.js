@@ -1,42 +1,49 @@
 // @flow
 import React from 'react'
 import YouTube from 'react-youtube'
-import type { Player, Playlist } from "../types";
-import {nextVideo, previousVideo} from "../helpers";
+import type {NextPreviousAction, Player, Playlist, PlayPauseAction} from "../types";
+import {withFirebase} from "react-redux-firebase";
 import * as constants from '../constants'
+import {bindActionCreators} from 'redux';
+import {connect} from "react-redux";
+import * as actions from "../actions";
+import * as firebaseActions from "../firebaseActions";
+import {bindFirebaseActions} from "../../utils/bindFirebaseActions";
 
 type Props = {
+  id: string,
+  volume: number,
   playlist: Playlist,
-  node: {
-    update: (obj: {}) => void
+  firebaseActions: {
+    play: PlayPauseAction,
+    pause: PlayPauseAction,
+    next: NextPreviousAction,
   },
 }
 
 type State = {
   player: null | Player,
-  volume: number,
 };
 
 class VideoPlayer extends React.Component<Props, State> {
   state = {
     player: null,
-    volume: 50,
   }
-  componentDidMount() {
-    this.update({state: constants.PAUSED})
-  }
-  update = (obj: {}) => {
-    return this.props.node.update(obj);
+  componentDidUpdate(prevProps) {
+    if (!this.state.player) return
+    const {playlist: {position}} = this.props
+    const prevPosition = prevProps.playlist.position
+    if (position.state === constants.PLAYING && prevPosition.state !== constants.PLAYING) {
+      this.play()
+    } else if (position.state === constants.PAUSED && prevPosition.state !== constants.PAUSED) {
+      this.pause()
+    }
   }
   play() {
     if (this.state.player) this.state.player.playVideo()
   }
   pause() {
     if (this.state.player) this.state.player.pauseVideo()
-  }
-  changeVolume = (volume: number) => {
-    this.setState({volume})
-    if (this.state.player) this.state.player.setVolume(volume)
   }
   playOrPause = () => {
     const {playlist} = this.props
@@ -47,35 +54,34 @@ class VideoPlayer extends React.Component<Props, State> {
       this.play()
     }
   }
-  nextVideo = () => {
-    this.update(nextVideo(this.props.playlist))
-  }
-  previousVideo = () => {
-    this.update(previousVideo(this.props.playlist))
-  }
   onPlayerReady = (event: {target: Player}) => {
     this.setState({
       player: event.target,
     });
+    if (this.props.playlist.position.state === constants.PLAYING) {
+      this.play();
+    }
+
   }
   onPlayerChange = (event: {data: number}) => {
     console.log(event)
+    const {firebaseActions, id, playlist} = this.props
     switch (event.data) {
       case -1: //Not started
          break;
       case 0: //Ended
-        this.nextVideo()
+        firebaseActions.next(id, playlist, playlist.position.state === constants.PLAYING);
         break;
       case 1: //Playing
-        this.update({state: constants.PLAYING})
+        firebaseActions.play(id);
         break;
       case 2: //Paused
-        this.update({state: constants.PAUSED})
+        firebaseActions.pause(id);
         break;
       case 3: //Loading
         break;
       case 5: // Cued
-        if (this.props.playlist.position.state === constants.PLAYING) {
+        if (playlist.position.state === constants.PLAYING || playlist.position.switchingSongs) {
           this.play()
         }
         break;
@@ -103,4 +109,18 @@ class VideoPlayer extends React.Component<Props, State> {
     );
   }
 }
-export default VideoPlayer
+export default withFirebase(
+  connect(
+    (state, props) => ({
+      playlist: state.firebase.data.playlists[props.id],
+      volume: state.playlist.volume,
+    }),
+    (dispatch) => ({
+      actions: bindActionCreators(actions, dispatch),
+    }),
+    (stateProps, dispatchProps, ownProps) => {
+      const boundFirebaseActions = bindFirebaseActions(ownProps.firebase, firebaseActions)
+      return Object.assign({}, ownProps, stateProps, dispatchProps, {firebaseActions: boundFirebaseActions})
+    }
+  )(VideoPlayer)
+)

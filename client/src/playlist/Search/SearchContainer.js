@@ -1,12 +1,20 @@
 /* @flow */
 import * as React from 'react';
 import search from "youtube-search";
-import type {Video} from "../types";
+import type {Playlist, Video} from "../types";
 import Search from "./Search";
 import * as constants from "../../constants";
+import {bindFirebaseActions} from "../../utils/bindFirebaseActions";
+import type {AddVideoAction} from "../types";
+import {addVideo} from "../firebaseActions";
+import {withFirebase} from "react-redux-firebase";
+import {connect} from "react-redux";
+
 
 type Props = {
-  itemClick: (id:Video) => any
+  addVideo: AddVideoAction,
+  playlist: Playlist,
+  id: string,
 };
 
 type State = {
@@ -36,17 +44,28 @@ class SearchContainer extends React.Component<Props, State>  {
   }
 
   render() {
-    const { itemClick } = this.props
     const {results, nextPage} = this.state
+    const {addVideo, id, playlist} = this.props
     return (
       <Search
         handleSearch={this.handleSearch}
         hasMore={typeof nextPage === typeof ''}
         results={results}
-        itemClick={itemClick}
+        itemClick={(item) => {addVideo(id, playlist, item)}}
       />
     )
   }
 }
 
-export default SearchContainer
+export default withFirebase(
+  connect(
+    (state, props) => ({
+      playlist: state.firebase.data.playlists[props.id],
+    }),
+    () => ({}),
+    (stateProps, dispatchProps, ownProps) => {
+      const boundFirebaseAction = bindFirebaseActions(ownProps.firebase, addVideo)
+      return Object.assign({}, ownProps, stateProps, dispatchProps, {addVideo: boundFirebaseAction})
+    }
+  )(SearchContainer)
+)

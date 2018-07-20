@@ -18,7 +18,6 @@ type Props = {
   },
   playlistId: string,
   playlists: { [string]: Playlist },
-  firebase: any,
 }
 
 class PlaylistView extends React.Component<Props> {

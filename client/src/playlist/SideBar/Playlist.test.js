@@ -24,6 +24,7 @@ describe("Playlist", () => {
           'someKey': {
             description: "Description",
             channelTitle: "Author/Channel",
+            duration: '1M30S',
             title: "Title",
             thumbnails: {
               medium: {
@@ -36,6 +37,7 @@ describe("Playlist", () => {
           'someKey2': {
             description: "Description",
             channelTitle: "Author/Channel",
+            duration: '1M30S',
             title: "Title",
             thumbnails: {
               medium: {
@@ -52,11 +54,8 @@ describe("Playlist", () => {
       },
       itemOpen: jest.fn(),
       itemDelete: jest.fn(),
+      handleTitleChange: jest.fn(),
       changeOrder: jest.fn(),
-      totalTime: {
-        hours: 3,
-        minutes: 45,
-      }
     }
     mountedLockScreen = undefined
   })

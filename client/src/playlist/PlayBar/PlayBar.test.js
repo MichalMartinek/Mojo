@@ -3,10 +3,6 @@ import { mount } from "enzyme"
 import PlayBar from './PlayBar'
 
 
-const Preview = () => (
-  <div />
-)
-
 describe("PlayBar", () => {
   let props
   let mountedLockScreen
@@ -22,9 +18,10 @@ describe("PlayBar", () => {
 
   beforeEach(() => {
     props = {
-      preview: <Preview />,
       title: "Title",
-      author: "Author/Channel"
+      author: "Author/Channel",
+      changeVolume: jest.fn(),
+      volume: 50,
     }
     mountedLockScreen = undefined
   })
@@ -43,17 +40,13 @@ describe("PlayBar", () => {
     const author = playBar().find(".playBar__author").text()
     expect(author).toBe(props.author)
   })
-  it("always renders preview", () => {
-    const preview = playBar().find(Preview)
-    expect(preview.length).toBe(1)
-  })
   it("renders Play icon when paused", () => {
-    const bigButton = playBar().find('FontAwesomeIcon.playBar__icon--big')
+    const bigButton = playBar().find('FontAwesomeIcon.playBar__icon--main')
     expect(bigButton.props().icon).toBe('pause')
   })
   it("renders Pause icon when playing", () => {
     props.paused = true
-    const bigButton = playBar().find('FontAwesomeIcon.playBar__icon--big')
+    const bigButton = playBar().find('FontAwesomeIcon.playBar__icon--main')
     expect(bigButton.props().icon).toBe('play')
   })
   it("renders checked icon when shuffle passed", () => {

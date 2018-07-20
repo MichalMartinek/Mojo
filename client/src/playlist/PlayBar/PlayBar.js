@@ -17,7 +17,7 @@ type Props = {
   mainButtonClick?: () => void,
   previousButtonClick?: () => void,
   nextButtonClick?: () => void,
-  changeVolume?: (volume: number) => void,
+  changeVolume: (volume: number) => void,
 };
 
 const PlayBar = (props: Props) => {

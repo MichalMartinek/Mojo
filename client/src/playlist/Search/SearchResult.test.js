@@ -37,7 +37,6 @@ describe("SearchResult", () => {
       <SearchResult {...props} />
     )
     const container = searchResult.find('.searchResult__container')
-    console.log(searchResult.find('.searchItem'))
     expect(container.length).toBe(1)
     expect(searchResult.find('.searchItem').length).toBe(props.videos.length)
   })

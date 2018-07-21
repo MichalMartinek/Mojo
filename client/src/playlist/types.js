@@ -63,6 +63,12 @@ export type NextPreviousAction = (
   playlist: Playlist,
   isPlaying?: boolean
 ) => Promise<Object>;
+export type SwitchSongAction = (
+  id: string,
+  playlist: Playlist,
+  videoId: string,
+  isPlaying?: boolean
+) => Promise<Object>;
 export type UpdatePlaylistAction = (
   id: string,
   obj: $Shape<Playlist>

@@ -2,8 +2,8 @@
 
 import type { Firebase } from '../common/types';
 
-type InputFunction = (firebase: Firebase) => OutputFunction;
 type OutputFunction = Function;
+type InputFunction = (firebase: Firebase) => OutputFunction;
 type Input = InputFunction | { [string]: InputFunction };
 type Output = OutputFunction | { [string]: OutputFunction };
 

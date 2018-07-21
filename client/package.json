@@ -76,7 +76,7 @@
     ]
   },
   "lint-staged": {
-    "client/src/**/*.{js,jsx,json,css,sccs}": [
+    "src/**/*.{js,jsx,json,css,sccs}": [
       "prettier --single-quote --write",
       "git add"
     ]

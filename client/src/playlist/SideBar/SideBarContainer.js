@@ -2,7 +2,8 @@
 import React from 'react';
 import type {
   DeleteVideoAction,
-  Playlist, SetNameFieldAction,
+  Playlist,
+  SetNameFieldAction,
   UpdatePlaylistAction,
   UpdatePositionAction
 } from '../types';
@@ -25,13 +26,13 @@ type Props = {
     deleteVideo: DeleteVideoAction
   },
   actions: {
-    setNameField: (value:string) => SetNameFieldAction
+    setNameField: (value: string) => SetNameFieldAction
   }
 };
 
 class SideBarContainer extends React.Component<Props> {
   componentDidMount() {
-    this.props.actions.setNameField(this.props.playlist.title)
+    this.props.actions.setNameField(this.props.playlist.title);
   }
   render() {
     const { playlist, title, firebaseActions, id } = this.props;

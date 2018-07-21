@@ -11,6 +11,7 @@ import { parseDuration, sumOfDurations } from '../../utils/helpers';
 
 type Props = {
   playlist: PlaylistType,
+  title: string,
   itemOpen: (id: string) => void,
   handleTitleChange: (title: string) => void,
   itemDelete: (id: string) => void,
@@ -49,9 +50,6 @@ const SortableList = SortableContainer(({ playlist, itemOpen, itemDelete }) => {
 });
 
 class Playlist extends React.Component<Props, State> {
-  state = {
-    title: ''
-  };
   handleSort = ({
     oldIndex,
     newIndex
@@ -63,26 +61,19 @@ class Playlist extends React.Component<Props, State> {
       arrayMove(this.props.playlist.order, oldIndex, newIndex)
     );
   };
-  componentDidMount() {
-    this.setState({ title: this.props.playlist.title });
-  }
-  handleTitleChange = (e: { target: { value: string } }) => {
-    const value = e.target.value;
-    this.setState({ title: value });
-    this.props.handleTitleChange(value);
-  };
   render() {
-    const { playlist, ...rest } = this.props;
+    const { playlist, title, handleTitleChange, ...rest } = this.props;
     const durations = playlist.order.map(x =>
       parseDuration(playlist.videos[x].duration)
     );
     const totalTime = sumOfDurations(durations);
-    const { title } = this.state;
     return (
       <div className="playlist">
         <input
           className="playlist__title"
-          onChange={this.handleTitleChange}
+          onChange={(e: { target: { value: string } }) => {
+            handleTitleChange(e.target.value);
+          }}
           value={title}
         />
         <h3 className="playlist__stats">

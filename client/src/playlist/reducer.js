@@ -2,7 +2,7 @@
 import * as constants from './constants';
 import type { Action, State } from './types';
 
-const initialState: State = {
+export const initialState: State = {
   volume: 50,
   name: ''
 };

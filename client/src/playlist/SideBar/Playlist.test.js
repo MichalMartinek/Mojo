@@ -53,6 +53,7 @@ describe('Playlist', () => {
       itemOpen: jest.fn(),
       itemDelete: jest.fn(),
       handleTitleChange: jest.fn(),
+      title: 'Playlist title',
       changeOrder: jest.fn()
     };
     mountedLockScreen = undefined;

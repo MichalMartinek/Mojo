@@ -4,11 +4,9 @@ import { withInfo } from '@storybook/addon-info';
 import Spinner from '../common/Spinner';
 
 const SpinnerDoc = `
-      is simple spinner component`
+      is simple spinner component`;
 
-storiesOf('Spinner', module)
-  .add('spinning',
-    withInfo(SpinnerDoc)(() =>
-      <Spinner />
-    )
-  )
+storiesOf('Spinner', module).add(
+  'spinning',
+  withInfo(SpinnerDoc)(() => <Spinner />)
+);

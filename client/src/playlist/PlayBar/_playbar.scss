@@ -31,7 +31,9 @@
     }
   }
 
-  &__icon:hover, &__iconButton:hover, &__icon--checked {
+  &__icon:hover,
+  &__iconButton:hover,
+  &__icon--checked {
     color: $white-almost;
   }
 

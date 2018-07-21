@@ -41,14 +41,15 @@
     align-items: center;
     padding: 0.5rem 1.2rem;
     transition: all 0.3s ease;
-    color:$darkGray;
+    color: $darkGray;
     cursor: pointer;
   }
   &:hover {
     background-color: $background-transparent;
-    color:$black;
+    color: $black;
   }
-  &__title, &__channel {
+  &__title,
+  &__channel {
     font-weight: 500;
     margin: 0;
     font-size: 1.1rem;
@@ -85,11 +86,13 @@
   padding: 0.5rem 0;
   margin-left: -1.2rem;
   text-align: center;
-  &__hover, &:hover &__normal {
+  &__hover,
+  &:hover &__normal {
     display: none;
   }
 
-  &:hover &__hover, &:active &__hover  {
+  &:hover &__hover,
+  &:active &__hover {
     display: inline-block;
   }
 }

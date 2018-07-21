@@ -2,49 +2,51 @@
 import * as React from 'react';
 
 type Props = {
-  handleForm: (inputText:string, nextPage: ?boolean) => void,
+  handleForm: (inputText: string, nextPage: ?boolean) => void
 };
 type State = {
   inputText: string,
   validText: boolean,
-  initial: boolean,
+  initial: boolean
 };
 
-class PlaylistForm extends React.Component<Props, State>  {
+class PlaylistForm extends React.Component<Props, State> {
   state = {
     inputText: '',
     validText: true,
-    initial: true,
-  }
-  handleForm = (event: {preventDefault: ()=>void})=> {
+    initial: true
+  };
+  handleForm = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     if (this.state.initial) {
       this.setState({
         initial: false
-      })
+      });
     }
     if (this.validate()) {
-      this.props.handleForm(this.state.inputText)
+      this.props.handleForm(this.state.inputText);
     }
-  }
-  handleInputChange = (event: {target: {value: string}}) => {
-    this.setState({inputText: event.target.value});
+  };
+  handleInputChange = (event: { target: { value: string } }) => {
+    this.setState({ inputText: event.target.value });
     if (!this.state.initial) {
-      this.validate()
+      this.validate();
     }
-  }
-  validate = ():boolean => {
-    const validText = this.state.inputText.length > 2
+  };
+  validate = (): boolean => {
+    const validText = this.state.inputText.length > 2;
     this.setState({ validText });
-    return validText
-  }
+    return validText;
+  };
 
   render() {
-    const { inputText, validText } = this.state
+    const { inputText, validText } = this.state;
     return (
       <form onSubmit={this.handleForm} className="playlistForm">
         <input
-          className={`playlistForm__input ${!validText ? 'playlistForm__input--warning': ''}`}
+          className={`playlistForm__input ${
+            !validText ? 'playlistForm__input--warning' : ''
+          }`}
           placeholder="New playlist"
           value={inputText}
           onChange={this.handleInputChange}
@@ -53,8 +55,8 @@ class PlaylistForm extends React.Component<Props, State>  {
           Add
         </button>
       </form>
-    )
+    );
   }
 }
 
-export default PlaylistForm
+export default PlaylistForm;

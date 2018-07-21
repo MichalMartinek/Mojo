@@ -1,16 +1,21 @@
 /* @flow */
-import React from 'react'
-type AsyncFunction = (event: {}) => Promise<{}>
+import React from 'react';
+type AsyncFunction = (event: {}) => Promise<{}>;
 type Props = {
   loginWithFacebook: AsyncFunction,
   loginWithGoogle: AsyncFunction,
   loginWithGithub: AsyncFunction,
-  newPlaylist: (event: {}) => void,
+  newPlaylist: (event: {}) => void
 };
 
 class Login extends React.Component<Props> {
   render() {
-    const {loginWithGoogle, loginWithFacebook, loginWithGithub, newPlaylist} = this.props
+    const {
+      loginWithGoogle,
+      loginWithFacebook,
+      loginWithGithub,
+      newPlaylist
+    } = this.props;
     return (
       <div className="login">
         <header className="login__header">
@@ -18,20 +23,32 @@ class Login extends React.Component<Props> {
         </header>
         <div className="login__content">
           <div className="login__buttons">
-            <button className="button login__button" onClick={loginWithGoogle}>Login with Google</button>
-            <button className="button login__button" onClick={loginWithFacebook}>Login with Facebook</button>
-            <button className="button login__button" onClick={loginWithGithub}>Login with Github</button>
+            <button className="button login__button" onClick={loginWithGoogle}>
+              Login with Google
+            </button>
+            <button
+              className="button login__button"
+              onClick={loginWithFacebook}
+            >
+              Login with Facebook
+            </button>
+            <button className="button login__button" onClick={loginWithGithub}>
+              Login with Github
+            </button>
           </div>
           <div className="login__create">
             Or you can create new playlist without logging in.
-
-            <button className="button login__button login__button--create" onClick={newPlaylist}>New playlist</button>
+            <button
+              className="button login__button login__button--create"
+              onClick={newPlaylist}
+            >
+              New playlist
+            </button>
           </div>
         </div>
-
       </div>
     );
   }
 }
 
-export default Login
+export default Login;

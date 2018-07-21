@@ -14,7 +14,7 @@
     }
   }
 
-  &__controls{
+  &__controls {
     width: 14rem;
     display: flex;
     justify-content: flex-end;
@@ -44,7 +44,7 @@
     & a {
       color: transparent;
       background-position-y: -0%;
-      background-image: linear-gradient( $black, $primary);
+      background-image: linear-gradient($black, $primary);
       -webkit-background-clip: text;
       -moz-background-clip: text;
       transition: background 1400ms ease;
@@ -59,8 +59,8 @@
   /* Shadow */
   &:after {
     bottom: -5px;
-    box-shadow: inset 0 4px 8px -3px hsla(0,0%,7%,.06);
-    content: "";
+    box-shadow: inset 0 4px 8px -3px hsla(0, 0%, 7%, 0.06);
+    content: '';
     height: 5px;
     left: 0;
     opacity: 1;

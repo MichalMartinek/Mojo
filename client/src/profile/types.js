@@ -1,6 +1,6 @@
 // @flow
 
-import type {Playlist} from "../playlist/types";
+import type { Playlist } from '../playlist/types';
 
 export type Profile = {
   isLoaded: string,
@@ -8,10 +8,10 @@ export type Profile = {
   avatarUrl?: string,
   displayName?: string,
   email?: string,
-  playlists:{ [string]: boolean }
+  playlists: { [string]: boolean }
 };
 
-export type PopulateProfile =  {
+export type PopulateProfile = {
   isLoaded: string,
   isEmpty: string,
   avatarUrl?: string,

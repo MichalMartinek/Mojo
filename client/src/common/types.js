@@ -9,11 +9,13 @@ export type Firebase = {
   database: {
     ServerValue: {
       TIMESTAMP: string
-    },
+    }
   },
   ref: () => {
-    child: (path: string) => {
-     remove: () => Promise<Object>
-    },
-  },
-}
+    child: (
+      path: string
+    ) => {
+      remove: () => Promise<Object>
+    }
+  }
+};

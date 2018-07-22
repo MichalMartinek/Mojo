@@ -18,10 +18,11 @@ describe('SearchForm', () => {
   });
   it('change inner state', () => {
     const mockFn = jest.fn();
-    const searchForm = mount(<SearchForm handleForm={mockFn} />);
+    const searchForm = mount(<SearchForm onChange={mockFn} />);
     searchForm
-      .find('.search__input')
+      .find('.searchForm__input')
       .simulate('change', { target: { value: 'test' } });
-    expect(searchForm.state('inputText')).toBe('test');
+    expect(mockFn.mock.calls).toBe(1);
+    expect(mockFn.mock.calls[0][0]).toBe('test');
   });
 });

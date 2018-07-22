@@ -53,7 +53,12 @@ export type Duration = {
 // Redux state
 export type State = {
   +volume: number,
-  +name: string
+  +name: string,
+  +results: Array<Video>,
+  +nextPage: null | string,
+  +searchField: string,
+  +searchStatus: string,
+  +searchFieldFocused: boolean
 };
 
 // Firebase actions
@@ -90,9 +95,35 @@ export type DeleteVideoAction = (
 
 // Redux actions
 export type SetVolumeAction = { type: constants.SET_VOLUME, value: number };
+export type ClearSearchAction = { type: constants.CLEAR_SEARCH };
+export type SetSearchFieldAction = {
+  type: constants.SET_SEARCH_FIELD,
+  value: string
+};
+export type SetSearchStatusAction = {
+  type: constants.SET_SEARCH_STATUS,
+  value: string
+};
+export type SetSearchFieldFocusedAction = {
+  type: constants.SET_SEARCH_FIELD_FOCUSED,
+  value: boolean
+};
+export type SetSearchResultAction = {
+  type: constants.SET_SEARCH_RESULT,
+  results: Array<Video>,
+  append: boolean,
+  next: string
+};
 export type SetNameFieldAction = {
   type: constants.SET_NAME_FIELD,
   value: string
 };
 
-export type Action = SetVolumeAction | SetNameFieldAction;
+export type Action =
+  | SetVolumeAction
+  | SetNameFieldAction
+  | ClearSearchAction
+  | SetSearchFieldAction
+  | SetSearchResultAction
+  | SetSearchStatusAction
+  | SetSearchFieldFocusedAction;

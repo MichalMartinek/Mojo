@@ -1,70 +1,62 @@
 /* @flow */
 import * as React from 'react';
-import search from 'youtube-search';
 import type { Playlist, Video } from '../types';
-import Search from './Search';
-import * as constants from '../../constants';
+import SearchResult from './SearchResult';
 import { bindFirebaseActions } from '../../utils/bindFirebaseActions';
 import type { AddVideoAction } from '../types';
 import { addVideo } from '../firebaseActions';
 import { withFirebase } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import * as actions from '../actions';
+import { bindActionCreators } from 'redux';
 
 type Props = {
   addVideo: AddVideoAction,
   playlist: Playlist,
   id: string,
-  className: string
+  className: string,
+  results: null | Array<Video>,
+  nextPage: ?string,
+  actions: {
+    search: (inputText: string, nextPage: ?string) => void
+  }
 };
 
-type State = {
-  results: null | Array<Video>,
-  nextPage: ?string
-};
-class SearchContainer extends React.Component<Props, State> {
-  state = {
-    results: null,
-    nextPage: undefined
-  };
+class SearchContainer extends React.Component<Props> {
   static defaultProps = {
     className: ''
   };
-  handleSearch: (text: string, nextPage: ?boolean) => void = (
-    text,
-    nextPage
-  ) => {
-    const opts = {
-      maxResults: 10,
-      key: constants.GOOGLE_API,
-      type: 'video',
-      pageToken: undefined
-    };
-
-    if (nextPage) opts.pageToken = this.state.nextPage;
-
-    search(text, opts, (err, newPage, pageInfo) => {
-      if (err) return console.log(err);
-      const results =
-        nextPage && this.state.results
-          ? [...this.state.results, ...newPage]
-          : newPage;
-      this.setState({ results, nextPage: pageInfo.nextPageToken });
-    });
-  };
 
   render() {
-    const { results, nextPage } = this.state;
-    const { addVideo, className, id, playlist } = this.props;
+    const {
+      addVideo,
+      className,
+      id,
+      playlist,
+      results,
+      nextPage,
+      actions
+    } = this.props;
     return (
       <div className={className}>
-        <Search
-          handleSearch={this.handleSearch}
-          hasMore={typeof nextPage === typeof ''}
-          results={results}
-          itemClick={item => {
-            addVideo(id, playlist, item);
-          }}
-        />
+        <div className="search">
+          <div className="search__resultContainer">
+            {results ? (
+              <SearchResult
+                itemClick={item => {
+                  addVideo(id, playlist, item);
+                }}
+                videos={results}
+                hasMore={typeof nextPage === typeof ''}
+                loadMore={() => {
+                  actions.search('', nextPage);
+                }}
+              />
+            ) : (
+              <div>Use search to get videos</div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
@@ -73,9 +65,13 @@ class SearchContainer extends React.Component<Props, State> {
 export default withFirebase(
   connect(
     (state, props) => ({
-      playlist: state.firebase.data.playlists[props.id]
+      playlist: state.firebase.data.playlists[props.id],
+      nextPage: state.playlist.nextPage,
+      results: state.playlist.results
     }),
-    () => ({}),
+    dispatch => ({
+      actions: bindActionCreators(actions, dispatch)
+    }),
     (stateProps, dispatchProps, ownProps) => {
       const boundFirebaseAction = bindFirebaseActions(
         ownProps.firebase,

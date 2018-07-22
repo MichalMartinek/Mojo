@@ -29,7 +29,7 @@
   &__normal {
     backface-visibility: hidden;
   }
-
+  // Flipping
   &:hover {
     .playlistItem__normal {
       transform: rotateX(180deg);
@@ -55,11 +55,13 @@
   }
   &__left {
     width: 2rem;
+    font-weight: 600;
     @include flexCenter;
   }
   &__channel {
     margin: 0.5rem 0 0;
     font-size: 0.87rem;
+    color: $white-blue;
     font-weight: 400;
   }
   &__info {

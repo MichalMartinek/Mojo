@@ -10,27 +10,26 @@ type Props = {
 const Menu = ({ isAuthenticated, loading }: Props) => {
   return (
     <div className="menu">
-      <div className="menu__container">
-        <div className="menu__controls menu__controls--first">{/*TBD*/}</div>
-        <div className="menu__logo">
-          <Link to="/">Mojo</Link>
-        </div>
-        <div className="menu__controls">
-          {!loading &&
-            (isAuthenticated ? (
-              <Link className="button menu__button" to={routes.profile}>
-                Profile
-              </Link>
-            ) : (
-              <Link className="button menu__button" to={routes.login}>
-                Log in
-              </Link>
-            ))}
+      <div className="menu__left">
+        <Link to="/" className="menu__logo">
+          Mojo
+        </Link>
+      </div>
+      <div className="menu__controls">
+        {!loading &&
+          (isAuthenticated ? (
+            <Link className="menu__button" to={routes.profile}>
+              Profile
+            </Link>
+          ) : (
+            <Link className="menu__button" to={routes.login}>
+              Log in
+            </Link>
+          ))}
 
-          <Link className="button menu__button" to={routes.newPlaylist}>
-            New playlist
-          </Link>
-        </div>
+        <Link className="menu__button" to={routes.newPlaylist}>
+          New playlist
+        </Link>
       </div>
     </div>
   );

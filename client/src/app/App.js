@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ConnectedRouter } from 'react-router-redux';
-import Menu from './Menu';
+import withLayout from './withLayout';
 import HomeView from '../home/HomeView';
 import ProfileView from '../profile/ProfileView';
 import NewPlaylistView from '../newPlaylist/NewPlaylistView';
@@ -13,7 +13,7 @@ import NotFound from '../common/NotFoundView';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
+import { withFirebase } from 'react-redux-firebase';
 import type { Profile } from '../profile/types';
 import routes from './routes';
 
@@ -23,20 +23,27 @@ class App extends React.Component<{ profile: Profile }> {
     return (
       <div className="App">
         <ConnectedRouter history={history}>
-          <div>
-            <Menu
-              loading={!isLoaded(profile)}
-              isAuthenticated={!isEmpty(profile)}
+          <Switch>
+            <Route
+              exact
+              path={routes.root}
+              component={withLayout(HomeView, profile)}
             />
-            <Switch>
-              <Route exact path={routes.root} component={HomeView} />
-              <Route path={routes.playlist} component={PlaylistView} />
-              <Route path={routes.login} component={LoginView} />
-              <Route path={routes.profile} component={ProfileView} />
-              <Route path={routes.newPlaylist} component={NewPlaylistView} />
-              <Route component={NotFound} />
-            </Switch>
-          </div>
+            <Route path={routes.playlist} component={PlaylistView} />
+            <Route
+              path={routes.login}
+              component={withLayout(LoginView, profile)}
+            />
+            <Route
+              path={routes.profile}
+              component={withLayout(ProfileView, profile)}
+            />
+            <Route
+              path={routes.newPlaylist}
+              component={withLayout(NewPlaylistView, profile)}
+            />
+            <Route component={NotFound} />
+          </Switch>
         </ConnectedRouter>
       </div>
     );

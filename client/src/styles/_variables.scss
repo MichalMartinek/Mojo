@@ -18,12 +18,19 @@ $background-darkGray: #efeff1;
 $background-transparent: rgba(50, 50, 50, 0.1);
 
 // New colors
+$blue-purple: #1E206A;
+$blue-purple-light: #34378e;
 $blue-navy: #041260;
 $blue-basic: #2a46f8;
 $blue-dark: #1b1c4f;
+$blue-shadow: rgba(91, 92, 125, 0.35);
 $blue-transparent: rgba(102, 103, 132, 0.35);
 
+$purple: rebeccapurple;
+$purple-light: rebeccapurple;
+
 $white-almost: #f4eded;
+$white-side: #D5D5D5;
 $white-blue: #9b9fb7;
 
 // Breakpoints
@@ -31,5 +38,13 @@ $breakpoint-phone: 700px;
 
 //Other
 $padding-box: 1.3rem;
+$border-radius: 7px;
 
-$menu-height: 5rem;
+$menu-height: 4.5rem;
+$app-height: calc(100vh - 2 * #{$menu-height});
+
+// Sidebar
+$sidebar-width: 40vw;
+$sidebar-maxWidth: 500px;
+$sidebar-breakpoint: 1250px;
+$player-height: 0.5627; // Ratio 4/3

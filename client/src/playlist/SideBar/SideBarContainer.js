@@ -7,11 +7,13 @@ import type {
   UpdatePlaylistAction,
   UpdatePositionAction
 } from '../types';
-import PlaylistComponent from './Playlist';
 import { bindActionCreators } from 'redux';
 import { withFirebase } from 'react-redux-firebase';
-import * as actions from '../actions';
 import { connect } from 'react-redux';
+import PlaylistVideos from './PlaylistVideos';
+import PlaylistHeader from './SideBarHeader';
+import VideoPlayer from './VideoPlayer';
+import * as actions from '../actions';
 import { bindFirebaseActions } from '../../utils/bindFirebaseActions';
 import * as firebaseActions from '../firebaseActions';
 
@@ -20,6 +22,7 @@ type Props = {
   playlist: Playlist,
   volume: number,
   title: string,
+  className: string,
   firebaseActions: {
     updatePlaylist: UpdatePlaylistAction,
     updatePosition: UpdatePositionAction,
@@ -31,16 +34,33 @@ type Props = {
 };
 
 class SideBarContainer extends React.Component<Props> {
+  static defaultProps = {
+    className: ''
+  };
   componentDidMount() {
     this.props.actions.setNameField(this.props.playlist.title);
   }
   render() {
-    const { playlist, title, firebaseActions, id } = this.props;
+    const {
+      playlist,
+      className,
+      title,
+      firebaseActions,
+      actions,
+      id
+    } = this.props;
     return (
-      <div className="playlistContainer__playlist">
-        <PlaylistComponent
+      <div className={`sidebar ${className}`}>
+        <PlaylistHeader
           playlist={playlist}
           title={title}
+          handleTitleChange={title => {
+            actions.setNameField(title);
+            firebaseActions.updatePlaylist(id, { title });
+          }}
+        />
+        <PlaylistVideos
+          playlist={playlist}
           itemOpen={key => {
             firebaseActions.updatePosition(id, { video: key });
           }}
@@ -50,14 +70,13 @@ class SideBarContainer extends React.Component<Props> {
           changeOrder={order => {
             firebaseActions.updatePlaylist(id, { order });
           }}
-          handleTitleChange={title => {
-            firebaseActions.updatePlaylist(id, { title });
-          }}
         />
+        <VideoPlayer id={id} />
       </div>
     );
   }
 }
+
 export default withFirebase(
   connect(
     (state, props) => ({

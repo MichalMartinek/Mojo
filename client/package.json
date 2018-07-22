@@ -72,7 +72,9 @@
       "!**/build/**",
       "!**/stories/**",
       "!**/localization/**",
-      "!**/*.test.{js,jsx}"
+      "!**/*.test.{js,jsx}",
+      "!**/types.{js,jsx}",
+      "!**/constants.{js,jsx}"
     ]
   },
   "lint-staged": {

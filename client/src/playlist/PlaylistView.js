@@ -8,7 +8,6 @@ import PlayBarContainer from './PlayBar/PlayBarContainer';
 import SideBarContainer from './SideBar/SideBarContainer';
 import type { Playlist } from './types';
 import SearchContainer from './Search/SearchContainer';
-import VideoPlayer from './SideBar/VideoPlayer';
 
 type Props = {
   match: {
@@ -33,12 +32,15 @@ class PlaylistView extends React.Component<Props> {
     return (
       <Fragment>
         <div className="playlistContainer">
-          <SideBarContainer id={playlistId} />
-          <div className="playlistContainer__search">
-            <SearchContainer id={playlistId} />
-          </div>
+          <SideBarContainer
+            id={playlistId}
+            className="playlistContainer__sidebar"
+          />
+          <SearchContainer
+            id={playlistId}
+            className="playlistContainer__search"
+          />
         </div>
-        <VideoPlayer id={playlistId} />
         <PlayBarContainer id={playlistId} />
       </Fragment>
     );

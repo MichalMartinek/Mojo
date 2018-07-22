@@ -1,9 +1,9 @@
 .playlistContainer {
   display: flex;
-  height: calc(100vh - 10.6rem);
-  &__playlist {
-    width: 40%;
-    max-width: 500px;
+  height: $app-height;
+  &__sidebar {
+    width: $sidebar-width;
+    max-width: $sidebar-maxWidth;
   }
   &__search {
     flex: 1;

@@ -13,7 +13,8 @@ import { connect } from 'react-redux';
 type Props = {
   addVideo: AddVideoAction,
   playlist: Playlist,
-  id: string
+  id: string,
+  className: string
 };
 
 type State = {
@@ -24,6 +25,9 @@ class SearchContainer extends React.Component<Props, State> {
   state = {
     results: null,
     nextPage: undefined
+  };
+  static defaultProps = {
+    className: ''
   };
   handleSearch: (text: string, nextPage: ?boolean) => void = (
     text,
@@ -50,16 +54,18 @@ class SearchContainer extends React.Component<Props, State> {
 
   render() {
     const { results, nextPage } = this.state;
-    const { addVideo, id, playlist } = this.props;
+    const { addVideo, className, id, playlist } = this.props;
     return (
-      <Search
-        handleSearch={this.handleSearch}
-        hasMore={typeof nextPage === typeof ''}
-        results={results}
-        itemClick={item => {
-          addVideo(id, playlist, item);
-        }}
-      />
+      <div className={className}>
+        <Search
+          handleSearch={this.handleSearch}
+          hasMore={typeof nextPage === typeof ''}
+          results={results}
+          itemClick={item => {
+            addVideo(id, playlist, item);
+          }}
+        />
+      </div>
     );
   }
 }

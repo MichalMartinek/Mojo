@@ -1,98 +1,125 @@
-.playlist {
-  background: linear-gradient($background-gray, $secondary-light);
-  width: 100%;
-  height: 100%;
-  border-right: 1px solid $secondary-bg;
-  overflow: hidden;
-
-  &__title {
-    background: none;
-    border: none;
-    display: block;
-    padding: 0.5rem 1rem 0.3rem;
-    margin: 1.2rem auto 0;
-    color: $darkGray;
-    text-align: center;
-    /*text-transform: uppercase;
-    letter-spacing: 0.3rem;*/
-    font-weight: 400;
-    font-size: 1.6rem;
-    transition: all 0.3s ease-out;
-    &:focus {
-      background: $white;
-    }
-  }
-  &__stats {
-    margin-top: 0.7rem;
-    text-align: center;
-    font-weight: 400;
-    font-size: 0.9rem;
-  }
-  &__container {
-    height: calc(100% - 5.8rem);
-    overflow-x: auto;
-    border-top: 2px solid $secondary-bg;
-  }
-}
 .playlistItem {
-  &__inner {
+  position: relative;
+  display: flex;
+  margin: 0.85rem 1rem;
+
+  &__hover, &__normal {
     display: flex;
+    height: 5rem;
+    width: 100%;
+    background: $blue-purple-light;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 1.2rem;
-    transition: all 0.3s ease;
-    color: $darkGray;
+    transition: all 0.5s ease;
+    color: $white-almost;
+    border-radius: $border-radius;
+    box-shadow: 0 0 15px $blue-shadow;
     cursor: pointer;
+    perspective: 40rem;
+    perspective-origin: 50% 50%;
   }
+  &__hover {
+    backface-visibility: hidden;
+    transform: rotateX(-180deg);
+    background-color: $blue-dark;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &__normal {
+    backface-visibility: hidden;
+  }
+
   &:hover {
-    background-color: $background-transparent;
-    color: $black;
+    .playlistItem__normal {
+      transform: rotateX(180deg);
+    }
+    .playlistItem__hover {
+      transform: none;
+    }
   }
-  &__title,
-  &__channel {
+  &--playing > div{
+    background: $white-side;
+    color: $blue-navy;
+    &:hover {
+      background: $white-almost;
+    }
+  }
+  &--playing &__title, &--playing &__channel {
+    color: $blue-navy;
+  }
+  &__title {
     font-weight: 500;
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+  }
+  &__left {
+    width: 2rem;
+    @include flexCenter;
   }
   &__channel {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+    font-size: 0.87rem;
     font-weight: 400;
   }
   &__info {
     flex: 1;
   }
-  &__delete {
-    width: 3rem;
-    padding: 0.5rem 1rem;
-    margin-left: -1.2rem;
-    transition: color 0.5s ease;
-    &:hover {
-      color: $primary;
-    }
-  }
-  &__imgContainer {
+  &__imgContainer, &__controls {
+    position: relative;
+    margin-left: 0.5rem;
     width: 30%;
     max-width: 150px;
+    height: 100%;
+  }
+  &__duration {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 0.73rem;
+    padding: 0.11rem 0.18rem;
+    background: $black;
+    color: $white-almost;
   }
   &__thumbnail {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-bottom-right-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+  &__controls {
+    display: flex;
+  }
+  &__handle {
+    cursor: move;
+    @include flexCenter;
+  }
+  &__delete {
+    border-bottom-right-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+  &__handle, &__delete {
+    width: 3rem;
+    flex: 1;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    &:hover {
+      background: $purple;
+      color: $white-almost;
+    }
+  }
+}
+.playlistScrollbar {
+  @extend .customScrollbar;
+  &::-webkit-scrollbar-track {
+    border-radius: $border-radius;
+    background-color: $white-blue;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $border-radius;
+    background-color: $blue-basic;
   }
 }
 
-.playlistHandle {
-  cursor: row-resize;
-  width: 3rem;
-  padding: 0.5rem 0;
-  margin-left: -1.2rem;
-  text-align: center;
-  &__hover,
-  &:hover &__normal {
-    display: none;
-  }
-
-  &:hover &__hover,
-  &:active &__hover {
-    display: inline-block;
-  }
-}

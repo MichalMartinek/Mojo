@@ -112,23 +112,25 @@ class VideoPlayer extends React.Component<Props, State> {
     const video =
       (playlist.videos && playlist.videos[playlist.position.video]) || {};
     return (
-      <YouTube
-        videoId={video.id}
-        opts={{
-          playerVars: {
-            // https://developers.google.com/youtube/player_parameters
-            autoplay: playlist.position.state === constants.PLAYING,
-            controls: 0,
-            showinfo: 0,
-            rel: 0
-          }
-        }}
-        onReady={this.onPlayerReady}
-        onStateChange={this.onPlayerChange}
-        onError={e => {
-          console.log('onError', e);
-        }}
-      />
+      <div className="player">
+        <YouTube
+          videoId={video.id}
+          opts={{
+            playerVars: {
+              // https://developers.google.com/youtube/player_parameters
+              autoplay: playlist.position.state === constants.PLAYING,
+              controls: 0,
+              showinfo: 0,
+              rel: 0
+            }
+          }}
+          onReady={this.onPlayerReady}
+          onStateChange={this.onPlayerChange}
+          onError={e => {
+            console.log('onError', e);
+          }}
+        />
+      </div>
     );
   }
 }

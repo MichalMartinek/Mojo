@@ -1,18 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Playlist from './Playlist';
+import Playlist from './PlaylistVideos';
 
-describe('Playlist', () => {
+describe('PlaylistVideos', () => {
   let props;
-  let mountedLockScreen;
-
-  const playlist = () => {
-    if (!mountedLockScreen) {
-      mountedLockScreen = mount(<Playlist {...props} />);
-    }
-    return mountedLockScreen;
-  };
-
   beforeEach(() => {
     props = {
       playlist: {
@@ -48,28 +39,22 @@ describe('Playlist', () => {
         },
         order: ['someKey', 'someKey2'],
         title: 'Playlist title',
-        author: 'Author/Channel'
+        author: 'Author/Channel',
+        position: {
+          video: 'someKey2'
+        }
       },
       itemOpen: jest.fn(),
       itemDelete: jest.fn(),
-      handleTitleChange: jest.fn(),
-      title: 'Playlist title',
       changeOrder: jest.fn()
     };
-    mountedLockScreen = undefined;
   });
 
   it('always renders a divs with videos in right order', () => {
-    props.className = 'testingClass';
-    const divs = playlist().find('.playlist__container');
+    const playlistVideos = mount(<Playlist {...props} />);
+    const divs = playlistVideos.find('.sidebar__playlist');
 
     expect(divs.length).toBeGreaterThan(0);
     expect(divs.props().children[0].key).toBe(props.playlist.order[0]);
-  });
-  it('always renders title', () => {
-    const title = playlist()
-      .find('.playlist__title')
-      .props().value;
-    expect(title).toBe(props.playlist.title);
   });
 });

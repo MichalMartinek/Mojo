@@ -69,7 +69,7 @@ class SearchContainer extends React.Component<Props> {
         break;
       case constants.STATUS_SEARCHED:
         content = (
-          <div className="searchResult__container">
+          <div className="search__resultContainer">
             <SearchResult
               itemClick={item => {
                 addVideo(id, playlist, item);

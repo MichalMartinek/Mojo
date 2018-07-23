@@ -54,7 +54,8 @@
     "storybook": "npm-run-all -p watch-css start-storybook",
     "build": "npm-run-all build-css build-js",
     "flow": "flow",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && firebase deploy"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.5",
@@ -63,7 +64,8 @@
     "@storybook/addons": "^3.4.5",
     "@storybook/react": "^3.4.5",
     "babel-core": "^6.26.3",
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "firebase-tools": "^3.19.3"
   },
   "jest": {
     "coverageReporters": [

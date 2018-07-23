@@ -41,7 +41,7 @@ const SearchResult = ({ videos, itemClick, loadMore, hasMore }: Props) => {
       </div>
     );
   }
-  return <div>Nothing</div>;
+  return <div>Nothing found</div>;
 };
 
 export default SearchResult;

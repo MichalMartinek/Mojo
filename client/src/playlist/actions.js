@@ -42,7 +42,9 @@ export const clearSearch = (): ClearSearchAction => ({
 export const search = (text: string, nextPage: ?string) => (
   dispatch: Action => {}
 ) => {
-  dispatch(setSearchStatus(types.STATUS_LOADING));
+  if (!nextPage) {
+    dispatch(setSearchStatus(types.STATUS_LOADING));
+  }
   const opts = {
     maxResults: 10,
     key: globalConstants.GOOGLE_API,

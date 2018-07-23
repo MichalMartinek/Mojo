@@ -1,4 +1,4 @@
-import { videoInfo } from './youtube';
+//import { videoInfo } from './youtube';
 
 describe('youtube', () => {
   test('bind single function', () => {

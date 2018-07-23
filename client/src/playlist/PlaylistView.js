@@ -11,6 +11,9 @@ import SearchContainer from './Search/SearchContainer';
 import CustomMenu from './CustomMenu';
 import { isEmpty, isLoaded } from 'react-redux-firebase';
 import type { Profile } from '../profile/types';
+import withLayout from '../app/withLayout';
+import NotFoundView from '../common/NotFoundView';
+import PlaylistLoading from './PlaylistLoading';
 
 type Props = {
   match: {
@@ -27,19 +30,23 @@ class PlaylistView extends React.Component<Props> {
   render() {
     const { profile } = this.props;
     const playlistId = this.props.match.params.id;
-    if (!this.props.playlists || !this.props.playlists[playlistId]) {
-      return <div>Loading or not found</div>;
-    }
-    const playlist = this.props.playlists[playlistId];
-    if (!playlist.videos) playlist.videos = {}; // Because Firebase can't store empty objects
-    if (!playlist.order) playlist.order = []; // Because Firebase can't store empty arrays
+    let content;
 
-    return (
-      <Fragment>
-        <CustomMenu
-          loading={!isLoaded(profile)}
-          isAuthenticated={!isEmpty(profile)}
-        />
+    if (
+      this.props.playlists &&
+      isLoaded(this.props.playlists[playlistId]) &&
+      isEmpty(this.props.playlists[playlistId])
+    ) {
+      const NotFound = withLayout(NotFoundView, profile);
+      return <NotFound />;
+    }
+    if (!this.props.playlists || !isLoaded(this.props.playlists[playlistId])) {
+      content = <PlaylistLoading />;
+    } else {
+      const playlist = this.props.playlists[playlistId];
+      if (!playlist.videos) playlist.videos = {}; // Because Firebase can't store empty objects
+      if (!playlist.order) playlist.order = []; // Because Firebase can't store empty arrays
+      content = (
         <div className="playlistContainer">
           <SideBarContainer
             id={playlistId}
@@ -49,8 +56,17 @@ class PlaylistView extends React.Component<Props> {
             id={playlistId}
             className="playlistContainer__search"
           />
+          <PlayBarContainer id={playlistId} />
         </div>
-        <PlayBarContainer id={playlistId} />
+      );
+    }
+    return (
+      <Fragment>
+        <CustomMenu
+          loading={!isLoaded(profile)}
+          isAuthenticated={!isEmpty(profile)}
+        />
+        {content}
       </Fragment>
     );
   }

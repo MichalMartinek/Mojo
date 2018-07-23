@@ -42,7 +42,7 @@ class App extends React.Component<{ profile: Profile }> {
               path={routes.newPlaylist}
               component={withLayout(NewPlaylistView, profile)}
             />
-            <Route component={NotFound} />
+            <Route component={withLayout(NotFound, profile)} />
           </Switch>
         </ConnectedRouter>
       </div>

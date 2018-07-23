@@ -39,8 +39,6 @@ const props = {
 describe('SearchResult', () => {
   it('always renders div with videos', () => {
     const searchResult = mount(<SearchResult {...props} />);
-    const container = searchResult.find('.searchResult__container');
-    expect(container.length).toBe(1);
     expect(searchResult.find('.searchItem').length).toBe(props.videos.length);
   });
 });

@@ -1,7 +1,7 @@
 /* @flow */
 import * as React from 'react';
+import LinesEllipsis from 'react-lines-ellipsis';
 import type { Video } from '../types';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 type Props = {
   video: Video,
@@ -11,24 +11,32 @@ type Props = {
 const SearchResultItem = ({ video, onClick }: Props) => {
   return (
     <div className="searchItem" onClick={onClick}>
-      <div className="searchItem__inner">
-        <div
-          className="searchItem__children"
-          onClick={e => e.stopPropagation()}
-        >
-          <FontAwesomeIcon icon="plus" />
-        </div>
-        <div className="searchItem__info">
-          <h4 className="searchItem__title">{video.title}</h4>
-          <h4 className="searchItem__channel">{video.channelTitle}</h4>
-        </div>
-        <div className="searchItem__imgContainer">
-          <img
-            className="searchItem__thumbnail"
-            src={video.thumbnails.medium.url}
-            alt={video.title}
+      <div className="searchItem__imgContainer">
+        <img
+          className="searchItem__thumbnail"
+          src={video.thumbnails.medium.url}
+          alt={video.title}
+        />
+      </div>
+      <div className="searchItem__info">
+        <h4 className="searchItem__title">
+          <LinesEllipsis
+            text={video.title}
+            maxLine="2"
+            ellipsis="..."
+            trimRight
+            basedOn="letters"
           />
-        </div>
+        </h4>
+        <h4 className="searchItem__channel">
+          <LinesEllipsis
+            text={video.channelTitle}
+            maxLine="1"
+            ellipsis="..."
+            trimRight
+            basedOn="letters"
+          />
+        </h4>
       </div>
     </div>
   );

@@ -21,10 +21,9 @@ class SearchFormContainer extends React.Component<Props> {
   handleForm = () => {
     const {
       searchField,
-      nextPage,
       actions: { search }
     } = this.props;
-    search(searchField, nextPage);
+    search(searchField, null);
   };
 
   render() {

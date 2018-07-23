@@ -13,15 +13,16 @@ type Props = {
 };
 
 const SearchResult = ({ videos, itemClick, loadMore, hasMore }: Props) => {
-  return (
-    <div className="searchResult__container customScrollbar">
-      {videos.length ? (
+  if (videos.length) {
+    return (
+      <div className="searchResult customScrollbar">
         <InfiniteScroll
           pageStart={0}
           loadMore={loadMore}
           hasMore={hasMore}
-          threshold={35}
+          threshold={255}
           useWindow={false}
+          className="searchResult__container"
           loader={
             <div className="searchResult__loader" key={0}>
               <Spinner />
@@ -37,11 +38,10 @@ const SearchResult = ({ videos, itemClick, loadMore, hasMore }: Props) => {
             />
           ))}
         </InfiniteScroll>
-      ) : (
-        <div>Nothing</div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+  return <div>Nothing</div>;
 };
 
 export default SearchResult;

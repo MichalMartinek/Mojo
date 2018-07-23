@@ -20,6 +20,8 @@ $background-transparent: rgba(50, 50, 50, 0.1);
 // New colors
 $blue-purple: #1E206A;
 $blue-purple-light: #34378e;
+$blue-purple-lighter: #455095;
+$blue-purple-very-light: #7F87B7;
 $blue-navy: #041260;
 $blue-basic: #2a46f8;
 $blue-dark: #1b1c4f;
@@ -30,9 +32,12 @@ $purple: rebeccapurple;
 $purple-light: rebeccapurple;
 
 $white-almost: #f4eded;
+$white-back: #FEFEFE;
 $white-search: #EBEBEB;
 $white-side: #D5D5D5;
 $white-blue: #9b9fb7;
+
+$gray-light: #979797;
 $gray-middle: #6F6F6F;
 $gray-dark: #5f5f5f;
 
@@ -43,6 +48,7 @@ $breakpoint-mid: 1300px;
 //Other
 $padding-box: 1.3rem;
 $border-radius: 7px;
+$border-radius-big: 14px;
 
 $menu-height: 4rem;
 $bar-height: 4.5rem;

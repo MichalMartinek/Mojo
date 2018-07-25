@@ -68,6 +68,7 @@ class SearchContainer extends React.Component<Props> {
         );
         break;
       case constants.STATUS_SEARCHED:
+      default:
         content = (
           <div className="search__resultContainer">
             <SearchResult

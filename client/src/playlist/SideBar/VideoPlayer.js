@@ -34,7 +34,7 @@ class VideoPlayer extends React.Component<Props, State> {
   state = {
     player: null
   };
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (!this.state.player) return;
     const {
       playlist: { position }
@@ -50,6 +50,9 @@ class VideoPlayer extends React.Component<Props, State> {
       prevPosition.state !== constants.PAUSED
     ) {
       this.pause();
+    }
+    if (!prevState.player || prevProps.volume !== this.props.volume) {
+      this.state.player.setVolume(this.props.volume);
     }
   }
   play() {
@@ -76,7 +79,6 @@ class VideoPlayer extends React.Component<Props, State> {
     }
   };
   onPlayerChange = (event: { data: number }) => {
-    console.log(event);
     const { firebaseActions, id, playlist } = this.props;
     switch (event.data) {
       case -1: //Not started

@@ -47,7 +47,9 @@ const PlayBar = (props: Props) => {
         >
           <FontAwesomeIcon
             icon={props.paused ? 'play' : 'pause'}
-            className="playBar__icon playBar__icon--main"
+            className={`playBar__icon playBar__icon--main ${
+              props.paused ? '' : 'playBar__icon--left'
+            }`}
           />
         </button>
         <button

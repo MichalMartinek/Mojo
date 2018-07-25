@@ -28,6 +28,10 @@
       font-size: 1rem;
       margin: 1vw;
     }
+    &--left {
+      position: relative;
+      left: 0px;
+    }
   }
 
   &__icon:hover,

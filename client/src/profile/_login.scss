@@ -1,22 +1,35 @@
 .login {
   width: 100%;
+  &__content {
+    width: 60%;
+    min-width: 650px;
+    padding: 2rem 0;
+    margin: 3rem auto $padding-box auto;
+    background: $white;
+    border-radius: $border-radius-big;
+    box-shadow: 0px 3px 3px 2px rgba(157, 157, 157, 0.49);
+  }
   &__header {
     text-align: center;
   }
-  &__content {
-    width: calc(100% - 5rem);
+  &__title {
+    margin: .5rem;
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: $gray-dark;
+  }
+  &__container {
+    width: 100%;
     display: flex;
-    justify-content: space-evenly;
-    margin: 3rem auto;
+    justify-content: space-between;
   }
   &__buttons,
   &__create {
-    width: 45%;
-    padding: 3rem 4rem;
+    padding: $padding-box;
     text-align: center;
-    background: $white;
-    border-radius: 0.2rem;
-    box-shadow: 0px 3px 3px 2px rgba(157, 157, 157, 0.49);
+    width: calc(50% - 1rem );
   }
   &__buttons {
     display: flex;
@@ -25,15 +38,65 @@
     align-items: center;
   }
   &__create {
-    padding-top: 5rem;
+    position: relative;
+    padding-top: 2rem;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -1rem;
+      bottom: 0;
+      width: 2px;
+      margin: 2rem -1px;
+      background: url(/images/border-vertical.svg) 50% 50% repeat-y;
+    }
+  }
+  &__createText {
+    color: $gray-dark;
+    font-size: 1.3rem;
+    font-weight: 300;
   }
   &__button {
     width: 100%;
-    margin: 0.5rem;
-
+    max-width: 350px;
+    margin: 0.5rem auto;
+    padding: 0.75rem;
+    color: $white-almost;
+    display: flex;
+    &:hover {
+      color: $white;
+    }
     &--create {
       display: block;
-      margin: 4.25rem auto 0;
+      position: absolute;
+      bottom: $padding-box;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: calc(100% - 2*#{$padding-box})
     }
+    &--facebook {
+      background: $facebook;
+    }
+    &--google {
+      background: $google;
+    }
+    &--github {
+      background: $github;
+    }
+  }
+  &__icon {
+    font-size: 1.3rem;
+    display: inline-block;
+    margin: 0 1rem;
+  }
+  &__buttonText {
+    display: block;
+    flex: 1;
+    text-align: center;
+    font-weight: 400;
   }
 }

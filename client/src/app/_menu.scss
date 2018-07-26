@@ -1,5 +1,8 @@
 .menu {
+  position: fixed;
   height: $menu-height;
+  top: 0;
+  z-index: 15000;
   background: $white;
   padding: 0;
   width: 100%;

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2" height="10" viewBox="0 0 2 10">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.1;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect id="Obdélník_5" data-name="Obdélník 5" class="cls-1" y="2" width="1" height="6"/>
+  <rect id="Obdélník_5_kopie" data-name="Obdélník 5 kopie" class="cls-2" x="1" y="2" width="1" height="6"/>
+</svg>

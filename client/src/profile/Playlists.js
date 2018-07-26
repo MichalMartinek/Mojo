@@ -7,12 +7,12 @@ import {
   isLoaded,
   isEmpty
 } from 'react-redux-firebase';
-import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../common/firebaseActions';
 import type { PopulateProfile } from './types';
 import type { Firebase } from '../common/types';
+import PlaylistsItem from './PlaylistsItem';
 
 type Props = {
   profile: PopulateProfile,
@@ -21,35 +21,38 @@ type Props = {
 };
 
 class Playlists extends React.Component<Props> {
-  render() {
+  renderContent() {
     const { profile } = this.props;
-    if (!isLoaded(profile)) {
-      return <div>Loading...</div>;
+    if (!isLoaded(profile) || isEmpty(profile)) {
+      return <div className="playlists__status">Loading</div>;
     }
-    if (isEmpty(profile) || !profile.playlists) {
-      return <div>Profile Is Empty</div>;
+    if (!profile.playlists) {
+      return <div className="playlists__status">No playlists found</div>;
     }
     const { playlists } = profile;
-    console.log(playlists);
     return (
-      <div className="profile__playlists">
-        <h4>Playlists</h4>
+      <div className="playlists__container">
         {Object.keys(playlists).map(
           (key: string) =>
             playlists[key] ? (
-              <div key={key} id={key}>
-                <Link to={`/playlist/${key}`}>{playlists[key].title}</Link>
-
-                <button
-                  onClick={() =>
-                    actions.deletePlaylist(this.props.firebase, key, playlists)
-                  }
-                >
-                  Delete
-                </button>
-              </div>
+              <PlaylistsItem
+                key={key}
+                id={key}
+                playlist={playlists[key]}
+                onDelete={() => {
+                  actions.deletePlaylist(this.props.firebase, key, playlists);
+                }}
+              />
             ) : null
         )}
+      </div>
+    );
+  }
+  render() {
+    return (
+      <div className="playlists">
+        <h4 className="playlists__header">Playlists</h4>
+        {this.renderContent()}
       </div>
     );
   }

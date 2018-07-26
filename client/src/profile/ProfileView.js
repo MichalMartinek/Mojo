@@ -25,18 +25,20 @@ type Props = {
 class ProfileView extends React.Component<Props> {
   render() {
     const { profile, auth, firebase } = this.props;
-    if (!isLoaded(profile)) {
-      return <div>Loading...</div>;
+    if (!isLoaded(profile) || !isEmpty(profile)) {
+      return (
+        <div className="profile">
+          <About
+            profile={profile}
+            logout={() => actions.logout(firebase)}
+            loading={!isLoaded(profile)}
+          />
+          <Playlists id={auth.uid} />
+        </div>
+      );
     }
-    if (isEmpty(profile)) {
-      this.props.push(routes.login);
-    }
-    return (
-      <div className="profile">
-        <About profile={profile} logout={() => actions.logout(firebase)} />
-        <Playlists id={auth.uid} />
-      </div>
-    );
+    this.props.push(routes.login);
+    return <div>Loading</div>;
   }
 }
 

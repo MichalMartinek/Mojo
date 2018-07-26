@@ -5,12 +5,16 @@ import type { Profile } from './types';
 
 type Props = {
   profile: Profile,
+  loading: boolean,
   logout: () => Promise<Object>
 };
 
 class About extends React.Component<Props> {
   render() {
-    const { profile, logout } = this.props;
+    const { profile, logout, loading } = this.props;
+    if (loading) {
+      return <div className="about about--empty" />;
+    }
     return (
       <div className="about">
         <div className="about__image">
@@ -18,7 +22,7 @@ class About extends React.Component<Props> {
         </div>
         <h1 className="about__name">{profile.displayName}</h1>
         <h2 className="about__email">{profile.email}</h2>
-        <button className="button about__logout" onClick={logout}>
+        <button className="button about__logout " onClick={logout}>
           Logout
         </button>
       </div>

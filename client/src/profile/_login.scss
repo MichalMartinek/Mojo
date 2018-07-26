@@ -1,5 +1,8 @@
 .login {
-  width: 100%;
+  @include bodyBackgroundFull;
+  background-image: url(/images/france-perles-237885-unsplash.jpg);
+  padding-top: 5rem;
+
   &__content {
     width: 60%;
     min-width: 650px;

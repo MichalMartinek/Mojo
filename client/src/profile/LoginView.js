@@ -46,14 +46,9 @@ class LoginView extends React.Component<Props> {
     });
     this.props.push(routes.profile);
   };
-  handleNewPlaylist = () => {
-    this.props.push(routes.profile);
-  };
   render() {
-    console.log(this.props);
     return (
       <Login
-        newPlaylist={this.handleNewPlaylist}
         loginWithFacebook={this.loginWithFacebook}
         loginWithGithub={this.loginWithGithub}
         loginWithGoogle={this.loginWithGoogle}

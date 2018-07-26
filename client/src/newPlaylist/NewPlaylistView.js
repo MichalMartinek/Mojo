@@ -43,9 +43,11 @@ class NewPlaylistView extends React.Component<Props, State> {
       .addPlaylist(firebase, 'New playlist', profile)
       .then(data => {
         this.setState({ creating: false });
+        console.log(routes.playlist.replace(':id', data.key));
         push(routes.playlist.replace(':id', data.key));
       })
-      .catch(() => {
+      .catch(e => {
+        console.log(e);
         this.setState({ error: true });
       });
   };
@@ -60,14 +62,18 @@ class NewPlaylistView extends React.Component<Props, State> {
     if (error) {
       return (
         <div className="newPlaylist">
-          <h3>Error</h3>
+          <div className="newPlaylist__content">
+            <h3 className="newPlaylist__title">Error</h3>
+          </div>
         </div>
       );
     }
     return (
       <div className="newPlaylist">
-        <Spinner />
-        <h3>Creating new playlist</h3>
+        <div className="newPlaylist__content">
+          <h3 className="newPlaylist__title">Creating new playlist</h3>
+          <Spinner />
+        </div>
       </div>
     );
   }

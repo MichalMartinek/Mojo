@@ -2,6 +2,8 @@
 import type { Firebase } from './types';
 import type { Playlist } from '../playlist/types';
 import * as constants from '../playlist/constants';
+import { isEmpty, isLoaded } from 'react-redux-firebase';
+import type { Profile } from '../profile/types';
 
 export const login = (firebase: Firebase): Promise<Object> => {
   return firebase.login({
@@ -39,7 +41,7 @@ export const deletePlaylist = (
 export const addPlaylist = (
   firebase: Firebase,
   title: string,
-  profile: ?Object
+  profile: Profile
 ): Promise<Object> => {
   const newOne = {
     title,
@@ -52,8 +54,7 @@ export const addPlaylist = (
     }
   };
   return firebase.push('/playlists', newOne).then(res => {
-    console.log(res.key);
-    if (profile) {
+    if (isLoaded(profile) && !isEmpty(profile)) {
       const playlists = profile.playlists ? { ...profile.playlists } : {};
       playlists[res.key] = true;
       return updateProfile(firebase, { playlists }).then(() => res);

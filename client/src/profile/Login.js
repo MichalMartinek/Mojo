@@ -1,22 +1,18 @@
 /* @flow */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import routes from '../app/routes';
 type AsyncFunction = (event: {}) => Promise<{}>;
 type Props = {
   loginWithFacebook: AsyncFunction,
   loginWithGoogle: AsyncFunction,
-  loginWithGithub: AsyncFunction,
-  newPlaylist: (event: {}) => void
+  loginWithGithub: AsyncFunction
 };
 
 class Login extends React.Component<Props> {
   render() {
-    const {
-      loginWithGoogle,
-      loginWithFacebook,
-      loginWithGithub,
-      newPlaylist
-    } = this.props;
+    const { loginWithGoogle, loginWithFacebook, loginWithGithub } = this.props;
     return (
       <div className="login">
         <div className="login__content">
@@ -60,12 +56,12 @@ class Login extends React.Component<Props> {
               <p className="login__createText">
                 Or you can create new playlist without logging in.
               </p>
-              <button
+              <Link
                 className="button login__button login__button--create"
-                onClick={newPlaylist}
+                to={routes.newPlaylist}
               >
                 New playlist
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -14,9 +14,9 @@
     margin: 0 auto;
   }
   &__loader {
-    text-align: center;
-    margin: 1rem 0 0;
-    width: 100%;
+    width: 13rem;
+    height: 12rem;
+    @include flexCenter;
   }
 }
 

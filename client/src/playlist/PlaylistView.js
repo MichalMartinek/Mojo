@@ -14,6 +14,8 @@ import type { Profile } from '../profile/types';
 import withLayout from '../app/withLayout';
 import NotFoundView from '../common/NotFoundView';
 import PlaylistLoading from './PlaylistLoading';
+import { bindActionCreators } from 'redux';
+import * as actions from './actions';
 
 type Props = {
   match: {
@@ -23,10 +25,16 @@ type Props = {
   },
   playlistId: string,
   profile: Profile,
-  playlists: { [string]: Playlist }
+  playlists: { [string]: Playlist },
+  actions: {
+    clearSearch: () => void
+  }
 };
 
 class PlaylistView extends React.Component<Props> {
+  componentDidMount() {
+    this.props.actions.clearSearch();
+  }
   render() {
     const { profile } = this.props;
     const playlistId = this.props.match.params.id;
@@ -73,8 +81,13 @@ class PlaylistView extends React.Component<Props> {
 }
 export default compose(
   firebaseConnect(props => [{ path: `playlists/${props.match.params.id}` }]),
-  connect(state => ({
-    playlists: state.firebase.data.playlists,
-    profile: state.firebase.profile
-  }))
+  connect(
+    state => ({
+      playlists: state.firebase.data.playlists,
+      profile: state.firebase.profile
+    }),
+    dispatch => ({
+      actions: bindActionCreators(actions, dispatch)
+    })
+  )
 )(PlaylistView);

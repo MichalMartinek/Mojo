@@ -29,7 +29,6 @@ class SearchContainer extends React.Component<Props> {
   static defaultProps = {
     className: ''
   };
-
   render() {
     const {
       addVideo,

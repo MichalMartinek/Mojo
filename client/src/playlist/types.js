@@ -70,7 +70,6 @@ export type NextPreviousAction = (
 ) => Promise<Object>;
 export type SwitchSongAction = (
   id: string,
-  playlist: Playlist,
   videoId: string,
   isPlaying?: boolean
 ) => Promise<Object>;

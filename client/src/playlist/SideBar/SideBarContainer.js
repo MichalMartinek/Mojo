@@ -4,8 +4,8 @@ import type {
   DeleteVideoAction,
   Playlist,
   SetNameFieldAction,
-  UpdatePlaylistAction,
-  UpdatePositionAction
+  SwitchSongAction,
+  UpdatePlaylistAction
 } from '../types';
 import { bindActionCreators } from 'redux';
 import { withFirebase } from 'react-redux-firebase';
@@ -16,6 +16,7 @@ import VideoPlayer from './VideoPlayer';
 import * as actions from '../actions';
 import { bindFirebaseActions } from '../../utils/bindFirebaseActions';
 import * as firebaseActions from '../firebaseActions';
+import * as constants from '../constants';
 
 type Props = {
   id: string,
@@ -25,7 +26,7 @@ type Props = {
   className: string,
   firebaseActions: {
     updatePlaylist: UpdatePlaylistAction,
-    updatePosition: UpdatePositionAction,
+    switchSong: SwitchSongAction,
     deleteVideo: DeleteVideoAction
   },
   actions: {
@@ -62,7 +63,11 @@ class SideBarContainer extends React.Component<Props> {
         <PlaylistVideos
           playlist={playlist}
           itemOpen={key => {
-            firebaseActions.updatePosition(id, { video: key });
+            firebaseActions.switchSong(
+              id,
+              key,
+              playlist.position.state === constants.PLAYING
+            );
           }}
           itemDelete={videoId => {
             firebaseActions.deleteVideo(id, playlist, videoId);

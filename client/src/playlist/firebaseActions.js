@@ -32,17 +32,17 @@ export const pause = (firebase: Firebase): PlayPauseAction => {
 export const next = (firebase: Firebase): NextPreviousAction => {
   return (id, playlist, isPlaying) => {
     const next = nextVideo(playlist);
-    return switchSong(firebase)(id, playlist, next, isPlaying);
+    return switchSong(firebase)(id, next, isPlaying);
   };
 };
 export const previous = (firebase: Firebase): NextPreviousAction => {
   return (id, playlist, isPlaying) => {
     const prev = previousVideo(playlist);
-    return switchSong(firebase)(id, playlist, prev, isPlaying);
+    return switchSong(firebase)(id, prev, isPlaying);
   };
 };
 export const switchSong = (firebase: Firebase): SwitchSongAction => {
-  return (id, playlist, videoId, isPlaying) => {
+  return (id, videoId, isPlaying) => {
     const changes: { switchingSongs?: boolean } = {
       video: videoId
     };

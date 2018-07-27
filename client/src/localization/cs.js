@@ -15,5 +15,6 @@ export default {
   'common.decline': 'Odmítnout',
   'common.tryAgain': 'Zkusit znovu',
   'common.loadingError': 'Ouha, data se nepodařilo načíst',
-  'common.deletedError': 'Ouha, data se nepodařilo načíst, protože neukládáme smazané soubory.',
+  'common.deletedError':
+    'Ouha, data se nepodařilo načíst, protože neukládáme smazané soubory.'
 };

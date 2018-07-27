@@ -1,61 +1,69 @@
 /* @flow */
 
 import React from 'react';
-import { firebaseConnect, populate, isLoaded, isEmpty} from 'react-redux-firebase'
-import {Link} from 'react-router-dom';
-import {compose} from 'redux';
-import {connect }from 'react-redux'
-import * as actions from '../common/firebaseActions'
-import type {PopulateProfile} from "./types";
-import type {Firebase} from '../common/types'
+import {
+  firebaseConnect,
+  populate,
+  isLoaded,
+  isEmpty
+} from 'react-redux-firebase';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../common/firebaseActions';
+import type { PopulateProfile } from './types';
+import type { Firebase } from '../common/types';
+import PlaylistsItem from './PlaylistsItem';
 
 type Props = {
   profile: PopulateProfile,
   id: string,
-  firebase: Firebase,
+  firebase: Firebase
 };
 
 class Playlists extends React.Component<Props> {
-  render() {
-
-    const { profile } = this.props
-    if (!isLoaded(profile)) {
-      return <div>Loading...</div>
+  renderContent() {
+    const { profile } = this.props;
+    if (!isLoaded(profile) || isEmpty(profile)) {
+      return <div className="playlists__status">Loading</div>;
     }
-    if (isEmpty(profile) || !profile.playlists) {
-      return <div>Profile Is Empty</div>
+    if (!profile.playlists) {
+      return <div className="playlists__status">No playlists found</div>;
     }
-    const { playlists } = profile
-    console.log(playlists)
+    const { playlists } = profile;
     return (
-      <div className="profile__playlists">
-        <h4>Playlists</h4>
-        {
-          Object.keys(playlists).map((key: string) => (
-            playlists[key] ?
-              <div key={key} id={key}>
-                <Link to={`/playlist/${key}`}>{playlists[key].title}</Link>
-
-                <button onClick={() => actions.deletePlaylist(this.props.firebase, key, playlists)}>
-                  Delete
-                </button>
-              </div>
-              : null
-          ))
-        }
+      <div className="playlists__container">
+        {Object.keys(playlists).map(
+          (key: string) =>
+            playlists[key] ? (
+              <PlaylistsItem
+                key={key}
+                id={key}
+                playlist={playlists[key]}
+                onDelete={() => {
+                  actions.deletePlaylist(this.props.firebase, key, playlists);
+                }}
+              />
+            ) : null
+        )}
+      </div>
+    );
+  }
+  render() {
+    return (
+      <div className="playlists">
+        <h4 className="playlists__header">Playlists</h4>
+        {this.renderContent()}
       </div>
     );
   }
 }
-const populates = [{ child: 'playlists', root: 'playlists' }]
+const populates = [{ child: 'playlists', root: 'playlists' }];
 
 export default compose(
-  firebaseConnect((props) => {
-    return [
-      { path: `users/${props.id}`, populates }
-    ]
+  firebaseConnect(props => {
+    return [{ path: `users/${props.id}`, populates }];
   }),
   connect((state, props) => ({
     profile: populate(state.firebase, `users/${props.id}`, populates)
   }))
-)(Playlists)
+)(Playlists);

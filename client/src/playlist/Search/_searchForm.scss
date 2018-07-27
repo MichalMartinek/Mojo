@@ -1,0 +1,40 @@
+.searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 2.5rem;
+  max-width: 500px;
+  transition: all 0.3s ease;
+  border: 1px solid $white-search;
+  background: $white-search;
+  border-radius: $border-radius;
+
+
+  &--focused {
+    border: 1px solid $white-side;
+    background: none;
+    box-shadow: 0 0 5px $blue-shadow;
+  }
+  &__input {
+    flex: 1;
+    outline: none;
+    padding-left: 0.5rem;
+    height: 100%;
+    border: none;
+    font-family: inherit;
+    font-size: 1.1rem;
+    background: none;
+  }
+  &__button {
+    width: 3rem;
+    height: 100%;
+    transition: all 0.5s ease;
+    background: none;
+    font-size: 1.1rem;
+    color: $gray-middle;
+    &:hover {
+      color: $gray-dark;
+    }
+  }
+}

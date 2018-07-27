@@ -1,0 +1,124 @@
+.playBarContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.playBar {
+  width: 100%;
+  height: $bar-height;
+  padding: 0 $padding-box;
+  background: $blue-navy;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px -5px 5px 0px $blue-transparent;
+
+  &__icon {
+    color: $white-blue;
+    transition: color 0.5s ease;
+    margin: 1.25vw;
+    font-size: 1.3rem;
+
+    &--main {
+      margin: 0;
+      color: $blue-navy;
+      position: relative;
+      left: 0.15rem;
+    }
+    &--small {
+      font-size: 1rem;
+      margin: 1vw;
+    }
+    &--left {
+      position: relative;
+      left: 0px;
+    }
+  }
+
+  &__icon:hover,
+  &__iconButton:hover,
+  &__icon--checked {
+    color: $white-almost;
+  }
+
+  /* Info column*/
+  &__info {
+    width: 30%;
+    justify-self: flex-start;
+    align-self: center;
+  }
+  &__author {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: $white-blue;
+  }
+  &__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: $white-almost;
+
+    @include ellipsis;
+  }
+
+  /* Main controls column*/
+  &__main {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__mainButton {
+    @include flexCenter;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    background: $white-almost;
+    box-shadow: 0px 0px 10px 0px $white-blue;
+    &:hover {
+      background: $white;
+      box-shadow: 0px 0px 15px 0px $white-blue;
+      & .playBar__icon--main {
+        color: $blue-basic;
+      }
+    }
+  }
+  /* Settings column */
+  &__volume {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  /*&:after {
+    top: -2.5px;
+    box-shadow: inset  0px -5px 5px 0px  hsla(0,0%,7%,.06);
+    content: "";
+    height: 5px;
+    left: 0;
+    opacity: 1;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    z-index: 2050;
+  }*/
+}
+
+.input-range__label-container {
+  display: none;
+}
+
+.input-range__track {
+  background: $white-blue;
+}
+
+.input-range__track--active {
+  background: $blue-basic;
+}
+.input-range__slider {
+  background: $blue-basic;
+  border-color: $blue-basic;
+}

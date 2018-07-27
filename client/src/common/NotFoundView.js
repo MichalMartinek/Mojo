@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export default () => (
-  <div>
-    <h1>Not found</h1>
+  <div className="notFound">
+    <h1 className="notFound__title">Not found</h1>
   </div>
-)
+);

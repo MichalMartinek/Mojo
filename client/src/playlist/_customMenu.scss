@@ -1,0 +1,27 @@
+.playlistMenu {
+  box-shadow: none;
+
+  &__left {
+    background: $blue-purple;
+  }
+  &__right {
+    box-shadow: 0px 5px 5px 0px $blue-transparent;
+    flex: 1;
+    display: flex;
+    position: relative;
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+    padding: 0 $padding-box;
+  }
+  &__logo {
+    margin-top: 0.5rem;
+    background-image: linear-gradient($white, $white-almost, $primary);
+  }
+  &__controls {
+    flex: 1;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

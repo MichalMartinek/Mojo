@@ -1,7 +1,8 @@
 * {
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -12,6 +13,10 @@ button {
   cursor: pointer;
 }
 
+.App {
+  width: 100%;
+  padding-top: $menu-height;
+}
 .no-button {
   background: none;
   color: inherit;
@@ -25,17 +30,39 @@ button {
   text-align: center;
 }
 .button {
-  padding: 0.5rem;
+  padding: 0.75rem 3rem;
   font: inherit;
-  color: $primary-dark;
+  display: block;
+  margin: 1rem;
   outline: none;
-  background: none;
-  border: 2px solid $primary-mid;
-  border-radius: 5px;
-  transition: all 0.3s;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  background: $purple;
+  border-radius: $border-radius;
+  color: $white-side;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 3px 0 $white-blue;
 
   &:hover {
-    background: $primary-mid;
-    color: $white;
+    color: $white-almost;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
   }
+}
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin bodyBackgroundFull {
+  width: 100%;
+  height: calc(100vh - #{$menu-height});
+  background-size: cover;
+  background-position: center;
 }

@@ -1,0 +1,11 @@
+.notFound {
+  @include bodyBackgroundFull;
+  @include flexCenter;
+  background-image: url(/images/joshua-earle-541397-unsplash.jpg);
+
+  &__title {
+    font-size: 3rem;
+    font-weight: 300;
+    color: $white;
+  }
+}

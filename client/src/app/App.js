@@ -10,6 +10,8 @@ import LoginView from '../profile/LoginView';
 import history from '../history';
 import PlaylistView from '../playlist/PlaylistView';
 import NotFound from '../common/NotFoundView';
+import PrivacyPolice from '../legal/PrivacyPoliceView';
+import TermsService from '../legal/TermsServiceView';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -41,6 +43,14 @@ class App extends React.Component<{ profile: Profile }> {
             <Route
               path={routes.newPlaylist}
               component={withLayout(NewPlaylistView, profile)}
+            />
+            <Route
+              path={routes.privacyPolice}
+              component={withLayout(PrivacyPolice, profile)}
+            />
+            <Route
+              path={routes.termsOfService}
+              component={withLayout(TermsService, profile)}
             />
             <Route component={withLayout(NotFound, profile)} />
           </Switch>

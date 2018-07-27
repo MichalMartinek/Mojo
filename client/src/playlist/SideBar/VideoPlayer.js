@@ -75,7 +75,7 @@ class VideoPlayer extends React.Component<Props, State> {
       player: event.target
     });
     if (this.props.playlist.position.state === constants.PLAYING) {
-      this.play();
+      event.target.playVideo();
     }
   };
   onPlayerChange = (event: { data: number }) => {

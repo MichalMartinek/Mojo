@@ -6,16 +6,19 @@ import { withFirebase, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import withLayout from '../common/withLayout';
-import * as actions from '../common/firebaseActions';
-import type { Firebase } from '../common/types';
+import type { AddPlaylistAction } from '../common/types';
 import type { Profile } from '../profile/types';
 import { push } from 'react-router-redux';
 import routes from '../app/routes';
+import * as firebaseActions from '../common/firebaseActions';
+import { bindFirebaseActions } from '../utils/bindFirebaseActions';
 
 type Props = {
   push: (path: string) => void,
   profile: Profile,
-  firebase: Firebase
+  firebaseActions: {
+    addPlaylist: AddPlaylistAction
+  }
 };
 type State = {
   loaded: boolean,
@@ -39,9 +42,9 @@ class NewPlaylistView extends React.Component<Props, State> {
   };
   createPlaylist = () => {
     this.setState({ creating: true });
-    const { profile, firebase, push } = this.props;
-    return actions
-      .addPlaylist(firebase, 'New playlist', profile)
+    const { profile, firebaseActions, push } = this.props;
+    return firebaseActions
+      .addPlaylist('New playlist', profile)
       .then(data => {
         this.setState({ creating: false });
         push(routes.playlist.replace(':id', data.key));
@@ -86,9 +89,17 @@ export default withLayout(
         profile: state.firebase.profile
       }),
       dispatch => ({
-        actions: bindActionCreators(actions, dispatch),
         push: bindActionCreators(push, dispatch)
-      })
+      }),
+      (stateProps, dispatchProps, ownProps) => {
+        const boundFirebaseActions = bindFirebaseActions(
+          ownProps.firebase,
+          firebaseActions
+        );
+        return Object.assign({}, ownProps, stateProps, dispatchProps, {
+          firebaseActions: boundFirebaseActions
+        });
+      }
     )
   )(NewPlaylistView)
 );

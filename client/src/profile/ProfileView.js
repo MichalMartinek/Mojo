@@ -6,39 +6,53 @@ import { connect } from 'react-redux';
 import { withFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 import Playlists from './Playlists';
 import About from './About';
-import type { Firebase } from '../common/types';
-import * as actions from '../common/firebaseActions';
+import type { LoginLogoutAction } from '../common/types';
 import type { Profile } from './types';
 import routes from '../app/routes';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import withLayout from '../common/withLayout';
+import { bindFirebaseActions } from '../utils/bindFirebaseActions';
+import * as firebaseActions from '../common/firebaseActions';
 
 type Props = {
   profile: Profile,
   push: (path: string) => void,
-  firebase: Firebase,
+  firebaseActions: {
+    logout: LoginLogoutAction
+  },
   auth: {
     uid: string
   }
 };
 
 class ProfileView extends React.Component<Props> {
+  componentDidUpdate() {
+    this.secure();
+  }
+  componentDidMount() {
+    this.secure();
+  }
+  secure = () => {
+    const { profile } = this.props;
+    if (isLoaded(profile) && isEmpty(profile)) {
+      this.props.push(routes.login);
+    }
+  };
   render() {
-    const { profile, auth, firebase } = this.props;
+    const { profile, auth, firebaseActions } = this.props;
     if (!isLoaded(profile) || !isEmpty(profile)) {
       return (
         <div className="profile">
           <About
             profile={profile}
-            logout={() => actions.logout(firebase)}
+            logout={firebaseActions.logout}
             loading={!isLoaded(profile)}
           />
           <Playlists id={auth.uid} />
         </div>
       );
     }
-    this.props.push(routes.login);
     return <div>Loading</div>;
   }
 }
@@ -53,7 +67,16 @@ export default withLayout(
       }),
       dispatch => ({
         push: bindActionCreators(push, dispatch)
-      })
+      }),
+      (stateProps, dispatchProps, ownProps) => {
+        const boundFirebaseActions = bindFirebaseActions(
+          ownProps.firebase,
+          firebaseActions
+        );
+        return Object.assign({}, ownProps, stateProps, dispatchProps, {
+          firebaseActions: boundFirebaseActions
+        });
+      }
     )
   )(ProfileView)
 );

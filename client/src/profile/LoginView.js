@@ -8,43 +8,30 @@ import withLayout from '../common/withLayout';
 import * as firebaseActions from '../common/firebaseActions';
 import { push } from 'react-router-redux';
 import routes from '../app/routes';
-import type { Firebase } from '../common/types';
+import type { LoginLogoutAction } from '../common/types';
 import Login from './Login';
+import { bindFirebaseActions } from '../utils/bindFirebaseActions';
 
 type Props = {
   push: (path: string) => void,
-  firebase: Firebase
+  firebaseActions: {
+    loginWithGoogle: LoginLogoutAction,
+    loginWithFacebook: LoginLogoutAction,
+    loginWithGithub: LoginLogoutAction
+  }
 };
 
 class LoginView extends React.Component<Props> {
   loginWithGoogle = async (): Promise<any> => {
-    await this.props.firebase.login({
-      provider: 'google',
-      type: 'popup'
-      // scopes: ['email'] // not required
-    });
+    await this.props.firebaseActions.loginWithGoogle();
     this.props.push(routes.profile);
   };
   loginWithFacebook = async (): Promise<any> => {
-    await this.props.firebase.login({
-      provider: 'facebook',
-      type: 'popup'
-      // scopes: ['email'] // not required
-    });
+    await this.props.firebaseActions.loginWithFacebook();
     this.props.push(routes.profile);
   };
   loginWithGithub = async (): Promise<any> => {
-    const res: {
-      additionalUserInfo: { username: string }
-    } = await this.props.firebase.login({
-      provider: 'github',
-      type: 'popup',
-      scope: ['user:email'] // not required
-    });
-    console.log(res);
-    await firebaseActions.updateProfile(this.props.firebase, {
-      displayName: res.additionalUserInfo.username
-    });
+    await this.props.firebaseActions.loginWithGithub();
     this.props.push(routes.profile);
   };
   render() {
@@ -65,7 +52,16 @@ export default withLayout(
       null,
       dispatch => ({
         push: bindActionCreators(push, dispatch)
-      })
+      }),
+      (stateProps, dispatchProps, ownProps) => {
+        const boundFirebaseActions = bindFirebaseActions(
+          ownProps.firebase,
+          firebaseActions
+        );
+        return Object.assign({}, ownProps, stateProps, dispatchProps, {
+          firebaseActions: boundFirebaseActions
+        });
+      }
     )
   )(LoginView)
 );

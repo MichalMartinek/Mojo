@@ -1,5 +1,8 @@
 // @flow
 
+import type { Profile } from '../profile/types';
+import type { Playlist } from '../playlist/types';
+
 export type Firebase = {
   login: (obj: Object) => Promise<Object>,
   logout: () => Promise<Object>,
@@ -19,3 +22,13 @@ export type Firebase = {
     }
   }
 };
+export type LoginLogoutAction = () => Promise<Object>;
+export type AddPlaylistAction = (
+  title: string,
+  profile: Profile
+) => Promise<Object>;
+export type DeletePlaylistAction = (
+  id: string,
+  playlists: { [string]: Playlist }
+) => Promise<Object>;
+export type UpdatePlaylistAction = (obj: Object) => Promise<Object>;

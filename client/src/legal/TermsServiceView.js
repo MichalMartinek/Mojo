@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import withLayout from '../common/withLayout';
 
 class TermsServiceView extends React.Component<{}> {
   render() {
@@ -116,4 +117,4 @@ class TermsServiceView extends React.Component<{}> {
   }
 }
 
-export default TermsServiceView;
+export default withLayout(TermsServiceView);

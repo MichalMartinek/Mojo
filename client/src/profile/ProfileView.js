@@ -12,6 +12,7 @@ import type { Profile } from './types';
 import routes from '../app/routes';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
+import withLayout from '../common/withLayout';
 
 type Props = {
   profile: Profile,
@@ -42,15 +43,17 @@ class ProfileView extends React.Component<Props> {
   }
 }
 
-export default compose(
-  withFirebase,
-  connect(
-    state => ({
-      profile: state.firebase.profile,
-      auth: state.firebase.auth
-    }),
-    dispatch => ({
-      push: bindActionCreators(push, dispatch)
-    })
-  )
-)(ProfileView);
+export default withLayout(
+  compose(
+    withFirebase,
+    connect(
+      state => ({
+        profile: state.firebase.profile,
+        auth: state.firebase.auth
+      }),
+      dispatch => ({
+        push: bindActionCreators(push, dispatch)
+      })
+    )
+  )(ProfileView)
+);

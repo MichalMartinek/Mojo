@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { ConnectedRouter } from 'react-router-redux';
-import withLayout from './withLayout';
 import HomeView from '../home/HomeView';
 import ProfileView from '../profile/ProfileView';
 import NewPlaylistView from '../newPlaylist/NewPlaylistView';
@@ -29,30 +28,30 @@ class App extends React.Component<{ profile: Profile }> {
             <Route
               exact
               path={routes.root}
-              component={withLayout(HomeView, profile)}
+              render={() => <HomeView profile={profile} />}
             />
             <Route path={routes.playlist} component={PlaylistView} />
             <Route
               path={routes.login}
-              component={withLayout(LoginView, profile)}
+              render={() => <LoginView profile={profile} />}
             />
             <Route
               path={routes.profile}
-              component={withLayout(ProfileView, profile)}
+              render={() => <ProfileView profile={profile} />}
             />
             <Route
               path={routes.newPlaylist}
-              component={withLayout(NewPlaylistView, profile)}
+              render={() => <NewPlaylistView profile={profile} />}
             />
             <Route
               path={routes.privacyPolice}
-              component={withLayout(PrivacyPolice, profile)}
+              render={() => <PrivacyPolice profile={profile} />}
             />
             <Route
               path={routes.termsOfService}
-              component={withLayout(TermsService, profile)}
+              render={() => <TermsService profile={profile} />}
             />
-            <Route component={withLayout(NotFound, profile)} />
+            <Route render={() => <NotFound profile={profile} />} />
           </Switch>
         </ConnectedRouter>
       </div>

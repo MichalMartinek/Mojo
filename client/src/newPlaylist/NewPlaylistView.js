@@ -5,16 +5,20 @@ import Spinner from '../common/Spinner';
 import { withFirebase, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
-import * as actions from '../common/firebaseActions';
-import type { Firebase } from '../common/types';
+import withLayout from '../common/withLayout';
+import type { AddPlaylistAction } from '../common/types';
 import type { Profile } from '../profile/types';
 import { push } from 'react-router-redux';
 import routes from '../app/routes';
+import * as firebaseActions from '../common/firebaseActions';
+import { bindFirebaseActions } from '../utils/bindFirebaseActions';
 
 type Props = {
   push: (path: string) => void,
   profile: Profile,
-  firebase: Firebase
+  firebaseActions: {
+    addPlaylist: AddPlaylistAction
+  }
 };
 type State = {
   loaded: boolean,
@@ -29,25 +33,23 @@ class NewPlaylistView extends React.Component<Props, State> {
   };
   handleUpdate = () => {
     const { profile } = this.props;
-    const { loaded } = this.state;
+    const { loaded, creating } = this.state;
 
-    if (isLoaded(profile) && !loaded) {
+    if (isLoaded(profile) && !loaded && !creating) {
       this.setState({ loaded: true });
       this.createPlaylist();
     }
   };
   createPlaylist = () => {
-    const { profile, firebase, push } = this.props;
     this.setState({ creating: true });
-    actions
-      .addPlaylist(firebase, 'New playlist', profile)
+    const { profile, firebaseActions, push } = this.props;
+    return firebaseActions
+      .addPlaylist('New playlist', profile)
       .then(data => {
         this.setState({ creating: false });
-        console.log(routes.playlist.replace(':id', data.key));
         push(routes.playlist.replace(':id', data.key));
       })
       .catch(e => {
-        console.log(e);
         this.setState({ error: true });
       });
   };
@@ -79,15 +81,25 @@ class NewPlaylistView extends React.Component<Props, State> {
   }
 }
 
-export default compose(
-  withFirebase,
-  connect(
-    state => ({
-      profile: state.firebase.profile
-    }),
-    dispatch => ({
-      actions: bindActionCreators(actions, dispatch),
-      push: bindActionCreators(push, dispatch)
-    })
-  )
-)(NewPlaylistView);
+export default withLayout(
+  compose(
+    withFirebase,
+    connect(
+      state => ({
+        profile: state.firebase.profile
+      }),
+      dispatch => ({
+        push: bindActionCreators(push, dispatch)
+      }),
+      (stateProps, dispatchProps, ownProps) => {
+        const boundFirebaseActions = bindFirebaseActions(
+          ownProps.firebase,
+          firebaseActions
+        );
+        return Object.assign({}, ownProps, stateProps, dispatchProps, {
+          firebaseActions: boundFirebaseActions
+        });
+      }
+    )
+  )(NewPlaylistView)
+);

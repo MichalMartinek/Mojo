@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../app/routes';
+import withLayout from '../common/withLayout';
 
-export default () => (
+export default withLayout(() => (
   <div className="home">
     <div className="home__header">
       <div className="home__textContainer">
@@ -18,4 +19,4 @@ export default () => (
       </div>
     </div>
   </div>
-);
+));

@@ -11,7 +11,7 @@ import SearchContainer from './Search/SearchContainer';
 import CustomMenu from './CustomMenu';
 import { isEmpty, isLoaded } from 'react-redux-firebase';
 import type { Profile } from '../profile/types';
-import withLayout from '../app/withLayout';
+import withLayout from '../common/withLayout';
 import NotFoundView from '../common/NotFoundView';
 import PlaylistLoading from './PlaylistLoading';
 import { bindActionCreators } from 'redux';

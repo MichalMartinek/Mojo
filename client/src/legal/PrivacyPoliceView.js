@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import withLayout from '../common/withLayout';
 
 class PrivacyPoliceView extends React.Component<{}> {
   render() {
@@ -244,14 +245,10 @@ class PrivacyPoliceView extends React.Component<{}> {
         </p>
         <ul>
           <li>By email: martinek8@gmail.com</li>
-          <li>
-            By visiting this page on our website:
-            https://mojo-yt.firebaseapp.com/contact
-          </li>
-        </ul>{' '}
+        </ul>
       </div>
     );
   }
 }
 
-export default PrivacyPoliceView;
+export default withLayout(PrivacyPoliceView);

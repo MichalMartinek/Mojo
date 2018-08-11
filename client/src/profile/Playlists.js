@@ -9,20 +9,23 @@ import {
 } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../common/firebaseActions';
 import type { PopulateProfile } from './types';
-import type { Firebase } from '../common/types';
+import type { DeletePlaylistAction } from '../common/types';
 import PlaylistsItem from './PlaylistsItem';
+import * as firebaseActions from '../common/firebaseActions';
+import { bindFirebaseActions } from '../utils/bindFirebaseActions';
 
 type Props = {
   profile: PopulateProfile,
   id: string,
-  firebase: Firebase
+  firebaseActions: {
+    deletePlaylist: DeletePlaylistAction
+  }
 };
 
 class Playlists extends React.Component<Props> {
   renderContent() {
-    const { profile } = this.props;
+    const { profile, firebaseActions } = this.props;
     if (!isLoaded(profile) || isEmpty(profile)) {
       return <div className="playlists__status">Loading</div>;
     }
@@ -40,7 +43,7 @@ class Playlists extends React.Component<Props> {
                 id={key}
                 playlist={playlists[key]}
                 onDelete={() => {
-                  actions.deletePlaylist(this.props.firebase, key, playlists);
+                  firebaseActions.deletePlaylist(key, playlists);
                 }}
               />
             ) : null
@@ -63,7 +66,19 @@ export default compose(
   firebaseConnect(props => {
     return [{ path: `users/${props.id}`, populates }];
   }),
-  connect((state, props) => ({
-    profile: populate(state.firebase, `users/${props.id}`, populates)
-  }))
+  connect(
+    (state, props) => ({
+      profile: populate(state.firebase, `users/${props.id}`, populates)
+    }),
+    null,
+    (stateProps, dispatchProps, ownProps) => {
+      const boundFirebaseActions = bindFirebaseActions(
+        ownProps.firebase,
+        firebaseActions
+      );
+      return Object.assign({}, ownProps, stateProps, dispatchProps, {
+        firebaseActions: boundFirebaseActions
+      });
+    }
+  )
 )(Playlists);

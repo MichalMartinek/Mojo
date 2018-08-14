@@ -8,6 +8,7 @@ body {
   font-family: 'Roboto', sans-serif;
   background: $background-gray;
   height: 100%;
+  min-width: $min-app-width;
 }
 button {
   cursor: pointer;

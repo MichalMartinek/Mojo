@@ -54,7 +54,7 @@ class Login extends React.Component<Props> {
             </div>
             <div className="login__create">
               <p className="login__createText">
-                Or you can create new playlist without logging in.
+                Or you can create a new playlist without logging in.
               </p>
               <Link
                 className="button login__button login__button--create"
